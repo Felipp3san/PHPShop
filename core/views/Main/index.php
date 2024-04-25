@@ -2,6 +2,10 @@
     <?= $titulo ?>
 </h1>
 
+<h1>
+<i class="fa-solid fa-trash"></i>
+</h1>
+
 <table>
     <thead>
         <tr>

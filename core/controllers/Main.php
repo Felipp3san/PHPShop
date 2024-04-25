@@ -8,7 +8,7 @@ class Main
     public function index()
     {
         $data = [
-            'titulo' => 'Página index MAIN',
+            'titulo' => 'Página inicial',
             'clientes' => ['felippe', 'rhuanna', 'dayane']
         ];
 
