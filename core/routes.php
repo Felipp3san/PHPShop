@@ -4,7 +4,6 @@
 $routes = [
     'inicio' => 'main@index',
     'loja' => 'main@loja',
-    'carrinho' => 'loja@carrinho'
 ];
 
 // ação Default
