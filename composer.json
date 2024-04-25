@@ -1,0 +1,17 @@
+{
+    "name": "felippesantana/php-shop",
+    "description": "Loja online em PHP",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Felippe Santana",
+            "email": "f-elipp-3@hotmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "core\\": "core/"
+        }
+    }
+}
