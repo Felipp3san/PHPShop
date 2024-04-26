@@ -795,7 +795,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap util/component-functions.js
+   * Bootstrap util/component-Store.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */

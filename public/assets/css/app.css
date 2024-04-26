@@ -1,1 +1,22 @@
 /* folha de estilo principal */
+
+* {
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    margin: 0 !important;
+ }
+
+.navegacao {
+    background-color: rgb(154, 171, 194);
+    color: black;
+}
+
+.rodape {
+    background-color: rgb(32, 30, 67);
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

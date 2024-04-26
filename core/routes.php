@@ -2,12 +2,15 @@
 
 // coleção de rotas
 $routes = [
-    'inicio' => 'main@index',
-    'loja' => 'main@loja',
+    'index' => 'main@index',
+    'store' => 'main@store',
+    'cart' => 'main@cart',
+    'login' => 'main@login',
+    'logout' => 'main@logout',
 ];
 
 // ação Default
-$action = 'inicio';
+$action = 'index';
 
 /* verificar se existe ação na query string
 ou seja, http://phpshop.test/public/index.php?a=carrinho  
@@ -16,7 +19,7 @@ if(isset($_GET['a']))
 {
     if (!key_exists($_GET['a'], $routes)) 
     {
-        $action = 'inicio';
+        $action = 'index';
     }
     else
     {

@@ -1,26 +1,35 @@
 <?php
 
 namespace core\controllers;
-use core\classes\Functions;
+use core\classes\Store;
 
-class Main
-{
+class Main {
     public function index()
     {
-        $data = [
-            'titulo' => 'Página inicial',
-            'clientes' => ['felippe', 'rhuanna', 'dayane']
-        ];
+        $clientes = ['felippe', 'rhuanna', 'dayane'];
 
-        Functions::Layout([
-            'Shared/html_header',
-            'Main/index',
-            'Shared/html_footer',
-        ], $data);
+        Store::Layout('Main/index', $clientes);
     }
 
-    public function loja()
+    public function store()
     {
-        echo "LOJA";
+        Store::Layout('Main/store');
+    }
+
+    public function cart()
+    {
+        Store::Layout('Main/cart');
+    }
+
+    public function login()
+    {
+        $_SESSION['cliente'] = "Felippe";
+        Store::Layout('Main/index');
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['cliente']);
+        Store::Layout('Main/index');
     }
 }
