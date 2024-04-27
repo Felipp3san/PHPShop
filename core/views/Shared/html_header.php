@@ -1,4 +1,5 @@
 <?php
+
 use core\classes\Store;
 ?>
 
@@ -15,31 +16,28 @@ use core\classes\Store;
 </head>
 
 <body>
-    <div class="container-fluid navegacao">
-        <div class="row">
-            <div class="col-6 d-flex gap-4 p-3">
-                <a href="?a=index">
-                    <h3><?= APP_NAME ?></h3>
-                </a>
-                <div class="fs-4 d-flex gap-3">
-                    <a href="?a=index">Inicio</a>
-                    <a href="?a=store">Loja</a>
-                </div>
-            </div>
-            <div class="col-6 d-flex justify-content-end gap-4 p-3 fs-4">
+    <div class="container-fluid navegacao d-flex justify-content-between px-4 fs-4">
+        <div class="d-flex align-items-center gap-5">
+            <a class="d-flex align-items-center gap-1" href="?a=index">
+                <img src="assets/images/php.png" alt="php-logo" width="75" height="75">
+                <span>Shop</span>
+            </a>
+            <a class="link-navegacao" href="?a=index">Inicio</a>
+            <a class="link-navegacao" href="?a=store">Loja</a>
+        </div>
+        <div class="d-flex align-items-center gap-5">
+            <?php if (Store::clienteLogado()) : ?>
+                <span>Olá, <?= $_SESSION['cliente'] ?>!</span>
+                <a class="link-navegacao" href="?a=conta">Conta</a>
+                <a class="link-navegacao" href="?a=logout">Logout</a>
+            <?php else : ?>
+                <a class="link-navegacao" href="?a=login">Login</a>
+                <a class="link-navegacao" href="?a=register">Criar conta</a>
+            <?php endif ?>
 
-                <?php if (Store::clienteLogado()): ?>
-                    <span>Olá, <?= $_SESSION['cliente'] ?>!</span>
-                    <a href="?a=conta">Conta</a> 
-                    <a href="?a=logout">Logout</a>
-                <?php else : ?>
-                    <a href="?a=login">Login</a>
-                <?php endif ?>
-
-                <a href="?a=cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="badge bg-warning p-2">10</span>
-                </a>
-            </div>
+            <a href="?a=cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="badge bg-warning p-2">10</span>
+            </a>
         </div>
     </div>

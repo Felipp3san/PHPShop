@@ -1,22 +1,29 @@
 /* folha de estilo principal */
 
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 * {
     box-sizing: border-box !important;
     padding: 0 !important;
     margin: 0 !important;
- }
+    font-family: "Open Sans", sans-serif;
+}
 
 .navegacao {
-    background-color: rgb(154, 171, 194);
-    color: black;
+    background-color: black;
+    color: white;
 }
 
 .rodape {
-    background-color: rgb(32, 30, 67);
-    color: white;
+    background-color: black;
+    color: lightgray;
 }
 
 a {
     text-decoration: none;
     color: inherit;
+}
+
+.link-navegacao:hover{
+    text-decoration: underline;
 }

@@ -7,6 +7,8 @@ $routes = [
     'cart' => 'main@cart',
     'login' => 'main@login',
     'logout' => 'main@logout',
+    'register' => 'main@register',
+    'create_user' => 'main@createUser',
 ];
 
 // ação Default

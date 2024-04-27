@@ -32,7 +32,7 @@ class Database
         $this->connection = null;
     }
 
-    public function select($sql, $parametros = null)
+    public function select($sql, $parameters = null)
     {
         // Verificar se é uma instrução SELECT com regex.
         if(!preg_match("/^SELECT/i", $sql))
@@ -45,10 +45,10 @@ class Database
         $results = null;
 
         try {
-            if(!empty($parametros))
+            if(!empty($parameters))
             {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute($parametros);
+                $execute->execute($parameters);
                 $results = $execute->fetchAll(PDO::FETCH_CLASS);
             }
             else
