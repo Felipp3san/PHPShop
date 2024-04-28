@@ -38,3 +38,16 @@ ativo
 created_at
 updated_at
 deleted_at
+
+
+ALTER TABLE cliente 
+MODIFY COLUMN nome_completo VARCHAR(100) NOT NULL;
+
+ALTER TABLE cliente 
+MODIFY COLUMN morada VARCHAR(100) NOT NULL;
+
+ALTER TABLE cliente 
+MODIFY COLUMN cidade VARCHAR(50) NOT NULL;
+
+ALTER TABLE cliente 
+MODIFY COLUMN personal_url VARCHAR(50) NOT NULL;

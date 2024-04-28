@@ -10,8 +10,7 @@ class Database
 {
     private $connection;
 
-    private function openConnection()
-    {
+    private function open_connection() {
         // PHP Data Object
         // new PDO('mysql:host=localhost;dbname=php_shop;charset=utf8')
         $this->connection = new PDO(
@@ -27,155 +26,151 @@ class Database
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
-    private function closeConnection()
-    {
+    private function close_connection() {
         $this->connection = null;
     }
 
-    public function select($sql, $parameters = null)
-    {
+    public function select($sql, $params = null) {
+
+        $sql = trim($sql);
+
         // Verificar se é uma instrução SELECT com regex.
-        if(!preg_match("/^SELECT/i", $sql))
-        {
+        if(!preg_match("/^SELECT/i", $sql)) {
             throw new Exception('(Database) Não é uma instrução SELECT.');
         }
 
-        $this->openConnection();
-
         $results = null;
-
+        
         try {
-            if(!empty($parameters))
-            {
+            $this->open_connection();
+
+            if(!empty($params)) {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute($parameters);
+                $execute->execute($params);
                 $results = $execute->fetchAll(PDO::FETCH_CLASS);
             }
-            else
-            {
+            else {
                 $execute = $this->connection->prepare($sql);
                 $execute->execute();
                 $results = $execute->fetchAll(PDO::FETCH_CLASS);
             }
         } catch (PDOException $e) {
            return false; 
+        } finally {
+            $this->close_connection();
         }
-        
-        $this->closeConnection();
 
         return $results;
     }
     
-    public function insert($sql, $parametros = null)
-    {
+    public function insert($sql, $params = null) {
+
+        $sql = trim($sql);
+        
         // Verificar se é uma instrução SELECT com regex.
         if(!preg_match("/^INSERT/i", $sql)) {
             throw new Exception('(Database) Não é uma instrução INSERT.');
         }
 
-        $this->openConnection();
-
         try {
-            if(!empty($parametros))
-            {
+            $this->open_connection();
+
+            if(!empty($params)) {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute($parametros);
+                $execute->execute($params);
             }
-            else
-            {
+            else {
                 $execute = $this->connection->prepare($sql);
                 $execute->execute();
             }
         } catch (PDOException $e) {
-           return false; 
+            return false; 
+        } finally {
+            $this->close_connection();
         }
-        
-        $this->closeConnection();
     }
 
-    public function update($sql, $parametros = null)
-    {
+    public function update($sql, $params = null) {
+
+        $sql = trim($sql);
+        
         // Verificar se é uma instrução SELECT com regex.
-        if(!preg_match("/^UPDATE/i", $sql))
-        {
+        if(!preg_match("/^UPDATE/i", $sql)) {
             throw new Exception('(Database) Não é uma instrução UPDATE.');
         }
 
-        $this->openConnection();
-
         try {
-            if(!empty($parametros))
-            {
+            $this->open_connection();
+
+            if(!empty($params)) {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute($parametros);
+                $execute->execute($params);
             }
-            else
-            {
+            else {
                 $execute = $this->connection->prepare($sql);
                 $execute->execute();
             }
         } catch (PDOException $e) {
            return false; 
+        } finally {
+            $this->close_connection();
         }
         
-        $this->closeConnection();
     }
 
-    public function delete($sql, $parametros = null)
-    {
+    public function delete($sql, $params = null) {
+
+        $sql = trim($sql);
+
         // Verificar se é uma instrução SELECT com regex.
-        if(!preg_match("/^DELETE/i", $sql))
-        {
+        if(!preg_match("/^DELETE/i", $sql)) {
             throw new Exception('(Database) Não é uma instrução DELETE.');
         }
 
-        $this->openConnection();
-
         try {
-            if(!empty($parametros))
-            {
+            $this->open_connection();
+
+            if(!empty($params)) {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute($parametros);
+                $execute->execute($params);
             }
-            else
-            {
+            else {
                 $execute = $this->connection->prepare($sql);
                 $execute->execute();
             }
         } catch (PDOException $e) {
-           return false; 
+            return false; 
+        } finally {
+            $this->close_connection();
         }
-        
-        $this->closeConnection();
     }
 
     // GENERICO
-    public function statement($sql, $parametros = null)
-    {
+    public function statement($sql, $params = null) {
+
+        $sql = trim($sql);
+
         // Verificar se é uma instrução SELECT com regex.
-        if(preg_match("/^(SELECT|INSERT|UPDATE|DELETE)/i", $sql))
-        {
+        if(preg_match("/^(SELECT|INSERT|UPDATE|DELETE)/i", $sql)) {
             throw new Exception('(Database) Instrução inválida.');
         }
 
-        $this->openConnection();
-
         try {
-            if(!empty($parametros))
-            {
+            $this->open_connection();
+
+            if(!empty($params)) {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute($parametros);
+                $execute->execute($params);
             }
-            else
-            {
+            else {
                 $execute = $this->connection->prepare($sql);
                 $execute->execute();
             }
         } catch (PDOException $e) {
-           return false; 
+            return false; 
+        } finally {
+            $this->close_connection();
         }
-        
-        $this->closeConnection();
     }
     
 }

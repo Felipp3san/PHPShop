@@ -26,7 +26,7 @@ use core\classes\Store;
             <a class="link-navegacao" href="?a=store">Loja</a>
         </div>
         <div class="d-flex align-items-center gap-5">
-            <?php if (Store::clienteLogado()) : ?>
+            <?php if (Store::is_client_logged()) : ?>
                 <span>Olá, <?= $_SESSION['cliente'] ?>!</span>
                 <a class="link-navegacao" href="?a=conta">Conta</a>
                 <a class="link-navegacao" href="?a=logout">Logout</a>

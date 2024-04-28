@@ -8,7 +8,8 @@ $routes = [
     'login' => 'main@login',
     'logout' => 'main@logout',
     'register' => 'main@register',
-    'create_user' => 'main@createUser',
+    'create_user' => 'main@create_user',
+    'confirm_email' => 'main@confirm_email',
 ];
 
 // ação Default
