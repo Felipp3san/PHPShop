@@ -4,7 +4,7 @@ namespace core\models;
 
 use core\classes\Database;
 
-class User {
+class Customer {
 
     public function is_email_in_use($email) {
         $db = new Database();
@@ -20,6 +20,38 @@ class User {
         if($results) {
             return true;
         } else {
+            return false;
+        }
+    }
+
+    public function validate_email($purl) {
+        $db = new Database();
+
+        $params = [
+            ':purl' => $purl
+        ];
+
+        $results = $db->select("
+            SELECT * FROM cliente WHERE personal_url = :purl",
+            $params);
+
+        if ($results != false && count($results) == 1) {
+
+            $id_cliente = $results[0]->id;
+
+            $params = [
+                ':id' => $id_cliente
+            ];
+
+            // Remover o personal_url e mudar status de ativo.
+            $db->update("
+                UPDATE cliente SET personal_url='', ativo=1 
+                WHERE id = :id
+            ", $params);
+
+            return true;
+        }
+        else {
             return false;
         }
     }

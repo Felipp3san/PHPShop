@@ -62,4 +62,14 @@ class Store
         // Converte array em string e retornar
         return implode("", $hash);
     }
+
+    public static function redirect($rota = '')
+    {
+        if(empty($rota)) {
+            header("Location: " . APP_BASEURL);
+        } 
+        else {
+            header("Location: " . APP_BASEURL . "?a={$rota}");
+        }
+    }
 }

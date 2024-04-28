@@ -2,8 +2,10 @@
 
 namespace core\controllers;
 
+use core\classes\Database;
+use core\classes\Email;
 use core\classes\Store;
-use core\models\User;
+use core\models\Customer;
 
 class Main {
     public function index()
@@ -23,8 +25,12 @@ class Main {
 
     public function login()
     {
-        $_SESSION['cliente'] = "Felippe";
-        $this->index();
+        if (Store::is_client_logged()) {
+            $this->index();
+            return;
+        }
+
+        Store::layout('Main/login');
     }
 
     public function logout()
@@ -46,10 +52,7 @@ class Main {
 
     public function create_user() {
 
-        /* 
-        Caso seja enviado um formulário, tentar adicionar novo cliente a base de dados
-        Do contrário, redireciona para página de registo. 
-        */
+        // Verificar se foi enviado um formulário de registo 'POST'
         if ($_SERVER['REQUEST_METHOD'] != 'POST') { 
             $this->register();
             return;
@@ -63,9 +66,9 @@ class Main {
         }
         
         // Verificar se email já existe na database.
-        $user = new User();
+        $customer = new Customer();
 
-        if($user->is_email_in_use($_POST['email'])) {
+        if($customer->is_email_in_use($_POST['email'])) {
             $_SESSION['error'] = "Email informado já está em uso.";
             $this->register();
             return;
@@ -74,16 +77,62 @@ class Main {
         // Criar o personal_url(para validação de conta por email).
         $purl = Store::create_hash();
         
-        // Inserir novo registo na tabela cliente.
-        if($user->create_user($purl)) {
+        // Tenta inserir novo utilizar na base de dados. 
+        if(!$customer->create_user($purl)) {
             $_SESSION['error'] = "Falha ao criar nova conta de utilizador.";
             $this->register();
             return;
         }
 
         // Enviar email com o personalURL para email do cliente.
-        // Apresentar um mensagem indicando que deve validar email.
-        $confirmation_link = "http://phpshop.test/public/index.php?a=confirmar_email&purl=$purl";
+        $email = new Email();
+        $customer_email = strtolower(trim($_POST['email']));
+        $customer_name = strtolower(trim($_POST['full-name']));
+
+        $result = $email->send_verification_email($customer_email ,$customer_name, $purl);
+         
+        if ($result) {
+            // // Apresentar um mensagem indicando que deve validar email.
+            Store::layout('Main/account_created');
+        }
+        else {
+            $_SESSION['error'] = "Falha ao enviar email de confirmação. Por favor, tente novamente.";
+            $this->register();
+            return;
+        }
+    }
+
+    public function confirm_email() {
+
+        // Verifica se já existe sessão aberta
+        if (Store::is_client_logged()) {
+            $this->index();
+            return;
+        }
+
+        // Verificar se existe um purl na query string
+        if (!isset($_GET['purl'])) {
+            $this->index();
+            return;
+        }
+
+        // Verificar se o purl é válido
+        $purl = $_GET['purl'];
+
+        if (strlen($purl) != 12) {
+            $this->index();
+            return;
+        }
+
+        $customer = new Customer();
+        $result = $customer->validate_email($purl);
+        
+        if($result) {
+            Store::layout('Main/confirm_email');
+        }
+        else {
+            Store::redirect();
+        }        
     }
 }
 

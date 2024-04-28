@@ -88,6 +88,8 @@ class Database
         } finally {
             $this->close_connection();
         }
+
+        return true;
     }
 
     public function update($sql, $params = null) {
@@ -115,7 +117,8 @@ class Database
         } finally {
             $this->close_connection();
         }
-        
+
+        return true;
     }
 
     public function delete($sql, $params = null) {
@@ -143,6 +146,8 @@ class Database
         } finally {
             $this->close_connection();
         }
+
+        return true;
     }
 
     // GENERICO
@@ -171,6 +176,8 @@ class Database
         } finally {
             $this->close_connection();
         }
+
+        return true;
     }
     
 }

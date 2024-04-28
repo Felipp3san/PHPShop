@@ -10,6 +10,7 @@ $routes = [
     'register' => 'main@register',
     'create_user' => 'main@create_user',
     'confirm_email' => 'main@confirm_email',
+    'login' => 'main@login',
 ];
 
 // ação Default
