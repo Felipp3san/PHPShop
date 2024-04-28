@@ -24,7 +24,7 @@
                     </div>
                     <div>
                         <label class="form-label" for="email">Email</label>
-                        <input class="form-control p-2" type="text" id="email" name="email" required />
+                        <input class="form-control p-2" type="email" id="email" name="email" required />
                     </div>
                     <div>
                         <label class="form-label" for="password">Senha</label>

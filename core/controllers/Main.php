@@ -2,7 +2,6 @@
 
 namespace core\controllers;
 
-use core\classes\Database;
 use core\classes\Email;
 use core\classes\Store;
 use core\models\Customer;
@@ -26,24 +25,41 @@ class Main {
     public function login()
     {
         if (Store::is_client_logged()) {
-            $this->index();
+            Store::redirect();
             return;
         }
 
-        Store::layout('Main/login');
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+            /*
+            validar se os campos foram preenchidos corretamente
+            pedir informações a base de dados
+            criar sessao de cliente
+            */
+            if (!isset($_POST['email']) ||
+                !isset($_POST['password']) ||
+                !filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL)) {
+
+                $_SESSION['error'] = "Os dados foram preenchidos incorretamente.";
+                Store::redirect('login');
+            }
+        }
+        else {
+            //$_SESSION['error'] = "Senha incorreta.";
+            Store::layout('Main/login');
+        }
     }
 
     public function logout()
     {
         unset($_SESSION['cliente']);
-        $this->index();
+        Store::redirect();
     }
 
     public function register()
     {
         // Verifica se já existe sessão aberta
         if (Store::is_client_logged()) {
-            $this->index();
+            Store::redirect();
             return;
         }
 
