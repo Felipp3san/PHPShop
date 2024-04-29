@@ -1,22 +1,22 @@
-<div class="container mx-auto">
+<div class="container-fluid">
     <div class="row my-5">
         <div class="col-12">
-            <h3 class="text-center">Registo de novo cliente</h3>
+            <h3 class="text-center">REGISTO</h3>
         </div>
     </div>
     <div class="row">
-        <div class="col-6 mx-auto">
+        <div class="col-3 mx-auto">
             <?php if (isset($_SESSION['error'])): ?>
-                <div class="alert alert-danger p-3 mb-3" role="alert">
+                <div class="alert alert-danger mb-3 py-3 text-center" role="alert">
                     <?= $_SESSION['error'] ?>
                 </div>
+                <?php unset($_SESSION['error']);?>
             <?php endif ?>
-            <?php unset($_SESSION['error']);?>
         </div>
     </div>
     <div class="row">
-        <div class="col-6 mx-auto">
-            <form action="?a=create_user" method="POST">
+        <div class="col-3 mx-auto">
+            <form action="?a=register" method="POST">
                 <div class="d-flex flex-column gap-3">
                     <div>
                         <label class="form-label" for="full-name">Nome completo</label>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="d-flex gap-2 mx-auto">
                         <button class="btn btn-primary btn-lg px-4 py-2" type="submit">Registar</button>
-                        <a class="btn btn-secondary btn-lg px-4 py-2" href="?a=index">Retornar</a>
+                        <a class="btn btn-secondary btn-lg px-4 py-2" href="?a=<?= $_SESSION['previous-action']?>">Retornar</a>
                     </div>
                 </div>
             </form>

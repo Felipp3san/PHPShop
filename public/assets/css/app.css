@@ -9,6 +9,10 @@
     font-family: "Open Sans", sans-serif;
 }
 
+body {
+    min-height: 100vh;
+}
+
 .navegacao {
     background-color: black;
     color: white;

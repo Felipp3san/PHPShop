@@ -15,7 +15,7 @@ use core\classes\Store;
     <title><?= $titulo ?></title>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <div class="container-fluid navegacao d-flex justify-content-between px-4 fs-4">
         <div class="d-flex align-items-center gap-5">
             <a class="d-flex align-items-center gap-1" href="?a=index">
