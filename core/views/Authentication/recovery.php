@@ -7,13 +7,13 @@
     <div class="row">
         <div class="col-3 mx-auto">
             <?php if (isset($_SESSION['error'])): ?>
-                <div class="alert alert-danger mb-3 py-3 text-center" role="alert">
+                <div class="alert alert-danger mb-3 p-3 text-center" role="alert">
                     <?= $_SESSION['error'] ?>
                 </div>
                 <?php unset($_SESSION['error']);?>
             <?php endif ?>
             <?php if (isset($_SESSION['success'])): ?>
-                <div class="alert alert-success mb-3 py-3 text-center" role="alert">
+                <div class="alert alert-success mb-3 p-3 text-center" role="alert">
                     <?= $_SESSION['success'] ?>
                 </div>
             <?php endif ?>

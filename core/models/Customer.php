@@ -80,6 +80,38 @@ class Customer {
             return false;
         }
     }
+    
+    public function validate_login($email, $password) {
+
+        $db = new Database();
+
+        $params = [ 
+            ':email' => strtolower(trim($email)),
+        ];
+
+        $results = $db->select("
+            SELECT * FROM cliente
+            WHERE email = :email
+            AND ativo = 1 AND deleted_at IS NULL",
+        $params);
+
+        // Email não possui conta
+        if(!$results) {
+            return false;
+        }
+        else {
+
+            $customer_account = $results[0];
+
+            // Senha inválida
+            if(!password_verify($password, $customer_account->senha)) {
+                return false;
+            }
+
+            // Login bem-sucedido
+            return $customer_account;
+        }
+    }
 
     public function create_user($purl) {
         $db = new Database();
@@ -100,41 +132,6 @@ class Customer {
             $params);
 
         return $result;
-    }
-
-    public function login_verification() {
-
-        $db = new Database();
-
-        $params = [ 
-            ':email' => strtolower(trim($_POST['email'])),
-        ];
-
-        $results = $db->select("
-            SELECT * FROM cliente
-            WHERE email= :email",
-        $params);
-
-        // verifica se utilizador existe.
-        if(!$results) {
-            $_SESSION['error'] = "Utilizador não registado.";
-            return false;
-        }
-        // verifica se utilizador está ativo
-        if ($results[0]->ativo != 1){
-            $_SESSION['error'] = "Verifique seu email antes de aceder a conta.";
-            return false;
-        }
-
-        // verifica se a senha está correta
-        if (!password_verify($_POST['password'], $results[0]->senha)) {
-            $_SESSION['error'] = "A senha está incorreta.";
-            return false;
-        }
-
-        $_SESSION['cliente'] = ucfirst(explode(" ", $results[0]->nome_completo)[0]);
-
-        return true;
     }
 
     public function associate_purl($email, $purl) {

@@ -9,19 +9,19 @@ use core\models\Customer;
 class AuthenticationController {
 
     public function login() {
+
         // Mantem a persistência da ultima página visitada
         $_SESSION['previous-action'] = "login";
 
+        // Verifica se há sessão aberta
         if (Store::is_client_logged()) {
             Store::redirect();
         }
 
+        // POST('/?a=login/')
         if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
-            /*
-            validar se os campos foram preenchidos corretamente
-            pedir informações a base de dados
-            criar sessao de cliente
-            */
+
+            // Valida se os campos foram preenchidos corretamente
             if (!isset($_POST['email']) ||
                 !isset($_POST['password']) ||
                 !filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL)) {
@@ -31,24 +31,45 @@ class AuthenticationController {
                 return;
             }
 
-            $customer = new Customer();
+            $email = $_POST['email'];
+            $password = $_POST['password'];
 
-            if(!$customer->login_verification()) {
-                Store::redirect('login');
+            $customer = new Customer();
+            $customer_account = $customer->validate_login($email, $password);
+
+            // verificar se email informado possui cadastro.
+            if(!$customer_account) {
+                $_SESSION['error'] = "Login inválido. Verifique seu e-mail e senha.";
+                store::redirect('login');
                 return;
             }
+            // login bem-sucedido
             else {
-                Store::redirect();
+                // Extrai o primeiro nome do nome completo
+                $full_name = explode(" ", $customer_account->nome_completo);
+                $first_name = ucfirst($full_name[0]);
+
+                // Define as variáveis de sessão cliente
+                $_SESSION['customer_id'] = $customer_account->id;
+                $_SESSION['customer_email'] = $customer_account->email;
+                $_SESSION['customer_name'] = $first_name;
+
+                store::redirect();
                 return;
-            };
+            }
         }
+        // GET('/?a=login/')
         else {
             Store::layout('Authentication/login');
         }
     }
 
     public function logout() {
-        unset($_SESSION['cliente']);
+        unset($_SESSION['admin_id']);
+        unset($_SESSION['admin_password']);
+        unset($_SESSION['customer_id']);
+        unset($_SESSION['customer_email']);
+        unset($_SESSION['customer_name']);
         Store::redirect();
     }
 

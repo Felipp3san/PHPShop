@@ -3,10 +3,16 @@
 // coleção de rotas
 
 $routes = [
+    // Admin
+    'admin' => 'AdminController@staff_login',
+    'management_panel' => 'AdminController@management_panel',
+    'add_products' => 'AdminController@add_products',
+
     // Main
     'index' => 'MainController@index',
-    'store' => 'MainController@store',
-    'cart' => 'MainController@cart',
+
+    // Cart
+    'cart' => 'CartController@cart',
 
     // Authentication
     'login' => 'AuthenticationController@login',
@@ -15,6 +21,9 @@ $routes = [
     'confirm_email' => 'AuthenticationController@confirm_email',
     'forgot_password' => 'AuthenticationController@forgot_password',
     'recovery' => 'AuthenticationController@recovery',
+
+    // Products
+    'products' => 'ProductController@products',
 ];
 
 // ação Default

@@ -3,31 +3,80 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 * {
-    box-sizing: border-box !important;
-    padding: 0 !important;
-    margin: 0 !important;
     font-family: "Open Sans", sans-serif;
+    font-size: 20px;
 }
 
 body {
     min-height: 100vh;
+    background-color: rgb(246,246,246);
 }
 
-.navegacao {
-    background-color: black;
-    color: white;
+.container-background {
+    background-color: rgb(255,255,255);
 }
 
-.rodape {
-    background-color: black;
-    color: lightgray;
+.badge {
+    background-color: orange;
 }
 
-a {
+.navigation-link {
     text-decoration: none;
     color: inherit;
 }
 
-.link-navegacao:hover{
-    text-decoration: underline;
+/* Customize styles here */
+.jumbotron {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+    margin-bottom: 0;
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Produtos */
+.product-card {
+    background-color: rgb(255,255,255);
+    margin-bottom: 20px;
+    text-overflow: ellipsis;
+}
+
+.product-image {
+    padding: 20px;
+    transition-duration: 0.2s;
+}
+
+.product-image:hover{
+    padding: 10px;
+    cursor: pointer;
+}
+
+.product-name {
+    overflow: hidden;
+    min-height: calc(1.2em * 2); /* 2 lines with a line height of 1.2em */
+    line-height: 1.2em; /* Adjust line height according to your design */
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Number of lines before the ellipsis */
+}
+
+.product-description {
+    overflow: hidden;
+    min-height: calc(1.2em * 3); /* 2 lines with a line height of 1.2em */
+    line-height: 1.2em; /* Adjust line height according to your design */
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* Number of lines before the ellipsis */
+}
+
+.product-text {
+    padding: 20px;
 }

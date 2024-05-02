@@ -1,61 +1,81 @@
-<div class="container-fluid">
-    <div class="row my-5">
-        <div class="col-12">
-            <h3 class="text-center">REGISTO</h3>
+<div class="col-6 p-5 my-5 mx-auto container-background">
+    <h3 class="text-center mb-4">Registo</h3>
+    <?php if (isset($_SESSION['error'])) : ?>
+        <div class="alert alert-danger mb-3 p-3 text-center" role="alert">
+            <?= $_SESSION['error'] ?>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-3 mx-auto">
-            <?php if (isset($_SESSION['error'])): ?>
-                <div class="alert alert-danger mb-3 py-3 text-center" role="alert">
-                    <?= $_SESSION['error'] ?>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif ?>
+    <form action="?a=register" method="POST">
+        <div class="d-flex flex-column gap-3">
+            <div class="row align-items-center d-flex justify-content-between">
+                <div class="col-auto">
+                    <label for="full-name" class="col-form-label">Nome</label>
                 </div>
-                <?php unset($_SESSION['error']);?>
-            <?php endif ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-3 mx-auto">
-            <form action="?a=register" method="POST">
-                <div class="d-flex flex-column gap-3">
-                    <div>
-                        <label class="form-label" for="full-name">Nome completo</label>
-                        <input class="form-control p-2" type="text" id="full-name" name="full-name" required />
-                    </div>
-                    <div>
-                        <label class="form-label" for="email">Email</label>
-                        <input class="form-control p-2" type="email" id="email" name="email" required />
-                    </div>
-                    <div>
-                        <label class="form-label" for="password">Senha</label>
-                        <input class="form-control p-2" type="password" id="password" name="password" required />
-                    </div>
-                    <div>
-                        <label class="form-label" for="confirm-password">Confirmar Senha</label>
-                        <input class="form-control p-2" type="password" id="confirm-password" name="confirm-password" required />
-                    </div>
-                    <div>
-                        <label class="form-label" for="address">Morada</label>
-                        <input class="form-control p-2" type="text" id="address" name="address" required />
-                    </div>
-                    <div>
-                        <label class="form-label" for="city">Cidade</label>
-                        <input class="form-control p-2" type="text" id="city" name="city" required />
-                    </div>
-                    <div>
-                        <label class="form-label" for="phone">Telefone</label>
-                        <input class="form-control p-2" type="text" id="phone" name="phone" />
-                    </div>
-                    <div class="d-flex gap-2 mx-auto">
-                        <button class="btn btn-primary btn-lg px-4 py-2" type="submit">Registar</button>
-                        <a class="btn btn-secondary btn-lg px-4 py-2" href="?a=<?= $_SESSION['previous-action']?>">Retornar</a>
-                    </div>
+                <div class="col-8">
+                    <input type="text" id="full-name" name="full-name" class="form-control rounded-0" required>
                 </div>
-            </form>
+            </div>
+            <div class="row align-items-center d-flex justify-content-between">
+                <div class="col-auto">
+                    <label for="email" class="col-form-label">Email</label>
+                </div>
+                <div class="col-8">
+                    <input type="email" id="email" name="email" class="form-control rounded-0" required>
+                </div>
+            </div>
+            <div class="row align-items-center d-flex justify-content-between">
+                <div class="col-auto">
+                    <label for="password" class="col-form-label">Senha</label>
+                </div>
+                <div class="col-8">
+                    <input type="password" id="password" name="password" class="form-control rounded-0" required>
+                </div>
+            </div>
+            <div class="row align-items-center d-flex justify-content-between">
+                <div class="col-auto">
+                    <label for="confirm-password" class="col-form-label">Confirmar senha</label>
+                </div>
+                <div class="col-8">
+                    <input type="password" id="confirm-password" name="confirm-password" class="form-control rounded-0" aria-describedby="passwordHelpInline" required>
+                </div>
+            </div>
+            <div class="row align-items-start d-flex justify-content-between">
+                <span id="passwordHelpInline" class="form-text text-end">
+                    A senha deve possuir entre 8 e 20 caracteres.
+                </span>
+            </div>
+            <div class="row align-items-center d-flex justify-content-between">
+                <div class="col-auto">
+                    <label for="address" class="col-form-label">Morada</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" id="address" name="address" class="form-control rounded-0" required>
+                </div>
+            </div>
+            <div class="row align-items-center d-flex justify-content-between">
+                <div class="col-auto">
+                    <label for="city" class="col-form-label">Cidade</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" id="city" name="city" class="form-control rounded-0" required>
+                </div>
+            </div>
+            <div class="row align-items-center d-flex justify-content-between">
+                <div class="col-auto">
+                    <label for="phone" class="col-form-label">Telefone</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" id="phone" name="phone" class="form-control rounded-0" >
+                </div>
+            </div>
+            <div class="d-flex gap-2 mx-auto mt-3">
+                <button class="btn btn-primary rounded-0 btn-lg px-4 py-2" type="submit">Registar</button>
+                <a class="btn btn-secondary rounded-0 btn-lg px-4 py-2" href="?a=<?= $_SESSION['previous-action'] ?>">Retornar</a>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
-
 
 <!--
 ( * obrigatórios)

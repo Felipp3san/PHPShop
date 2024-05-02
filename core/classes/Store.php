@@ -35,8 +35,13 @@ class Store
     }
 
     public static function is_client_logged(){
-        // Verifica se existe um cliente com sessão
-        return (isset($_SESSION['cliente']));
+        // Verifica se existe um cliente na sessão
+        return (isset($_SESSION['admin_id']) || isset($_SESSION['customer_id']));
+    }
+
+    public static function is_admin_logged(){
+        // Verifica se existe um admin na sessão
+        return (isset($_SESSION['admin_id']));
     }
 
     public static function create_hash($num_characters = 12){
@@ -63,8 +68,7 @@ class Store
         return implode("", $hash);
     }
 
-    public static function redirect($rota = '')
-    {
+    public static function redirect($rota = '') {
         if(empty($rota)) {
             header("Location: " . APP_BASEURL);
         } 
