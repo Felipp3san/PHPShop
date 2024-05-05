@@ -52,15 +52,25 @@ body {
     padding: 80px 0;
     margin-bottom: 0;
 }
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-}
+.feature {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .feature img {
+    max-width: 100%;
+    height: auto;
+  }
+  .feature h3 {
+    margin-top: 20px;
+  }
 
+  .news {
+    background-color: #f8f9fa;
+    padding: 50px 20px;
+  }
+  .news h2 {
+    margin-bottom: 30px;
+  }
 /* Produtos */
 .product-card {
     background-color: rgb(255,255,255);

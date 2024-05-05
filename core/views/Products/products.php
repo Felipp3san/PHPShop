@@ -1,3 +1,7 @@
+<?php
+use core\models\Favorite;
+?>
+
 <div class="container-fluid">
     <h3 class="mb-4"><?= $category_name ?></h3>
     <div class="row">
@@ -66,7 +70,32 @@
                                         </div>
                                     <?php endif ?>
                                     <!-- PREÇO -->
-                                    <p class="product-price fs-4 fw-bold mb-0"><?= $produto->preco ?> €</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <p class="product-price fs-4 fw-bold mb-0"><?= $produto->preco ?> €</p>
+
+                                        <?php if(isset($_SESSION['customer_id'])):?>
+
+                                            <?php if(Favorite::verify_favorite($_SESSION['customer_id'], $produto->id)):?>
+                                                <form action="?a=remove_favorite" method="POST">
+                                                    <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
+                                                    <input type="hidden" name="favorite-customer-id" value="<?= $_SESSION['customer_id'] ?>">
+                                                    <input type="hidden" name="favorite-item-id" value="<?= $produto->id ?>">
+                                                    <button class="btn btn-link p-0" type="submit">
+                                                        <i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>
+                                                    </button>
+                                                </form>
+                                            <?php else:?>
+                                                <form action="?a=add_favorite" method="POST">
+                                                    <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
+                                                    <input type="hidden" name="favorite-customer-id" value="<?= $_SESSION['customer_id'] ?>">
+                                                    <input type="hidden" name="favorite-item-id" value="<?= $produto->id ?>">
+                                                    <button class="btn btn-link p-0" type="submit">
+                                                        <i class="fa-regular fa-heart fa-xl" style="color: #ff0000;"></i>
+                                                    </button>
+                                                </form>
+                                            <?php endif ?>
+                                        <?php endif ?>
+                                    </div>
                             </div>
                             <!-- ADICIONAR CARRINHO -->
                             <div class="d-flex justify-content-center">

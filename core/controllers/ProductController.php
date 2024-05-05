@@ -3,6 +3,7 @@
 namespace core\controllers;
 
 use core\classes\Store;
+use core\models\Favorite;
 use core\models\Product;
 
 class ProductController {
@@ -52,6 +53,36 @@ class ProductController {
         }
     }
 
+    public function add_favorite() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $customer_id = $_POST['favorite-customer-id'];
+            $item_id = $_POST['favorite-item-id'];
+            $actual_url = substr($_POST['actual-url'], 4);
+
+            $favorite = new Favorite();
+
+            $favorite->add_favorite($customer_id, $item_id);
+
+            return Store::redirect($actual_url);
+        }
+    }
+
+    public function remove_favorite() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $customer_id = $_POST['favorite-customer-id'];
+            $item_id = $_POST['favorite-item-id'];
+            $actual_url = substr($_POST['actual-url'], 4);
+
+            $favorite = new Favorite();
+
+            $favorite->remove_favorite($customer_id, $item_id);
+
+            return Store::redirect($actual_url);
+        }
+    }
+
     private function get_filter_params($post_data) {
 
         $filter_params = [];
@@ -64,4 +95,5 @@ class ProductController {
     
         return $filter_params;
     }
+
 }

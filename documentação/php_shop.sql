@@ -38,10 +38,20 @@ CREATE TABLE `produto` (
   `deleted_at` datetime default null
 );
 
+CREATE TABLE `favorito` (
+  `item_id` int not null,
+  `cliente_id` int not null 
+);
+
+ALTER TABLE `favorito` ADD FOREIGN KEY (`item_id`) REFERENCES `produto` (`id`);
+ALTER TABLE `favorito` ADD FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`);
+
 CREATE TABLE `fabricante` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `nome` varchar(100) not null,
 );
+
+
 
 INSERT INTO `fabricante` (`nome`) VALUES
 ('Asus'),
