@@ -1,5 +1,5 @@
-<div class="col-4 p-5 mt-auto mx-auto container-background">
-    <h3 class="text-center">Login</h3>
+<div class="col-4 p-5 mx-auto my-auto container-background">
+    <h3 class="text-center mb-5">Login</h3>
     <?php if (isset($_SESSION['error'])) : ?>
         <div class="alert alert-danger mb-3 p-3 text-center" role="alert">
             <?= $_SESSION['error'] ?>
@@ -8,13 +8,13 @@
     <?php endif ?>
     <form action="?a=login" method="POST">
         <div class="d-flex flex-column gap-3">
-            <div>
-                <label class="form-label" for="email">Email</label>
-                <input class="form-control rounded-0 p-2" type="email" id="email" name="email" required />
+            <div class="form-floating mb-2">
+                <input type="email" class="form-control rounded-0" id="email" name="email" placeholder="name@example.com" required />
+                <label for="email">Email</label>
             </div>
-            <div>
-                <label class="form-label" for="password">Senha</label>
-                <input class="form-control rounded-0 p-2" type="password" id="password" name="password" required />
+            <div class="form-floating">
+                <input type="password" class="form-control rounded-0" id="password" name="password" placeholder="" required />
+                <label for="password">Senha</label>
             </div>
             <div class="d-flex justify-content-end">
                 <a class="btn btn-link" href="?a=forgot_password">Esqueceu a senha?</a>

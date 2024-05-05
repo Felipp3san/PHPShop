@@ -40,7 +40,7 @@ class Database
         }
 
         $results = null;
-        
+
         try {
             $this->open_connection();
 
@@ -54,6 +54,7 @@ class Database
                 $execute->execute();
                 $results = $execute->fetchAll(PDO::FETCH_CLASS);
             }
+            
         } catch (PDOException $e) {
            return false; 
         } finally {

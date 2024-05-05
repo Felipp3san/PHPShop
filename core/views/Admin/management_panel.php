@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container-fluid">
     <h3 class="text-center">Painel de administração</h3>
     <hr>
     <div class="row mt-4">

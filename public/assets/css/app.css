@@ -4,12 +4,20 @@
 
 * {
     font-family: "Open Sans", sans-serif;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 body {
     min-height: 100vh;
     background-color: rgb(246,246,246);
+}
+
+.container-width {
+    width: 85%;
+}
+
+.min-height {
+    min-height: calc(100vh - 101px - 56px);
 }
 
 .container-background {
@@ -20,12 +28,25 @@ body {
     background-color: orange;
 }
 
-.navigation-link {
-    text-decoration: none;
-    color: inherit;
+.search-bar {
+    display: flex;
+    align-items: center;
 }
 
-/* Customize styles here */
+.search-bar-icon {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.search-bar-input {
+    width: 100%;
+}
+
+#search-bar:focus {
+    box-shadow: none !important;
+}
+
+/* Pagina inicial */
 .jumbotron {
     background-color: #f8f9fa;
     padding: 80px 0;
@@ -44,7 +65,6 @@ body {
 .product-card {
     background-color: rgb(255,255,255);
     margin-bottom: 20px;
-    text-overflow: ellipsis;
 }
 
 .product-image {
@@ -77,6 +97,30 @@ body {
     -webkit-line-clamp: 3; /* Number of lines before the ellipsis */
 }
 
+.product-availability {
+    overflow: hidden;
+    min-height: calc(1.2em * 1); /* 2 lines with a line height of 1.2em */
+    line-height: 1.2em; /* Adjust line height according to your design */
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* Number of lines before the ellipsis */
+}
+
+.product-price {
+    overflow: hidden;
+    min-height: calc(1.2em * 1); /* 2 lines with a line height of 1.2em */
+    line-height: 1.2em; /* Adjust line height according to your design */
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* Number of lines before the ellipsis */
+}
+
 .product-text {
     padding: 20px;
+}
+
+.container-width {
+    width: 85%;
 }
