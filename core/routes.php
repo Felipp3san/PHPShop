@@ -6,7 +6,11 @@ $routes = [
     // Admin
     'admin' => 'AdminController@staff_login',
     'management_panel' => 'AdminController@management_panel',
+    'add_staff' => 'AdminController@add_staff',
     'add_products' => 'AdminController@add_products',
+    'add_manufacturer' => 'AdminController@add_manufacturer',
+    'visualize_manufacturers' => 'AdminController@visualize_manufacturers',
+    'visualize_staff' => 'AdminController@visualize_staff',
 
     // Main
     'index' => 'MainController@index',

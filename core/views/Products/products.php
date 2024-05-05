@@ -1,12 +1,12 @@
 <div class="container">
-    <h3 class="mt-5 mb-4"><?= $category_name ?></h1>
+    <h3 class="mt-5 mb-4"><?= $category_name ?></h3>
         <div class="row">
             <?php foreach($data as $produto): ?>
                 <div class="col-md-3">
                     <div class="product-card">
                         <!-- IMAGEM -->
                         <div class="product-image">
-                            <img src="assets/images/produtos/<?= $produto->imagem?>" class="img-fluid mb-3" alt="<? $produto->nome ?>">
+                            <img src="assets/images/produtos/<?= $category_name . '/'. $produto->imagem ?>" class="img-fluid mb-3" alt="<? $produto->nome ?>">
                         </div>
                         <!-- DESCRICAO -->
                         <div class="product-text">
@@ -30,10 +30,15 @@
                                 <?php endif ?>
                             </div>
                             <!-- DISPONILIBIDADE -->
-                            <?php if($produto->quantidade > 0): ?>
+                            <?php if($produto->quantidade > 10): ?>
                                 <div class="text-success">
                                     <i class="fa-regular fa-circle-check"></i>
                                     <span>Disponível</span>
+                                </div>
+                            <?php elseif($produto->quantidade <= 10 && $produto->quantidade > 0): ?>
+                                <div class="text-warning">
+                                    <i class="fa-regular fa-circle-check"></i>
+                                    <span>Poucas Unidades</span>
                                 </div>
                             <?php else: ?>
                                 <div class="text-danger">
@@ -43,6 +48,10 @@
                             <?php endif ?>
                             <!-- PREÇO -->
                             <p class="fs-4 fw-bold mb-0"><?= $produto->preco ?> €</p>
+                        </div>
+                        <!-- ADICIONAR CARRINHO -->
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-outline-success w-100 rounded-0" href="">Adicionar ao carrinho</a>
                         </div>
                     </div>
                 </div>

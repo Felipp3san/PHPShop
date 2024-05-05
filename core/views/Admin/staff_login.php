@@ -1,5 +1,5 @@
 <div class="col-4 p-5 mt-auto mx-auto container-background">
-    <h3 class="text-center">Admin Login</h3>
+    <h3 class="text-center">Admin</h3>
     <?php if (isset($_SESSION['error'])) : ?>
         <div class="alert alert-danger mb-3 p-3 text-center" role="alert">
             <?= $_SESSION['error'] ?>

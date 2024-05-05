@@ -15,4 +15,15 @@ class Manufacturer {
 
         return $results;
     }
+
+    public function add_manufacturer($params) {
+        $db = new Database();
+
+        $results = $db->insert("
+            INSERT INTO fabricante(nome)
+            VALUES(:nome)
+        ", $params);
+
+        return $results; 
+    }
 }
