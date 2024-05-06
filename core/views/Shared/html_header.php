@@ -39,12 +39,14 @@ use core\classes\Store;
                         </ul>
                     </div>
                     <!-- FAVORITOS -->
-                    <div class="nav-link">
-                        <a class="btn btn-link p-0 text-light text-decoration-none" href="?a=cart">
-                            <i class="fa-solid fa-heart"></i>
-                            <span>Favoritos</span>
-                        </a>
-                    </div>
+                    <?php if (Store::is_client_logged()) : ?>
+                        <div class="nav-link">
+                            <a class="btn btn-link p-0 text-light text-decoration-none" href="?a=favorites">
+                                <i class="fa-solid fa-heart"></i>
+                                <span>Favoritos</span>
+                            </a>
+                        </div>
+                    <?php endif ?>
                 </div>
                 <!-- BARRA DE PESQUISA -->
                 <div class="col-6 d-flex justify-content-between align-items-center">

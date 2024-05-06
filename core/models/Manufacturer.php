@@ -16,6 +16,23 @@ class Manufacturer {
         return $results;
     }
 
+    public function get_manufacturers_by_product_category($category_id) {
+
+        $db = new Database();
+
+        $params = [
+            ':categoria_id' => $category_id
+        ];
+
+        $results = $db->select("
+            SELECT DISTINCT fabricante.id, fabricante.nome FROM fabricante
+            INNER JOIN produto ON produto.fabricante_id = fabricante.id
+            WHERE produto.categoria_id = :categoria_id;         
+        ", $params);
+
+        return $results;
+    }
+
     public function add_manufacturer($params) {
         $db = new Database();
 

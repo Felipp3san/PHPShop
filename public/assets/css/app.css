@@ -119,12 +119,22 @@ body {
 
 .product-price {
     overflow: hidden;
-    min-height: calc(1.2em * 1); /* 2 lines with a line height of 1.2em */
+    min-height: calc(1.2em * 1); /* 1 lines with a line height of 1.2em */
     line-height: 1.2em; /* Adjust line height according to your design */
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1; /* Number of lines before the ellipsis */
+}
+
+.favorite-card-text {
+    overflow: hidden;
+    min-height: calc(1.2em * 2); /* 2 lines with a line height of 1.2em */
+    line-height: 1.2em; /* Adjust line height according to your design */
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Number of lines before the ellipsis */
 }
 
 .product-text {

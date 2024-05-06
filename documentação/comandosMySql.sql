@@ -44,3 +44,8 @@ deleted_at
 
 ALTER TABLE cliente 
 CHANGE nome nome_completo VARCHAR(100) NOT NULL;
+
+
+SELECT DISTINCT fabricante.id, fabricante.nome FROM fabricante
+INNER JOIN produto ON produto.fabricante_id = fabricante.id
+WHERE produto.categoria_id = 2; 

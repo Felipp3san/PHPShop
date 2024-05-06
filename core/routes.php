@@ -28,7 +28,10 @@ $routes = [
 
     // Products
     'products' => 'ProductController@products',
-    'add_favorite' => 'ProductController@add_favorite',
+    
+    // Favorites
+    'favorites' => 'FavoriteController@show_favorites',
+    'add_favorite' => 'FavoriteController@add_favorite',
     'remove_favorite' => 'ProductController@remove_favorite',
 ];
 
