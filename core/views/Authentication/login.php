@@ -1,6 +1,6 @@
 <div class="container-fluid my-auto">
     <div class="col-md-6 mx-auto">
-        <div class="card mb-4 shadow-sm rounded-0">
+        <div class="login card shadow-sm rounded-0">
             <div class="card-body p-5">
                 <h3 class="text-center mb-5">Login</h3>
                 <?php if (isset($_SESSION['error'])) : ?>
