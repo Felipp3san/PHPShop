@@ -13,6 +13,7 @@ use core\classes\Store;
     <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="assets/css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title><?= $titulo ?></title>
 </head>
 

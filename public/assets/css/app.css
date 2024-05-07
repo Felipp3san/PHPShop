@@ -144,3 +144,32 @@ body {
 .container-width {
     width: 85%;
 }
+
+/* LOGIN/REGISTER */
+
+#login {
+    white-space: nowrap;
+    height: 500px;
+    width: 600px;
+    overflow: hidden;
+    transition-duration: 1s;
+}
+
+#register {
+    white-space: nowrap;
+    height: 500px;
+    width: 0px;
+    overflow: hidden;
+    transition-duration: 1s;
+}
+
+.visibility-hidden {
+    opacity: 0;
+    pointer-events: none; 
+}
+
+
+/* MODAL */
+.modal-content {
+    border-radius: 0; /* Define as bordas como quadradas */
+}

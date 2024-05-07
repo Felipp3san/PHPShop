@@ -15,7 +15,7 @@ class AuthenticationController {
 
         // Verifica se há sessão aberta
         if (Store::is_client_logged()) {
-            Store::redirect();
+            return Store::redirect();
         }
 
         // POST('/?a=login/')
@@ -26,9 +26,9 @@ class AuthenticationController {
                 !isset($_POST['password']) ||
                 !filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL)) {
 
-                $_SESSION['error'] = "Os dados foram preenchidos incorretamente.";
-                Store::redirect('login');
-                return;
+                $_SESSION['error-title'] = "Login inválido";
+                $_SESSION['error'] = "Preencha os campos corretamente.";
+                return Store::redirect('login');
             }
 
             $email = $_POST['email'];
@@ -39,9 +39,10 @@ class AuthenticationController {
 
             // verificar se email informado possui cadastro.
             if(!$customer_account) {
-                $_SESSION['error'] = "Login inválido. Verifique seu e-mail e senha.";
-                store::redirect('login');
-                return;
+
+                $_SESSION['error-title'] = "Login inválido";
+                $_SESSION['error'] = "Verifique seu e-mail e senha.";
+                return Store::redirect('login');
             }
             // login bem-sucedido
             else {
@@ -54,13 +55,12 @@ class AuthenticationController {
                 $_SESSION['customer_email'] = $customer_account->email;
                 $_SESSION['customer_name'] = $first_name;
 
-                store::redirect();
-                return;
+                return Store::redirect();
             }
         }
         // GET('/?a=login/')
         else {
-            Store::layout('Authentication/login');
+            return Store::layout('Authentication/login');
         }
     }
 
@@ -77,26 +77,25 @@ class AuthenticationController {
 
         // Verifica se já existe sessão aberta
         if (Store::is_client_logged()) {
-            Store::redirect();
-            return;
+            return Store::redirect();
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
 
             // Passwords não coincidem.
             if($_POST['password'] != $_POST['confirm-password']) {
+                $_SESSION['error-title'] = "Registo inválido";
                 $_SESSION['error'] = "As senhas não coincidem.";
-                Store::redirect('register');
-                return;
+                return Store::redirect('register');
             }
 
             // Verificar se email já existe na database.
             $customer = new Customer();
         
             if($customer->is_email_in_use($_POST['email'])) {
+                $_SESSION['error-title'] = "Registo inválido";
                 $_SESSION['error'] = "Email informado já está em uso.";
-                Store::redirect('register');
-                return;
+                return Store::redirect('register');
             }
 
             // Criar o personal_url(para validação de conta por email).
@@ -104,9 +103,9 @@ class AuthenticationController {
             
             // Tenta inserir novo utilizar na base de dados. 
             if(!$customer->create_user($purl)) {
+                $_SESSION['error-title'] = "Registo inválido";
                 $_SESSION['error'] = "Falha ao criar nova conta de utilizador.";
-                Store::redirect('register');
-                return;
+                return Store::redirect('register');
             }
 
             // Enviar email com o personalURL para email do cliente.
@@ -116,17 +115,16 @@ class AuthenticationController {
 
             if ($result) {
                 // // Apresentar um mensagem indicando que deve validar email.
-                Store::layout('Authentication/account_created');
-                return;
+                return Store::layout('Authentication/account_created');
             }
             else {
+                $_SESSION['error-title'] = "Registo inválido";
                 $_SESSION['error'] = "Falha ao enviar email de confirmação. Por favor, tente novamente.";
-                Store::redirect('register');
-                return;
+                return Store::redirect('register');
             }
         }
         else {
-            Store::layout('Authentication/register');
+            Store::layout('Authentication/login');
         } 
     }
 

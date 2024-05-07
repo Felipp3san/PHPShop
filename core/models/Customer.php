@@ -120,15 +120,12 @@ class Customer {
             ':nome_completo' => strtolower(trim($_POST['full-name'])),
             ':email' => strtolower(trim($_POST['email'])),
             ':senha' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-            ':morada' => strtolower(trim($_POST['address'])),
-            ':cidade' => strtolower(trim($_POST['city'])),
-            ':telefone' => strtolower(trim($_POST['phone'])),
             ':personal_url' => $purl,
         ];
 
         $result = $db->insert("
-            INSERT INTO cliente(nome_completo, email, senha, morada, cidade, telefone, personal_url)
-            VALUES(:nome_completo, :email, :senha, :morada, :cidade, :telefone, :personal_url)", 
+            INSERT INTO cliente(nome_completo, email, senha, personal_url)
+            VALUES(:nome_completo, :email, :senha, :personal_url)", 
             $params);
 
         return $result;
