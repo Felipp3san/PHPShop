@@ -148,6 +148,22 @@ class Customer {
         return $result;
     }
 
+    public function validate_purl($purl) {
+
+        $db = new Database();
+
+        $params = [
+            ":personal_url" => $purl
+        ];
+        
+        $result = $db->select("
+            SELECT personal_url FROM cliente 
+            WHERE personal_url = :personal_url
+        ", $params);
+
+        return $result;
+    }
+
     public function change_password($purl) {
         $db = new Database();
 

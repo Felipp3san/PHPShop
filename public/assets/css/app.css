@@ -5,6 +5,7 @@
 * {
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
 body {
@@ -149,16 +150,16 @@ body {
 
 #login {
     white-space: nowrap;
-    height: 500px;
     width: 600px;
+    height: 500px;
     overflow: hidden;
     transition-duration: 1s;
 }
 
 #register {
     white-space: nowrap;
-    height: 500px;
     width: 0px;
+    height: 500px;
     overflow: hidden;
     transition-duration: 1s;
 }
@@ -168,6 +169,9 @@ body {
     pointer-events: none; 
 }
 
+#recovery {
+    width: 500px;
+}
 
 /* MODAL */
 .modal-content {
