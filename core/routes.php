@@ -17,6 +17,7 @@ $routes = [
 
     // Cart
     'cart' => 'CartController@cart',
+    'add_to_cart' => 'CartController@add_to_cart',
 
     // Authentication
     'login' => 'AuthenticationController@login',
@@ -34,7 +35,7 @@ $routes = [
     // Favorites
     'favorites' => 'FavoriteController@show_favorites',
     'add_favorite' => 'FavoriteController@add_favorite',
-    'remove_favorite' => 'ProductController@remove_favorite',
+    'remove_favorite' => 'FavoriteController@remove_favorite',
 ];
 
 // ação Default

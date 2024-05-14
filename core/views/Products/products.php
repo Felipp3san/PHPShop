@@ -3,6 +3,52 @@
 use core\models\Favorite;
 ?>
 
+<script>
+    $(document).ready(function() {
+        $("#errorModal").modal('show');
+        $("#successModal").modal('show');
+    });
+</script>
+<div>
+    <!-- ERRO -->
+    <?php if (isset($_SESSION['error'])) : ?>
+        <div id="errorModal" class="modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><?= $_SESSION['error-title'] ?></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body align-items-center d-flex">
+                        <p class="m-0"><?= $_SESSION['error'] ?>
+                        <p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php unset($_SESSION['error-title']); ?>
+        <?php unset($_SESSION['error']); ?>
+        <!-- SUCESSO -->
+    <?php elseif (isset($_SESSION['success'])) : ?>
+        <div id="successModal" class="modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><?= $_SESSION['success-title'] ?></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body align-items-center d-flex">
+                        <p class="m-0"><?= $_SESSION['success'] ?>
+                        <p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php unset($_SESSION['success-title']); ?>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif ?>
+</div>
+
 <div class="container-fluid">
     <h3 class="mb-4"><?= $category_name ?></h3>
     <div class="row">
@@ -119,9 +165,22 @@ use core\models\Favorite;
                                         </div>
                                 </div>
                                 <!-- ADICIONAR CARRINHO -->
-                                <div class="d-flex justify-content-center">
-                                    <a class="btn btn-outline-success w-100 mx-2 mb-2 rounded-0" href="">Adicionar ao carrinho</a>
-                                </div>
+                                <form action="?a=add_to_cart" method="POST">
+                                    <div class="d-flex justify-content-center">
+                                        <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
+                                        <input type="hidden" name="item-id" value="<?= $product->id ?>">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <input type="hidden" name="item-price" value="<?= $product->preco ?>">
+
+                                        <?php if (isset($_SESSION['customer_id'])) : ?>
+                                            <input type="hidden" name="customer-id" value="<?= $_SESSION['customer_id'] ?>">
+                                        <?php else : ?>
+                                            <input type="hidden" name="session-id" value="<?= session_id() ?>">
+                                        <?php endif ?>
+
+                                        <button class="btn btn-outline-success w-100 mx-2 mb-2 rounded-0" type="submit">Adicionar ao carrinho</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     <?php endforeach ?>

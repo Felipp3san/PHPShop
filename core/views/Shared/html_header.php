@@ -2,6 +2,8 @@
 
 use core\models\Category;
 use core\classes\Store;
+use core\models\Cart;
+
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +72,7 @@ use core\classes\Store;
                 </div>
                 <!-- MINHA CONTA -->
                 <div class="d-flex justify-content-between align-items-center">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav align-items-center gap-3">
                         <li class="nav-item">
                             <div class="nav-link dropdown">
                                 <button class="btn btn-link p-0 text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; background: none;">
@@ -101,12 +103,19 @@ use core\classes\Store;
                         </li>
                         <!-- CARRINHO -->
                         <?php if (!isset($_SESSION['admin_id'])) : ?>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" href="?a=cart">
-                                    <i class="fa-solid fa-cart-shopping fa-lg"></i>
-                                    <span class="badge p-1">10</span>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <!-- CONTAGEM DOS PRODUTOS NO CARRINHO -->
+                            <a href="?a=cart" class="btn btn-primary position-relative">
+                                <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    <?php if (Store::is_client_logged()) : ?>
+                                        <?= Cart::get_cart_items_count_by_customer_id($_SESSION['customer_id']) ?>
+                                    <?php else : ?>
+                                        <?= Cart::get_cart_items_count_by_session_id(session_id()) ?>
+                                    <?php endif ?>
+                                </span>
+                            </a>
+                        </li>
                         <?php endif ?>
                     </ul>
                 </div>
