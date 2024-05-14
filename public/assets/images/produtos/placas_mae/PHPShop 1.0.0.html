@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)http://phpshop.test/?a=cart -->
+<html lang="pt"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./PHPShop 1.0.0_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./PHPShop 1.0.0_files/all.min.css">
+    <link rel="stylesheet" href="./PHPShop 1.0.0_files/app.css">
+    <script src="./PHPShop 1.0.0_files/jquery.min.js"></script>
+    <title>PHPShop 1.0.0</title>
+</head>
+
+<body class="d-flex flex-column">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid container-width">
+            <div class="container-fluid d-flex justify-content-between">
+                <!-- LOGO -->
+                <div class="d-flex justify-items-between align-items-center gap-5">
+                    <a class="navbar-brand" href="http://phpshop.test/?a=index">
+                        <img src="./PHPShop 1.0.0_files/php.png" alt="php-logo" width="75" height="75">
+                        <span>Shop</span>
+                    </a>
+                    <!-- CATEGORIAS -->
+                    <div class="nav-link dropdown">
+                        <button class="btn btn-link p-0 text-light text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-bars"></i><span> Categorias</span>
+                        </button>
+                        <ul class="dropdown-menu rounded-0">
+                                                                                        <li><a class="dropdown-item" href="http://phpshop.test/?a=products&amp;category-name=Processadores&amp;id=1">Processadores</a></li>
+                                                            <li><a class="dropdown-item" href="http://phpshop.test/?a=products&amp;category-name=Placas%20de%20V%C3%ADdeo&amp;id=2">Placas de Vídeo</a></li>
+                                                            <li><a class="dropdown-item" href="http://phpshop.test/?a=products&amp;category-name=Mem%C3%B3rias%20RAM&amp;id=3">Memórias RAM</a></li>
+                                                            <li><a class="dropdown-item" href="http://phpshop.test/?a=products&amp;category-name=Placas-M%C3%A3e&amp;id=4">Placas-Mãe</a></li>
+                                                            <li><a class="dropdown-item" href="http://phpshop.test/?a=products&amp;category-name=Discos%20R%C3%ADgidos&amp;id=5">Discos Rígidos</a></li>
+                                                    </ul>
+                    </div>
+                    <!-- FAVORITOS -->
+                                            <div class="nav-link">
+                            <a class="btn btn-link p-0 text-light text-decoration-none" href="http://phpshop.test/?a=favorites">
+                                <i class="fa-solid fa-heart"></i>
+                                <span>Favoritos</span>
+                            </a>
+                        </div>
+                                    </div>
+                <!-- BARRA DE PESQUISA -->
+                <div class="col-6 d-flex justify-content-between align-items-center">
+                    <div class="col-10">
+                        <form action="http://phpshop.test/?a=cart" method="GET">
+                            <input type="hidden" name="a" value="search_products">
+                            <div class="search-bar bg-light">
+                                <div class="search-bar-icon">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                                <div class="d-flex search-bar-input">
+                                    <input type="text" id="search-bar" name="query" class="form-control rounded-0 border-0 bg-light" placeholder="Escreva aqui o que procura..." aria-label="Escreva aqui o que procura..." aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-dark border-0 rounded-0" type="submit" id="button-addon2">Pesquisar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                </div>
+                <!-- MINHA CONTA -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <ul class="navbar-nav align-items-center gap-3">
+                        <li class="nav-item">
+                            <div class="nav-link dropdown">
+                                <button class="btn btn-link p-0 text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; background: none;">
+                                    <i class="fa-solid fa-user fa-lg"></i>
+                                </button>
+                                <ul class="dropdown-menu rounded-0">
+                                                                                                                        <li><a class="dropdown-item disabled text-dark">Olá, Felippe!</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="http://phpshop.test/?a=conta">Minha conta</a></li>
+                                                                                <li><a class="dropdown-item" href="http://phpshop.test/?a=logout">Logout</a></li>
+                                                                    </ul>
+                            </div>
+                        </li>
+                        <!-- CARRINHO -->
+                                                <li class="nav-item">
+                            <!-- CONTAGEM DOS PRODUTOS NO CARRINHO -->
+                            <a href="http://phpshop.test/?a=cart" class="btn btn-primary position-relative">
+                                <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                                            11                                                                    </span>
+                            </a>
+                        </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid container-width min-height py-5 d-flex flex-column"><style>
+    #quantity {
+        width: 50px;
+    }
+
+    #decrease,
+    #increase,
+    #quantity {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 30px;
+    }
+    
+    #decrease,
+    #increase {
+        width: 40px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container-fluid">
+    <h2 class="mt-4 mb-4">Seu Carrinho</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Lista de itens no carrinho -->
+                    <h5 class="card-title">Itens no Carrinho</h5>
+                    <ul class="list-group">
+                        <!-- ITEM CARRINHO -->
+                                                                                    <li class="list-group-item ">
+                                    <div class="row d-flex justify-content-between align-items-center">
+                                        <div class="col-2">
+                                            <!-- IMAGEM -->
+                                            <img src="./PHPShop 1.0.0_files/Asus_Dual_GeForce_RTX_3060_12GB_GDDR6_OC.jpeg" class="img-thumbnail border-0" width="150" height="150" alt="&lt;? $product-&gt;nome ?&gt;">
+                                        </div>
+                                        <div class="col-4">
+                                            <!-- TITULO -->
+                                            <p>Placa Gráfica Asus Dual GeForce RTX 3060 12GB GDDR6 OC</p>
+                                        </div>
+                                        <div class="col-2">
+                                            <p class="badge text-bg-secondary border-0 fs-4">314.90 €</p>
+                                        </div>
+                                        <!-- QUANTIDADE -->
+                                        <div class="col-2 d-flex shadow-sm">
+                                            <button class="btn btn-secondary rounded-0 fs-5 p-0" id="decrease">-</button>
+                                            <input type="text" class="form-control rounded-0 fs-5 p-0" id="quantity" value="3" disabled="">
+                                            <button class="btn btn-secondary rounded-0 fs-5 p-0" id="increase">+</button>
+                                        </div>
+                                        <div class="col-2 d-grid justify-content-center">
+                                            <!-- PRECO  -->
+                                            <p class="badge text-bg-primary border-0 fs-4">314.90 €</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                                            <li class="list-group-item ">
+                                    <div class="row d-flex justify-content-between align-items-center">
+                                        <div class="col-2">
+                                            <!-- IMAGEM -->
+                                            <img src="./PHPShop 1.0.0_files/Intel_Core_i7_10700K.png" class="img-thumbnail border-0" width="150" height="150" alt="&lt;? $product-&gt;nome ?&gt;">
+                                        </div>
+                                        <div class="col-4">
+                                            <!-- TITULO -->
+                                            <p>Processador Intel Core i7-10700KF 8-Core 3.8GHz c/ Turbo 5.1GHz 16MB Skt1200</p>
+                                        </div>
+                                        <div class="col-2">
+                                            <p class="badge text-bg-secondary border-0 fs-4">399.99 €</p>
+                                        </div>
+                                        <!-- QUANTIDADE -->
+                                        <div class="col-2 d-flex shadow-sm">
+                                            <button class="btn btn-secondary rounded-0 fs-5 p-0" id="decrease">-</button>
+                                            <input type="text" class="form-control rounded-0 fs-5 p-0" id="quantity" value="8" disabled="">
+                                            <button class="btn btn-secondary rounded-0 fs-5 p-0" id="increase">+</button>
+                                        </div>
+                                        <div class="col-2 d-grid justify-content-center">
+                                            <!-- PRECO  -->
+                                            <p class="badge text-bg-primary border-0 fs-4">399.99 €</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                                                        </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Resumo do carrinho -->
+                    <h5 class="card-title">Resumo do Pedido</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Subtotal
+                            <span>R$ 100,00</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Frete
+                            <span>Grátis</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>Total</strong>
+                            <strong>R$ 100,00</strong>
+                        </li>
+                    </ul>
+                    <!-- Botões de ação -->
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-primary btn-block">Finalizar Compra</button>
+                        <button type="button" class="btn btn-secondary btn-block mt-2">Continuar Comprando</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./PHPShop 1.0.0_files/jquery(1).min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#increase').click(function() {
+            var value = parseInt($('#quantity').val());
+            $('#quantity').val(value + 1);
+        });
+
+        $('#decrease').click(function() {
+            var value = parseInt($('#quantity').val());
+            if (value > 1) {
+                $('#quantity').val(value - 1);
+            }
+        });
+    });
+</script></div>
+<footer class="footer py-3 bg-dark text-light text-center">
+  <div class="container-fluid">
+    <span>© 2024 PHPShop. Todos os direitos reservados.</span>
+  </div>
+</footer>
+<script src="./PHPShop 1.0.0_files/bootstrap.bundle.js"></script>
+<script src="./PHPShop 1.0.0_files/app.js"></script>
+
+
+</body></html>

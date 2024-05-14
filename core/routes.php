@@ -18,6 +18,7 @@ $routes = [
     // Cart
     'cart' => 'CartController@cart',
     'add_to_cart' => 'CartController@add_to_cart',
+    'remove_from_cart' => 'CartController@remove_from_cart',
 
     // Authentication
     'login' => 'AuthenticationController@login',

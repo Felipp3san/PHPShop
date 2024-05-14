@@ -178,7 +178,7 @@ use core\models\Favorite;
                                             <input type="hidden" name="session-id" value="<?= session_id() ?>">
                                         <?php endif ?>
 
-                                        <button class="btn btn-outline-success w-100 mx-2 mb-2 rounded-0" type="submit">Adicionar ao carrinho</button>
+                                        <button class="btn btn-outline-<?php if($product->quantidade <= 0) echo 'secondary'; else echo 'success'; ?> w-100 mx-2 mb-2 rounded-0" type="submit" <?php if($product->quantidade <= 0) echo 'disabled' ?>>Adicionar ao carrinho</button>
                                     </div>
                                 </form>
                             </div>

@@ -109,9 +109,9 @@ use core\models\Cart;
                                 <i class="fa-solid fa-cart-shopping fa-lg"></i>
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     <?php if (Store::is_client_logged()) : ?>
-                                        <?= Cart::get_cart_items_count_by_customer_id($_SESSION['customer_id']) ?>
+                                        <?= Cart::get_cart_items_count_by_customer_id($_SESSION['customer_id']) ?? 0?>
                                     <?php else : ?>
-                                        <?= Cart::get_cart_items_count_by_session_id(session_id()) ?>
+                                        <?= Cart::get_cart_items_count_by_session_id(session_id()) ?? 0?>
                                     <?php endif ?>
                                 </span>
                             </a>

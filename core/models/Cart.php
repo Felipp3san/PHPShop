@@ -62,6 +62,56 @@ class Cart {
         return $results;
     }
 
+    public function remove_from_cart($item_id, $quantity, $customer_id = null, $session_id = null) {
+
+        $db = new Database();
+
+        $params = [
+            ':item_id' => $item_id,
+        ];
+        
+        if(Store::is_client_logged()) {
+
+            $params[':cliente_id'] = $customer_id; 
+
+            // REMOVER SE A QUANTIDADE ESTIVER EM 1, ATUALIZAR SE FOR MAIS
+            if($quantity == 1) {
+                $results = $db->delete("
+                    DELETE FROM item_carrinho
+                    WHERE item_id = :item_id AND cliente_id = :cliente_id
+                ", $params);
+            }
+            else {
+                $results = $db->update("
+                    UPDATE item_carrinho
+                    SET quantidade = quantidade - 1
+                    WHERE item_id = :item_id AND cliente_id = :cliente_id
+                ", $params);
+            }
+        }
+        else {
+
+            $params[':session_id'] = $session_id;
+
+            // REMOVER SE A QUANTIDADE ESTIVER EM 1, ATUALIZAR SE FOR MAIS
+            if($quantity == 1) {
+                $results = $db->delete("
+                    DELETE FROM item_carrinho
+                    WHERE item_id = :item_id AND session_id = :session_id
+                ", $params);
+            }
+            else {
+                $results = $db->update("
+                    UPDATE item_carrinho
+                    SET quantidade = quantidade - 1
+                    WHERE item_id = :item_id AND session_id = :session_id
+                ", $params);
+            }
+        }
+
+        return $results;
+    }
+
     public function get_cart_items_by_customer_id($customer_id) {
 
         $db = new Database(); 
@@ -166,7 +216,7 @@ class Cart {
             return $results[0]->contagem;
         }
         else {
-            return false;
+            return 0;
         }
     }
 

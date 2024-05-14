@@ -52,4 +52,35 @@ class CartController {
             return Store::redirect($actual_url);
         }
     }
+
+    public function remove_from_cart(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+
+            $cart = new Cart();
+
+            $item_id = $_POST['item-id'];
+            $quantity = $_POST['quantity'];
+
+            if(Store::is_client_logged()) {
+                $customer_id = $_SESSION['customer_id'];
+                $results = $cart->remove_from_cart($item_id, $quantity, $customer_id);
+            }
+            else {
+                $session_id = session_id();
+                $results = $cart->remove_from_cart($item_id, $quantity, null ,$session_id);
+            }
+
+            if($results) {
+                $_SESSION['success-title'] = "Carrinho";
+                $_SESSION['success'] = "Item removido do carrinho!";
+            }
+            else {
+                $_SESSION['error-title'] = "Carrinho";
+                $_SESSION['error'] = "Erro, tente novamente.";
+            }
+
+            return Store::redirect('cart');
+        }
+    }
 }

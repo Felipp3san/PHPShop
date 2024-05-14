@@ -3,12 +3,58 @@
 use core\models\Favorite;
 ?>
 
+<script>
+    $(document).ready(function() {
+        $("#errorModal").modal('show');
+        $("#successModal").modal('show');
+    });
+</script>
+<div>
+    <!-- ERRO -->
+    <?php if (isset($_SESSION['error'])) : ?>
+        <div id="errorModal" class="modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><?= $_SESSION['error-title'] ?></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body align-items-center d-flex">
+                        <p class="m-0"><?= $_SESSION['error'] ?>
+                        <p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php unset($_SESSION['error-title']); ?>
+        <?php unset($_SESSION['error']); ?>
+        <!-- SUCESSO -->
+    <?php elseif (isset($_SESSION['success'])) : ?>
+        <div id="successModal" class="modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><?= $_SESSION['success-title'] ?></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body align-items-center d-flex">
+                        <p class="m-0"><?= $_SESSION['success'] ?>
+                        <p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php unset($_SESSION['success-title']); ?>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif ?>
+</div>
+
 <div class="container-fluid">
 
     <div class="col-10 mx-auto">
         <div class="row gap-3">
 
-            <div class="col-7 product-card shadow-sm">
+            <div class="col-7 product-card shadow">
                 <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
                         <?php for ($i = 0; $i < sizeof($pictures) - 1; $i++) : ?>
@@ -28,14 +74,14 @@ use core\models\Favorite;
                 </div>
             </div>
 
-            <div class="col product-card shadow-sm p-4 d-flex flex-column justify-content-between">
+            <div class="col product-card shadow p-4 d-flex flex-column justify-content-between">
                 <div>
                     <!-- Fabricante -->
                     <p class="fs-5 m-0"><?= $product->nome_fabricante ?></p>
                     <!-- Nome -->
                     <p class="fs-3 mb-4"><?= $product->nome ?></p>
                     <!-- Descrição -->
-                    <p class="lead" style="text-align: justify;"><?= $product->descricao ?></p>
+                    <p class="fs-6 lead text-justify"><?= $product->descricao ?></p>
                 </div>
 
                 <div class="d-flex flex-column gap-3">
@@ -59,14 +105,9 @@ use core\models\Favorite;
                         <?php endif ?>
                     </div>
 
-                    <!-- Preço -->
                     <div class="row">
-                        <span class="product-price fs-3 fw-bold mb-0 d-flex justify-content-end"><?= $product->preco ?> €</span>
-                    </div>
-                     
-                    <!-- Favorito -->
-                    <div class="row d-flex align-items-center">
-                        <div class="col-6">
+                        <!-- FAVORITO -->
+                        <div class="col">
                             <?php if (isset($_SESSION['customer_id'])) : ?>
                                 <div class="col">
                                     <?php if (Favorite::verify_favorite($_SESSION['customer_id'], $product->id)) : ?>
@@ -92,38 +133,47 @@ use core\models\Favorite;
                                 </div>
                             <?php endif ?>
                         </div>
-                        <div class="col-6 d-flex form-group align-items-center gap-3">
-                            <!-- Quantidade -->
-                            <label class="fs-4" for="quantity">Quantidade</label>
-                            <input type="number" class="form-control rounded-0 fs-4 shadow-sm text-center" id="quantity" min="1" max="<?= $product->quantidade ?>" value="1">
+                        <!-- PREÇO -->
+                        <div class="col-8">
+                            <span class="display-6 mb-0 d-flex justify-content-end"><?= $product->preco ?> €</span>
                         </div>
                     </div>
 
-                    <div class="row d-flex">
-                        <div class="col-7">
-                            <!-- ADICIONAR AO CARRINHO -->
-                            <button type="button" class="btn btn-outline-success rounded-0 w-100 fs-4">Adicionar ao Carrinho</button>
+                    <!-- ADICIONAR AO CARRINHO -->
+                    <form action="?a=add_to_cart" method="POST">
+                        <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
+                        <input type="hidden" name="item-id" value="<?= $product->id ?>">
+                        <input type="hidden" name="item-price" value="<?= $product->preco ?>">
+
+                        <!-- QUANTIDADE -->
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="d-flex h-100">
+                                    <button type="button" class="btn btn-dark rounded-0 h-100 fs-3 p-0" id="decrease">-</button>
+                                    <input type="text" class="form-control border border-dark rounded-0 h-100 fs-3 p-0" id="quantity" name="quantity" value="1">
+                                    <button type="button" class="btn btn-dark rounded-0 h-100 fs-3 p-0" id="increase">+</button>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <button type="submit" class="btn btn-outline-success rounded-0 w-100 fs-4">Adicionar ao Carrinho</button>
+                            </div>
                         </div>
-                        <div class="col">
-                            <!-- COMPRAR JÁ -->
-                            <button type="button" class="btn btn-primary rounded-0 w-100 fs-4">Comprar Já</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
 
         <!-- SOBRE O PRODUTO -->
         <div class="row">
-            <div class="col product-card shadow-sm p-5">
+            <div class="col product-card shadow p-5">
                 <h2 class="mb-4">Sobre o produto</h2>
-                <p class="lead" style="text-align: justify;"><?= $product->descricao ?></p>
+                <p class="lead text-justify"><?= $product->descricao ?></p>
             </div>
         </div>
 
         <!-- OPINIOES -->
         <div class="row">
-            <div class="col product-card shadow-sm p-5">
+            <div class="col product-card shadow p-5">
 
                 <h2 class="mb-4">Avaliação</h2>
 
@@ -183,7 +233,7 @@ use core\models\Favorite;
                         <?php $limit = 0; ?>
                         <?php foreach ($data['related-products']['products'] as $product) : ?>
                             <div class="col-md-3 px-1">
-                                <div class="product-card shadow-sm">
+                                <div class="product-card shadow">
                                     <!-- IMAGEM -->
                                     <div class="product-image">
                                         <a href="?a=details&product-id=<?= $product->id ?>">
@@ -246,3 +296,20 @@ use core\models\Favorite;
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#increase').click(function() {
+            var value = parseInt($('#quantity').val());
+            $('#quantity').val(value + 1);
+        });
+
+        $('#decrease').click(function() {
+            var value = parseInt($('#quantity').val());
+            if (value > 1) {
+                $('#quantity').val(value - 1);
+            }
+        });
+    });
+</script>
