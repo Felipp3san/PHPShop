@@ -52,13 +52,15 @@ use core\classes\Store;
                 <!-- BARRA DE PESQUISA -->
                 <div class="col-6 d-flex justify-content-between align-items-center">
                     <div class="col-10">
-                        <form action="">
+                        <form action="" method="GET">
+                            <input type="hidden" name="a" value="search_products">
                             <div class="search-bar bg-light">
                                 <div class="search-bar-icon">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </div>
-                                <div class="search-bar-input">
-                                    <input type="text" class="form-control rounded-0 border-0 bg-light" id="search-bar" placeholder="Escreva aqui o que procura...">
+                                <div class="d-flex search-bar-input">
+                                    <input type="text" id="search-bar" name="query" class="form-control rounded-0 border-0 bg-light" placeholder="Escreva aqui o que procura..." aria-label="Escreva aqui o que procura..." aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-dark border-0 rounded-0" type="submit" id="button-addon2">Pesquisar</button>
                                 </div>
                             </div>
                         </form>
@@ -97,7 +99,7 @@ use core\classes\Store;
                                 </ul>
                             </div>
                         </li>
-                        <!-- CARRINHO -->                                        
+                        <!-- CARRINHO -->
                         <?php if (!isset($_SESSION['admin_id'])) : ?>
                             <li class="nav-item">
                                 <a class="nav-link text-light" href="?a=cart">

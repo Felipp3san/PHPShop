@@ -49,3 +49,29 @@ CHANGE nome nome_completo VARCHAR(100) NOT NULL;
 SELECT DISTINCT fabricante.id, fabricante.nome FROM fabricante
 INNER JOIN produto ON produto.fabricante_id = fabricante.id
 WHERE produto.categoria_id = 2; 
+
+
+
+SELECT produto.*, AVG(review.avaliacao) AS 'avaliacao_media', COUNT(review.id) AS 'total_avaliacoes', fabricante.nome AS 'nome_fabricante' 
+FROM produto 
+LEFT JOIN review ON produto.id = review.produto_id 
+LEFT JOIN fabricante ON produto.categoria_id = fabricante.id
+WHERE categoria_id = 2 
+GROUP BY produto.id;
+
+UPDATE produto set imagem="placas_mae/ASUS_ROG_Strix_Z490E_Gaming.jpeg@placas_mae/ASUS_ROG_Strix_Z490E_Gaming_2.jpeg@placas_mae/ASUS_ROG_Strix_Z490E_Gaming_3.jpeg@placas_mae/ASUS_ROG_Strix_Z490E_Gaming_4.jpeg@placas_mae/ASUS_ROG_Strix_Z490E_Gaming_5.jpeg@placas_mae/ASUS_ROG_Strix_Z490E_Gaming_6.jpeg@placas_mae/ASUS_ROG_Strix_Z490E_Gaming_7.jpeg@placas_mae/ASUS_ROG_Strix_Z490E_Gaming_8.jpeg"
+WHERE id=4;
+
+
+ASUS_ROG_Strix_Z490E_Gaming_2.jpeg
+
+
+       
+imagens                                           
+nome          
+descricao     
+preco                                                    
+quantidade                                          
+categoria_id                                      
+ativo                                       
+adicionar ao carrinho

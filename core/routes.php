@@ -28,6 +28,8 @@ $routes = [
 
     // Products
     'products' => 'ProductController@products',
+    'details' => 'ProductController@get_product_details',
+    'search_products' => 'ProductController@search_products',
     
     // Favorites
     'favorites' => 'FavoriteController@show_favorites',

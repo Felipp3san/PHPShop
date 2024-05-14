@@ -11,12 +11,12 @@
         <p>Amplie o desempenho do seu computador com os melhores processadores do mercado.</p>
       </div>
       <div class="col-md-4 feature">
-        <img src="assets/images/produtos/placas de vídeo/Asus_GeForce_RTX_4090_ROG_Strix_OC_24GB_GDDR6X_DLSS3.jpeg" alt="Placa de Vídeo">
+        <img src="assets/images/produtos/placas_de_video/Asus_GeForce_RTX_4090_ROG_Strix_OC_24GB_GDDR6X_DLSS3.jpeg" alt="Placa de Vídeo">
         <h3>Placas de Vídeo</h3>
         <p>Desfrute de gráficos incríveis com as melhores placas de vídeo para gamers e profissionais.</p>
       </div>
       <div class="col-md-4 feature">
-        <img src="assets/images/produtos/memórias ram/Corsair_Vengeance_LPX_16GB.png" alt="Memória RAM">
+        <img src="assets/images/produtos/memorias_ram/Corsair_Vengeance_LPX_16GB.png" alt="Memória RAM">
         <h3>Memórias RAM</h3>
         <p>Aumente a velocidade do seu computador com memórias RAM de alta performance.</p>
       </div>

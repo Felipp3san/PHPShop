@@ -78,11 +78,11 @@ class Database
 
             if(!empty($params)) {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute($params);
+                $sucess = $execute->execute($params);
             }
             else {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute();
+                $sucess = $execute->execute();
             }
         } catch (PDOException $e) {
             return false; 
@@ -90,7 +90,7 @@ class Database
             $this->close_connection();
         }
 
-        return true;
+        return $sucess;
     }
 
     public function update($sql, $params = null) {

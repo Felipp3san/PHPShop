@@ -177,3 +177,13 @@ body {
 .modal-content {
     border-radius: 0; /* Define as bordas como quadradas */
 }
+
+
+/* DETALHES PRODUTO */
+.resize-hover {
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.resize-hover:hover {
+    transform: scale(1.2);
+}

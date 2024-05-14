@@ -132,7 +132,7 @@ class AdminController {
             }
 
             $results = $product->add_product($params);
-
+            
             if($results) {
                 $_SESSION['success'] = "Produto adicionado com sucesso!";
                 return Store::redirect('add_products');

@@ -4,7 +4,7 @@
         <?php foreach ($favorites as $favorite) : ?>
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm rounded-0">
-                    <img class="p-4" src="assets/images/produtos/<?= $favorite->nome_categoria . '/' . $favorite->imagem ?>" class="img-fluid mb-3" alt="<? $favorite->nome ?>">
+                    <img class="p-4" src="assets/images/produtos/<?= substr($favorite->imagem, 0, strpos($favorite->imagem, "@"))?>" class="img-fluid mb-3" alt="<? $favorite->nome ?>">
                     <div class="card-body">
                         <h5 class="card-title favorite-card-text"><?= $favorite->nome ?></h5>
                         <p class="card-text favorite-card-text"><?= $favorite->descricao ?></p>
@@ -14,7 +14,7 @@
                                 <input type="hidden" name="favorite-customer-id" value="<?= $_SESSION['customer_id'] ?>">
                                 <input type="hidden" name="favorite-item-id" value="<?= $favorite->id ?>">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Ver Detalhes</button>
+                                    <a class="btn btn-sm btn-outline-secondary" href="?a=details&product-id=<?= $favorite->id ?>">Ver Detalhes</a>
                                     <button type="submit" class="btn btn-sm btn-outline-secondary">Remover dos Favoritos</button>
                                 </div> 
                             </form>
