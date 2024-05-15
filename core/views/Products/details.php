@@ -103,9 +103,9 @@ use core\models\Favorite;
                         <div class="row">
                             <div class="col-4">
                                 <div class="d-flex h-100">
-                                    <button type="button" class="btn btn-dark rounded-0 h-100 fs-3 p-0" id="decrease">-</button>
-                                    <input type="text" class="form-control border border-dark rounded-0 h-100 fs-3 p-0" id="quantity" name="quantity" value="1">
-                                    <button type="button" class="btn btn-dark rounded-0 h-100 fs-3 p-0" id="increase">+</button>
+                                    <button type="button" class="btn btn-outline-dark rounded-0 h-100 fs-3 p-0" id="decrease">-</button>
+                                    <input type="text" class="form-control rounded-0 h-100 fs-3 p-0" id="quantity" name="quantity" value="1">
+                                    <button type="button" class="btn btn-outline-dark rounded-0 h-100 fs-3 p-0" id="increase">+</button>
                                 </div>
                             </div>
                             <div class="col-8">

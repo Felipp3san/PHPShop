@@ -31,7 +31,7 @@
                                             <span class="fw-semibold"><?= $item->nome ?></span>
                                         </div>
                                         <div class="col-2">
-                                            <span class="lead fs-4 d-flex justify-content-center"><?= $item->preco ?> €</span>
+                                            <span class="lead fs-4 d-flex justify-content-center"><?= number_format($item->preco, 2) ?> €</span>
                                         </div>
                                         <div class="col-2">
                                             <div class="d-flex justify-content-center">
@@ -39,7 +39,7 @@
                                                 <form action="?a=remove_from_cart" method="POST">
                                                     <input type="hidden" name="item-id" value="<?= $item->item_id ?>">
                                                     <input type="hidden" name="quantity" value="<?= $item->quantidade ?>">
-                                                    <button class="btn btn-secondary rounded-0 fs-5 p-0 border-2" id="decrease">-</button>
+                                                    <button class="btn btn-outline-dark rounded-0 fs-5 p-0 border-2" id="decrease">-</button>
                                                 </form>
                                                 <!-- QUANTIDADE -->
                                                 <input type="text" class="form-control rounded-0 fs-5 p-0 border-2" id="quantity" value="<?= $item->quantidade ?>" disabled>
@@ -49,13 +49,13 @@
                                                     <input type="hidden" name="item-id" value="<?= $item->item_id ?>">
                                                     <input type="hidden" name="item-price" value="<?= $item->item_preco ?>">
                                                     <input type="hidden" name="quantity" value="1">
-                                                    <button class="btn btn-secondary rounded-0 fs-5 p-0 border-2" id="increase">+</button>
+                                                    <button class="btn btn-outline-dark rounded-0 fs-5 p-0 border-2" id="increase">+</button>
                                                 </form>
                                             </div>
                                         </div>
                                         <div class="col-2 d-grid justify-content-center">
                                             <!-- PRECO TOTAL -->
-                                            <span class="lead fw-medium fs-4 d-flex justify-content-center"><?= $item->preco * $item->quantidade ?> €</span>
+                                            <span class="lead fw-medium fs-4 d-flex justify-content-center"><?= number_format($item->preco * $item->quantidade, 2) ?> €</span>
                                         </div>
                                         <!-- SOMAR TOTAL DOS PRODUTOS -->
                                         <?php $total = (!isset($total)) ? $item->preco * $item->quantidade : $total + $item->preco * $item->quantidade ?>
@@ -77,7 +77,7 @@
                     <ul class="list-group rounded-0">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Subtotal
-                            <span><?php echo $total = (!isset($total)) ? 0 : $total ?> €</span>
+                            <span><?php echo number_format($total = (!isset($total)) ? 0 : $total, 2) ?> €</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Frete
@@ -85,13 +85,13 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>Total</strong>
-                            <strong><?php echo $total = (!isset($total)) ? 0 : $total ?> €</strong>
+                            <strong><?php echo number_format($total = (!isset($total)) ? 0 : $total, 2) ?> €</strong>
                         </li>
                     </ul>
                     <!-- Botões de ação -->
                     <div class="d-grid mt-3">
                         <button type="button" class="btn btn-primary btn-block rounded-0">Finalizar Compra</button>
-                        <button type="button" class="btn btn-secondary btn-block mt-2 rounded-0">Continuar Comprando</button>
+                        <button type="button" class="btn btn-success btn-block mt-2 rounded-0">Continuar Comprando</button>
                     </div>
                 </div>
             </div>
