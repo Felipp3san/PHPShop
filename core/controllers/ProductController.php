@@ -29,7 +29,7 @@ class ProductController {
         $filter_params = $this->get_filter_params($_GET);
         
         if(sizeof($filter_params) > 0) {
-            $filter_results = $products->get_filtered_products($category_id, $filter_params);
+            $results = $products->get_filtered_products($category_id, $filter_params);
         }
         else {
             $filter_results = $products->get_products_from_category_with_review($category_id);
@@ -38,9 +38,15 @@ class ProductController {
         $data = [
             'category_name' => $category_name,
             'category_id' => $category_id,
-            'filter_manufacturers' => $filter_results['manufacturers'],
-            'products' => $filter_results['products'],
+            'filter_manufacturers' => $manufacturer->get_manufacturers_by_product_category($category_id),
         ];
+        
+        if(isset($filter_results) && sizeof($filter_results) > 0) {
+            $data['products'] = $filter_results;
+        }
+        else {
+            $data['products'] = $results;
+        };
 
         return Store::layout("Products/products", $data);
     }
@@ -50,26 +56,35 @@ class ProductController {
         // Verifica se o parâmetro 'query' foi enviado na URL
         if(isset($_GET['query']) && !empty($_GET['query'])) {
 
-            $search_query = trim($_GET['query']);
+            $search_query = htmlspecialchars(trim($_GET['query']));
+            
             $product = new Product();
-
-            $results = $product->get_products_categories_by_query($search_query);
-
-            if(sizeof($results) > 0) {
-                $data = [
-                    'category_name' => "Resultados da pesquisa",
-                    'products' => $results['products'],
-                ];
-                
-                return Store::layout("Products/products", $data);
+            $manufacturer = new Manufacturer();
+            
+            // GET
+            $filter_params = $this->get_filter_params($_GET);
+            
+            if(sizeof($filter_params) > 0) {
+                $results = $product->get_filtered_products_query($search_query, $filter_params);
             }
             else {
+                $results = $product->get_products_by_query($search_query);
+            };
+            
+            $data = [
+                'search_query' => $search_query,
+                'category_name' => "Resultados da pesquisa",
+                'filter_manufacturers' => $manufacturer->get_manufacturers_by_query($search_query),
+            ];
 
-            return Store::redirect();
+            if($results) {
+                $data['products'] = $results;
             }
-        } else {
-            return Store::redirect();
-        }
+
+            return Store::layout("Products/products", $data);
+        } 
+
+        return Store::redirect();
     }
 
     public function get_product_details() {

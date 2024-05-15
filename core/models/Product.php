@@ -53,18 +53,17 @@ class Product {
             GROUP BY produto.id;
         "); 
 
-        if(!$results) {
-            return false;
+        if(sizeof($results) > 0) {
+            return $results;
         }
         else {
-            return $results;
+            return false;
         }
     }
 
     public function get_products_from_category_with_review($category_id) {
 
         $db = new Database();
-        $manufacturer = new Manufacturer();
 
         $params = [
             ":categoria_id" => $category_id
@@ -77,16 +76,9 @@ class Product {
             WHERE categoria_id = :categoria_id
             GROUP BY produto.id
         ", $params); 
-
         
         if(sizeof($results) > 0) {
-            
-            $data = [
-                'products' => $results,
-                'manufacturers' => $manufacturer->get_manufacturers_by_category($category_id)            
-            ];
-
-            return $data;
+            return $results;
         }
         else {
             return false;
@@ -96,7 +88,6 @@ class Product {
     public function get_filtered_products($category_id, $filter_params) {
 
         $db = new Database();
-        $manufacturer = new Manufacturer();
 
         $filters = implode(" AND ", $filter_params);
 
@@ -113,19 +104,42 @@ class Product {
         ", $params); 
 
         if(sizeof($results) > 0) {
-            $data = [
-                'products' => $results,
-                'manufacturers' => $manufacturer->get_manufacturers_by_category($category_id)
-            ];
-
-            return $data;
+            return $results;
         }
         else {
             return false;
         }
     }
 
-    public function get_products_categories_by_query($search_query) {
+    public function get_filtered_products_query($search_query, $filter_params) {
+
+        $db = new Database();
+
+        $filters = implode(" AND ", $filter_params);
+
+        $params = [
+            ":query" => '%' . $search_query . '%'
+        ];
+
+        $results = $db->select("
+            SELECT produto.*, AVG(review.avaliacao) AS 'avaliacao_media', COUNT(review.id) AS 'total_avaliacoes' 
+            FROM produto 
+            LEFT JOIN review ON produto.id = review.produto_id 
+            LEFT JOIN fabricante ON produto.fabricante_id = fabricante.id
+            WHERE (produto.nome LIKE :query OR produto.descricao LIKE :query OR fabricante.nome LIKE :query)
+            AND (" . $filters . ") 
+            GROUP BY produto.id
+        ", $params);
+
+        if(sizeof($results) > 0) {
+            return $results;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function get_products_by_query($search_query) {
     
         $db = new Database();
 
@@ -144,12 +158,7 @@ class Product {
         ", $params);
 
         if(sizeof($results) > 0) {
-
-            $data = [
-                'products' => $results,
-            ];
-
-            return $data;
+            return $results;
         } else {
             return false;
         }

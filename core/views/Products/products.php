@@ -8,16 +8,43 @@ use core\models\Favorite;
     <h3 class="mb-4"><?= $category_name ?></h3>
     <div class="row">
         <div class="col-3">
-            <?php if (isset($_GET['a']) && $_GET['a'] != 'search_products') : ?>
-                <div class="product-card shadow-sm p-2">
-                    <h5>Filtros</h5>
-                    <form id="filters" action="?a=products&category-name=<?= $category_name ?>&id=<?= $category_id ?>">
+            <div class="product-card shadow p-2">
+                <h5>Filtros</h5>
+                <!-- FILTRAGEM POR QUERY -->
+                <?php if(isset($_GET['a']) && $_GET['a'] == 'search_products'): ?> 
+                    <form id="filters-query" action="?a=search_products">
+                        <input type="hidden" name="a" value="search_products">
+                        <input type="hidden" name="query" value="<?= $search_query ?>">
                         <!-- STOCK -->
                         <p class="m-0 fw-semibold">Stock</p>
                         <hr class="mx-0 my-1">
+                        <div>
+                            <input class="form-check-input rounded-0" type="checkbox" id="in-stock" name="in-stock" onclick="submitFormQuery()" <?php if (isset($_GET['in-stock'])) echo 'checked'; ?>>
+                            <label class="form-check-label" for="in-stock">Disponível</label>
+                        </div>
+                        <div>
+                            <input class="form-check-input rounded-0" type="checkbox" id="no-stock" name="no-stock" onclick="submitFormQuery()" <?php if (isset($_GET['no-stock'])) echo 'checked'; ?>>
+                            <label class="form-check-label" for="no-stock">Indisponível</label>
+                        </div>
+                        <!-- FABRICANTES  -->
+                        <p class="m-0 mt-3 fw-semibold">Fabricante</p>
+                        <hr class="mx-0 my-1">
+                        <?php foreach ($filter_manufacturers as $manufacturer) : ?>
+                            <div>
+                                <input class="form-check-input rounded-0" type="checkbox" name="manufacturer[]" value=<?= $manufacturer->id ?> onclick="submitFormQuery()" <?php if (isset($_GET['manufacturer']) && in_array($manufacturer->id, $_GET['manufacturer'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for=""><?= $manufacturer->nome ?></label>
+                            </div>
+                        <?php endforeach ?>
+                    </form>
+                <!-- FILTRAGEM POR CATEGORIA -->
+                <?php else: ?>
+                    <form id="filters" action="?a=products&category-name=<?= $category_name ?>&id=<?= $category_id ?>">
                         <input type="hidden" name="a" value="products">
                         <input type="hidden" name="category-name" value="<?= $category_name ?>">
                         <input type="hidden" name="id" value="<?= $category_id ?>">
+                        <!-- STOCK -->
+                        <p class="m-0 fw-semibold">Stock</p>
+                        <hr class="mx-0 my-1">
                         <div>
                             <input class="form-check-input rounded-0" type="checkbox" id="in-stock" name="in-stock" onclick="submitForm()" <?php if (isset($_GET['in-stock'])) echo 'checked'; ?>>
                             <label class="form-check-label" for="in-stock">Disponível</label>
@@ -31,20 +58,20 @@ use core\models\Favorite;
                         <hr class="mx-0 my-1">
                         <?php foreach ($filter_manufacturers as $manufacturer) : ?>
                             <div>
-                                <input class="form-check-input rounded-0" type="checkbox" name="manufacturer[]" value=<?= $manufacturer['id_fabricante'] ?> onclick="submitForm()" <?php if (isset($_GET['manufacturer']) && in_array($manufacturer['id_fabricante'], $_GET['manufacturer'])) echo 'checked'; ?>>
-                                <label class="form-check-label" for=""><?= $manufacturer['nome_fabricante'] ?></label>
+                                <input class="form-check-input rounded-0" type="checkbox" name="manufacturer[]" value=<?= $manufacturer->id ?> onclick="submitForm()" <?php if (isset($_GET['manufacturer']) && in_array($manufacturer->id, $_GET['manufacturer'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for=""><?= $manufacturer->nome ?></label>
                             </div>
                         <?php endforeach ?>
                     </form>
-                </div>
-            <?php endif ?>
+                <?php endif ?>
+            </div>
         </div>
         <div class="col-9">
             <div class="row">
-                <?php if (!empty($products)) : ?>
+                <?php if (isset($products) && !empty($products)) : ?>
                     <?php foreach ($products as $product) : ?>
                         <div class="col-md-3 px-1">
-                            <div class="product-card shadow-sm">
+                            <div class="product-card shadow">
                                 <!-- IMAGEM -->
                                 <div class="product-image">
                                     <a href="?a=details&product-id=<?= $product->id ?>">
@@ -149,5 +176,9 @@ use core\models\Favorite;
 <script>
     function submitForm() {
         document.getElementById("filters").submit();
+    }
+
+    function submitFormQuery() {
+        document.getElementById("filters-query").submit();
     }
 </script>

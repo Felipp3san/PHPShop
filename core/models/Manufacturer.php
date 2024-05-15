@@ -16,32 +16,41 @@ class Manufacturer {
         return $results;
     }
 
-    public function get_manufacturers_by_category($category_id) {
+    public function get_manufacturers_by_product_category($category_id) {
 
         $db = new Database();
 
-        if(is_array($category_id)) {
-            $params = [
-                ':categoria_id' => implode(",", $category_id)
-            ];
-        }
-        else {
-            $params = [
-                ':categoria_id' => $category_id
-            ];
-        }
+        $params = [
+            ':categoria_id' => $category_id
+        ];
 
         $results = $db->select("
-            SELECT DISTINCT fabricante.id AS fabricante_id, fabricante.nome as nome_fabricante FROM fabricante
+            SELECT DISTINCT fabricante.id, fabricante.nome FROM fabricante
             INNER JOIN produto ON produto.fabricante_id = fabricante.id
-            WHERE produto.categoria_id IN (:categoria_id);         
+            WHERE produto.categoria_id = :categoria_id;         
         ", $params);
 
-        if(sizeof($results) > 0) {
+        return $results;
+    }
 
-            $manufacturers = $this->manufacturers_to_array($results); 
+    public function get_manufacturers_by_query($search_query) {
 
-            return $manufacturers;
+        $db = new Database();
+
+        $params = [
+            ":query" => '%' . $search_query . '%'
+        ];
+
+        $results = $db->select("    
+            SELECT DISTINCT fabricante.id, fabricante.nome FROM fabricante
+            INNER JOIN produto ON produto.fabricante_id = fabricante.id
+            WHERE produto.nome LIKE :query
+            OR produto.descricao LIKE :query
+            OR fabricante.nome LIKE :query
+        ", $params);
+
+        if(sizeof($results)) {
+            return $results;
         }
         else {
             return false;
@@ -57,32 +66,5 @@ class Manufacturer {
         ", $params);
 
         return $results; 
-    }
-
-    public function manufacturers_to_array($results) {
-
-        $manufacturers = [];
-            
-        foreach ($results as $product) {
-            $manufacturer_exist = false;
-            
-            // Verifica se o fabricante já existe no array $manufacturers
-            foreach ($manufacturers as $manufacturer) {
-                if ($manufacturer['id_fabricante'] === $product->fabricante_id) {
-                    $manufacturer_exist = true;
-                    break;
-                }
-            }
-            
-            // Se o fabricante não existir, adiciona-o ao array $manufacturers
-            if (!$manufacturer_exist) {
-                $manufacturers[] = [
-                    'id_fabricante' => $product->fabricante_id,
-                    'nome_fabricante' => $product->nome_fabricante
-                ];
-            }
-        }
-
-        return $manufacturers;
     }
 }
