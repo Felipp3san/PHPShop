@@ -1,49 +1,3 @@
-<script>
-    $(document).ready(function() {
-        $("#errorModal").modal('show');
-        $("#successModal").modal('show');
-    });
-</script>
-<div>
-    <!-- ERRO -->
-    <?php if (isset($_SESSION['error'])) : ?>
-        <div id="errorModal" class="modal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><?= $_SESSION['error-title'] ?></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body align-items-center d-flex">
-                        <p class="m-0"><?= $_SESSION['error'] ?>
-                        <p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php unset($_SESSION['error-title']); ?>
-        <?php unset($_SESSION['error']); ?>
-        <!-- SUCESSO -->
-    <?php elseif (isset($_SESSION['success'])) : ?>
-        <div id="successModal" class="modal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><?= $_SESSION['success-title'] ?></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body align-items-center d-flex">
-                        <p class="m-0"><?= $_SESSION['success'] ?>
-                        <p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php unset($_SESSION['success-title']); ?>
-        <?php unset($_SESSION['success']); ?>
-    <?php endif ?>
-</div>
-
 <div class="container-fluid my-auto">
     <div class="d-flex justify-content-center">
 
@@ -122,7 +76,6 @@
 </div>
 
 <script>
-
     const registerDiv = document.getElementById("register");
     const loginDiv = document.getElementById("login");
 
@@ -141,11 +94,10 @@
     }
 
     <?php
-        if(isset($_SESSION['previous-action']) && $_SESSION['previous-action'] == 'register'){
-            echo 'showRegister()';
-        } elseif (isset($_SESSION['previous-action']) && $_SESSION['previous-action'] == 'login'){
-            echo 'showLogin()';
-        }
+    if (isset($_SESSION['previous-action']) && $_SESSION['previous-action'] == 'register') {
+        echo 'showRegister()';
+    } elseif (isset($_SESSION['previous-action']) && $_SESSION['previous-action'] == 'login') {
+        echo 'showLogin()';
+    }
     ?>
-
 </script>

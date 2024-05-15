@@ -1,49 +1,3 @@
-<script>
-    $(document).ready(function() {
-        $("#errorModal").modal('show');
-        $("#successModal").modal('show');
-    });
-</script>
-<div>
-    <!-- ERRO -->
-    <?php if (isset($_SESSION['error'])) : ?>
-        <div id="errorModal" class="modal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><?= $_SESSION['error-title'] ?></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body align-items-center d-flex">
-                        <p class="m-0"><?= $_SESSION['error'] ?>
-                        <p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php unset($_SESSION['error-title']); ?>
-        <?php unset($_SESSION['error']); ?>
-        <!-- SUCESSO -->
-    <?php elseif (isset($_SESSION['success'])) : ?>
-        <div id="successModal" class="modal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><?= $_SESSION['success-title'] ?></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body align-items-center d-flex">
-                        <p class="m-0"><?= $_SESSION['success'] ?>
-                        <p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php unset($_SESSION['success-title']); ?>
-        <?php unset($_SESSION['success']); ?>
-    <?php endif ?>
-</div>
-
 <div class="container-fluid">
     <h2 class="mt-4 mb-4">Seu Carrinho</h2>
     <div class="row">
@@ -56,7 +10,7 @@
                         <!-- ITEM CARRINHO -->
                         <?php if (isset($data['cart_items']) && $data['cart_items'] != false) : ?>
                             <li class="list-group-item">
-                               <div class="row text-center">
+                                <div class="row text-center">
                                     <div class="col-6"><span>Produto</span></div>
                                     <div class="col-2"><span>Preço</span></div>
                                     <div class="col-2"><span>Quantidade</span></div>
@@ -104,11 +58,11 @@
                                             <span class="lead fw-medium fs-4 d-flex justify-content-center"><?= $item->preco * $item->quantidade ?> €</span>
                                         </div>
                                         <!-- SOMAR TOTAL DOS PRODUTOS -->
-                                        <?php $total = (!isset($total))? $item->preco * $item->quantidade : $total + $item->preco * $item->quantidade ?>
+                                        <?php $total = (!isset($total)) ? $item->preco * $item->quantidade : $total + $item->preco * $item->quantidade ?>
                                     </div>
                                 </li>
                             <?php endforeach ?>
-                        <?php else: ?>
+                        <?php else : ?>
                             <span class="lead">Seu carrinho está vazio.</span>
                         <?php endif ?>
                     </ul>
@@ -123,7 +77,7 @@
                     <ul class="list-group rounded-0">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Subtotal
-                            <span><?php echo $total = (!isset($total))? 0 : $total ?> €</span>                        
+                            <span><?php echo $total = (!isset($total)) ? 0 : $total ?> €</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Frete
@@ -131,7 +85,7 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>Total</strong>
-                            <strong><?php echo $total = (!isset($total))? 0 : $total ?> €</strong>
+                            <strong><?php echo $total = (!isset($total)) ? 0 : $total ?> €</strong>
                         </li>
                     </ul>
                     <!-- Botões de ação -->

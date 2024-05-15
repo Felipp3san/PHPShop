@@ -14,7 +14,7 @@ class AdminController {
 
         // Verifica se há sessão aberta
         if (Store::is_client_logged()) {
-            Store::redirect();
+            return Store::redirect();
         }
        
         // POST
@@ -23,9 +23,9 @@ class AdminController {
             if (!isset($_POST['username']) ||
                 !isset($_POST['password'])) {
 
+                $_SESSION['error-title'] = "Login";
                 $_SESSION['error'] = "Os dados foram preenchidos incorretamente.";
-                Store::redirect('admin');
-                return;
+                return Store::redirect('admin');
             }
 
            $username = $_POST['username'];
@@ -36,21 +36,19 @@ class AdminController {
            $admin_account = $admin->verify_admin($username, $password);
 
            if(!$admin_account) {
+                $_SESSION['error-title'] = "Login";
                 $_SESSION['error'] = "Login inválido.";
-                store::redirect('admin');
-                return;
+                return Store::redirect('admin');
            }
            else {
                 $_SESSION['admin_id'] = $admin_account->id;
                 $_SESSION['admin_username'] = $admin_account->utilizador;
-
-                store::redirect();
-                return;
+                return Store::redirect();
            }
         }
         // GET
         else {
-            Store::layout('Admin/staff_login');
+           return Store::layout('Admin/staff_login');
         }
     }
     
@@ -78,8 +76,8 @@ class AdminController {
             $confirm_password = $_POST['confirm-password'];
 
             if($password != $confirm_password) {
+                $_SESSION['error-title'] = "Senha inválida";
                 $_SESSION['error'] = "As senhas não coincidem.";
-                return Store::redirect('add_staff');
             }
             else {
                 $admin = new Admin();
@@ -87,14 +85,15 @@ class AdminController {
                 $results = $admin->create_staff($username, $password);
 
                 if($results) {
-                    $_SESSION['success'] = "Gestor criado com sucesso!";
+                    $_SESSION['success-title'] = "Gestor adicionado";
+                    $_SESSION['success'] = "Gestor adicionado com sucesso!";
                 }
                 else {
+                    $_SESSION['error-title'] = "Erro";
                     $_SESSION['error'] = "Erro, tente novamente.";
                 }
-
-                return Store::redirect('add_staff');
             }
+            return Store::redirect('add_staff');
         }
         // GET
         else {
@@ -103,7 +102,6 @@ class AdminController {
     }
 
     public function add_products() {
-
         if(!Store::is_admin_logged()) { 
             return Store::layout('Admin/access_denied');
         }
@@ -112,8 +110,8 @@ class AdminController {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $product = new Product();
+            $category = new Category();
 
-            
             $params = [
                 ':nome' => trim($_POST['nome']),
                 ':descricao' => trim($_POST['descricao']),
@@ -121,8 +119,24 @@ class AdminController {
                 ':preco' => filter_var(trim($_POST['preco']), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
                 ':quantidade' => $_POST['quantidade'],
                 ':categoria_id' => $_POST['categoria_id'],
-                ':imagem' => $_POST['imagem'],
             ];
+            
+            // Buscar nome da categoria a partir do id
+            $category_name = $category->get_category_by_id($_POST['categoria_id'])->nome;
+            $modified_category_name = $category->clear_category_name_for_db(strtolower($category_name));
+           
+            // Adiciona categorias aos caminhos das imagens e concatena separando com @ para envia a base de dados
+            if(isset($_POST['imagens'])) {
+                $images = $_POST['imagens'];
+                
+                foreach ($images as $key => $value) {
+                    $images[$key] = $modified_category_name . "/" . $value;
+                }
+                
+                $images = implode('@', $images) . '@';
+                $params[':imagem'] = $images;
+            }
+            // =========================================================
             
             if($_POST['ativo']) {
                 $params[':ativo'] = 1;                
@@ -134,10 +148,12 @@ class AdminController {
             $results = $product->add_product($params);
             
             if($results) {
+                $_SESSION['success-title'] = "Produto adicionado";
                 $_SESSION['success'] = "Produto adicionado com sucesso!";
                 return Store::redirect('add_products');
             }
             else {
+                $_SESSION['error-title'] = "Erro";
                 $_SESSION['error'] = "Falha ao tentar adicionar novo produto.";
                 return Store::redirect('add_products');
             }
@@ -152,13 +168,11 @@ class AdminController {
                 'categorias' => $categories->get_categories()
             ];
 
-            Store::layout('Admin/add_products', $data);
-            return;
+            return Store::layout('Admin/add_products', $data);
         }
     }
 
     public function add_manufacturer() {
-
         if(!Store::is_admin_logged()) { 
             return Store::layout('Admin/access_denied');
         }
@@ -175,9 +189,11 @@ class AdminController {
             $results = $manufacturer->add_manufacturer($params);
 
             if($results) {
+                $_SESSION['success-title'] = "Fabricante adicionado";
                 $_SESSION['success'] = "Fabricante adicionado com sucesso!";
             }
             else {
+                $_SESSION['error-title'] = "Erro";
                 $_SESSION['error'] = "Falha ao tentar adicionar novo fabricante.";
             }
 

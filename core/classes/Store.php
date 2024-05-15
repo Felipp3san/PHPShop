@@ -30,6 +30,7 @@ class Store
 
         // apresentar as views da aplicação.
         include("../core/views/Shared/html_header.php");
+        include("../core/views/Shared/modal.php");
         include("../core/views/$structure.php");
         include("../core/views/Shared/html_footer.php");
     }

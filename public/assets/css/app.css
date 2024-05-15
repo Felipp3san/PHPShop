@@ -182,6 +182,9 @@ body {
     border-radius: 0; /* Define as bordas como quadradas */
 }
 
+.modal-bg{
+    backdrop-filter: blur(15px);  /* Deixa o fundo atrás do modal, borrado. */
+}
 
 /* DETALHES PRODUTO */
 .resize-hover {

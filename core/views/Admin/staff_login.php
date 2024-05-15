@@ -1,14 +1,8 @@
 <div class="container-fluid my-auto">
-    <div class="col-md-5 mx-auto">
+    <div class="col-4 mx-auto">
         <div class="card shadow-sm rounded-0">
             <div class="card-body p-5">
                 <h3 class="text-center mb-5">Admin</h3>
-                <?php if (isset($_SESSION['error'])) : ?>
-                    <div class="alert alert-danger mb-3 p-3 text-center" role="alert">
-                        <?= $_SESSION['error'] ?>
-                    </div>
-                    <?php unset($_SESSION['error']); ?>
-                <?php endif ?>
                 <form action="?a=admin" method="POST">
                     <div class="d-flex flex-column gap-3">
                         <div class="form-floating mb-2">

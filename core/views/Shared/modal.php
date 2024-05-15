@@ -7,7 +7,7 @@
 <div>
     <!-- ERRO -->
     <?php if (isset($_SESSION['error'])) : ?>
-        <div id="errorModal" class="modal" tabindex="-1">
+        <div id="errorModal" class="modal modal-bg" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -25,7 +25,7 @@
         <?php unset($_SESSION['error']); ?>
         <!-- SUCESSO -->
     <?php elseif (isset($_SESSION['success'])) : ?>
-        <div id="successModal" class="modal" tabindex="-1">
+        <div id="successModal" class="modal modal-bg" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">

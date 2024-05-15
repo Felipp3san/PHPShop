@@ -158,10 +158,18 @@ class Product {
     public function add_product($params) {
         $db = new Database();
 
-        $results = $db->insert("
-            INSERT INTO produto(nome, descricao, fabricante_id, preco, quantidade, categoria_id, imagem, ativo)
-            VALUES(:nome, :descricao, :fabricante_id, :preco, :quantidade, :categoria_id, :imagem, :ativo)
-        ", $params);
+        if (isset($params['imagem'])) {
+            $results = $db->insert("
+                INSERT INTO produto(nome, descricao, fabricante_id, preco, quantidade, categoria_id, imagem, ativo)
+                VALUES(:nome, :descricao, :fabricante_id, :preco, :quantidade, :categoria_id, :imagem, :ativo)
+            ", $params);
+        }
+        else {
+            $results = $db->insert("
+                INSERT INTO produto(nome, descricao, fabricante_id, preco, quantidade, categoria_id, ativo)
+                VALUES(:nome, :descricao, :fabricante_id, :preco, :quantidade, :categoria_id, :imagem, :ativo)
+            ", $params);
+        }
         
         return $results; 
     }

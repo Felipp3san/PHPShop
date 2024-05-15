@@ -43,12 +43,14 @@ use core\models\Cart;
                     </div>
                     <!-- FAVORITOS -->
                     <?php if (Store::is_client_logged()) : ?>
+                        <?php if (!isset($_SESSION['admin_id'])) : ?>
                         <div class="nav-link">
                             <a class="btn btn-link p-0 text-light text-decoration-none" href="?a=favorites">
                                 <i class="fa-solid fa-heart"></i>
                                 <span>Favoritos</span>
                             </a>
                         </div>
+                        <?php endif ?>
                     <?php endif ?>
                 </div>
                 <!-- BARRA DE PESQUISA -->

@@ -1,17 +1,5 @@
 <div class="container my-5">
     <h2>Adicionar Produto</h2>
-    <?php if (isset($_SESSION['error'])) : ?>
-        <div class="alert alert-danger mb-3 p-3 text-center" role="alert">
-            <?= $_SESSION['error'] ?>
-        </div>
-        <?php unset($_SESSION['error']); ?>
-    <?php endif ?>
-    <?php if (isset($_SESSION['success'])) : ?>
-        <div class="alert alert-success mb-3 p-3 text-center" role="alert">
-            <?= $_SESSION['success'] ?>
-        </div>
-        <?php unset($_SESSION['success']); ?>
-    <?php endif ?>
     <form action="?a=add_products" method="POST">
         <div class="d-flex flex-column gap-3 mt-4">
             <div class="form-group">
@@ -50,7 +38,8 @@
             </div>
             <div class="form-group">
                 <label for="imagem">Imagem</label>
-                <input type="file" class="form-control-file" id="imagem" name="imagem">
+                <input type="file" class="form-control-file" id="imagem" name="imagens[]" multiple>
+                <p class="mt-2 alert alert-warning">As imagens devem estar na pasta com o mesmo nome da categoria!</p>
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input rounded-0" id="ativo" name="ativo" checked>

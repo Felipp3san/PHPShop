@@ -1,53 +1,8 @@
 <?php
 
+use core\classes\Store;
 use core\models\Favorite;
 ?>
-
-<script>
-    $(document).ready(function() {
-        $("#errorModal").modal('show');
-        $("#successModal").modal('show');
-    });
-</script>
-<div>
-    <!-- ERRO -->
-    <?php if (isset($_SESSION['error'])) : ?>
-        <div id="errorModal" class="modal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><?= $_SESSION['error-title'] ?></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body align-items-center d-flex">
-                        <p class="m-0"><?= $_SESSION['error'] ?>
-                        <p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php unset($_SESSION['error-title']); ?>
-        <?php unset($_SESSION['error']); ?>
-        <!-- SUCESSO -->
-    <?php elseif (isset($_SESSION['success'])) : ?>
-        <div id="successModal" class="modal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><?= $_SESSION['success-title'] ?></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body align-items-center d-flex">
-                        <p class="m-0"><?= $_SESSION['success'] ?>
-                        <p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php unset($_SESSION['success-title']); ?>
-        <?php unset($_SESSION['success']); ?>
-    <?php endif ?>
-</div>
 
 <div class="container-fluid">
     <h3 class="mb-4"><?= $category_name ?></h3>
@@ -178,7 +133,8 @@ use core\models\Favorite;
                                             <input type="hidden" name="session-id" value="<?= session_id() ?>">
                                         <?php endif ?>
 
-                                        <button class="btn btn-outline-<?php if($product->quantidade <= 0) echo 'secondary'; else echo 'success'; ?> w-100 mx-2 mb-2 rounded-0" type="submit" <?php if($product->quantidade <= 0) echo 'disabled' ?>>Adicionar ao carrinho</button>
+                                        <button class="btn btn-outline-<?php if ($product->quantidade <= 0 || Store::is_admin_logged()) echo 'secondary';
+                                                                        else echo 'success'; ?> w-100 mx-2 mb-2 rounded-0" type="submit" <?php if ($product->quantidade <= 0 || Store::is_admin_logged()) echo 'disabled' ?>>Adicionar ao carrinho</button>
                                     </div>
                                 </form>
                             </div>
