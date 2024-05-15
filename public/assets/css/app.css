@@ -195,24 +195,3 @@ body {
     transform: scale(1.2);
 }
 
-/* CARRINHO */
-
-#quantity {
-    width: 50px;
-}
-
-#decrease,
-#increase,
-#quantity {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 30px;
-}
-
-#decrease,
-#increase {
-    width: 40px;
-    font-weight: bold;
-}

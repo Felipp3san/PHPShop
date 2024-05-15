@@ -11,7 +11,6 @@ use core\models\Favorite;
             <div class="product-card shadow p-2">
                 <h5>Filtros</h5>
                 <!-- FILTRAGEM POR QUERY -->
-                <?php if(!empty($products)): ?>
                     <?php if(isset($_GET['a']) && $_GET['a'] == 'search_products'): ?> 
                         <form id="filters-query" action="?a=search_products">
                             <input type="hidden" name="a" value="search_products">
@@ -65,24 +64,10 @@ use core\models\Favorite;
                             <?php endforeach ?>
                         </form>
                     <?php endif ?>
-                <?php endif ?>
             </div>
         </div>
         <div class="col-9">
             <div class="row">
-            <?php if(isset($_GET['a']) && $_GET['a'] == 'search_products' && empty($products)): ?> 
-                <div class="col px-1">
-                    <div class="product-card shadow px-5 py-2 d-flex align-items-center gap-2">
-                        <div class="">
-                            <i class="fs-1 fa-solid fa-magnifying-glass-minus fa-2xl"></i>
-                        </div>
-                        <div class="product-text">
-                            <p class="fs-4 lead">Não foram encontrados produtos com as informações inseridas</p>
-                            <p>Tenta novamente pesquisar por outras palavras...</p>
-                        </div>
-                    </div>
-                </div>
-            <?php endif ?>
                 <?php if (isset($products) && !empty($products)) : ?>
                     <?php foreach ($products as $product) : ?>
                         <div class="col-md-3 px-1">

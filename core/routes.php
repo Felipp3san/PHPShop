@@ -12,6 +12,10 @@ $routes = [
     'visualize_manufacturers' => 'AdminController@visualize_manufacturers',
     'visualize_staff' => 'AdminController@visualize_staff',
 
+    // User
+    'account' => 'UserController@account',
+    'add_address' => 'UserController@add_address',
+    
     // Main
     'index' => 'MainController@index',
 

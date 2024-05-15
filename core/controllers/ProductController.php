@@ -56,7 +56,7 @@ class ProductController {
         // Verifica se o parâmetro 'query' foi enviado na URL
         if(isset($_GET['query']) && !empty($_GET['query'])) {
 
-            $search_query = htmlspecialchars(trim($_GET['query']));
+            $search_query = explode(' ', htmlspecialchars(trim($_GET['query'])));
             
             $product = new Product();
             $manufacturer = new Manufacturer();
@@ -72,7 +72,7 @@ class ProductController {
             };
             
             $data = [
-                'search_query' => $search_query,
+                'search_query' => $_GET['query'],
                 'category_name' => "Resultados da pesquisa",
                 'filter_manufacturers' => $manufacturer->get_manufacturers_by_query($search_query),
             ];
@@ -109,7 +109,7 @@ class ProductController {
             $data['reviews'] = $review->get_reviews_by_product_id($product_id);
 
             // Buscar produtos relacionados
-            $data['related-products'] = $product->get_products_from_category_with_review($results->categoria_id);
+            $data['related_products'] = $product->get_products_from_category_with_review($results->categoria_id);
 
             return Store::layout("Products/details", $data);
         }

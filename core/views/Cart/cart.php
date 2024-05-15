@@ -1,3 +1,8 @@
+<style>
+    .quantity-width {
+        max-width: 50px;
+    }
+</style>
 <div class="container-fluid">
     <h2 class="mt-4 mb-4">Seu Carrinho</h2>
     <div class="row">
@@ -15,7 +20,7 @@
                                     <div class="col-2"><span>Preço</span></div>
                                     <div class="col-2"><span>Quantidade</span></div>
                                     <div class="col-2"><span>Preço Final</span></div>
-                                    <div class="col-1"><span>Remover</span></div>
+                                    <div class="col-1"></div>
                                 </div>
                             </li>
                             <?php foreach ($data['cart_items'] as $item) : ?>
@@ -41,17 +46,17 @@
                                                     <input type="hidden" name="item-id" value="<?= $item->item_id ?>">
                                                     <input type="hidden" name="to-remove" value="1">
                                                     <input type="hidden" name="quantity" value="<?= $item->quantidade ?>">
-                                                    <button class="btn btn-outline-dark rounded-0 fs-5 p-0 border-2" id="decrease">-</button>
+                                                    <button class="btn btn-outline-dark btn-sm rounded-0 border-2">-</button>
                                                 </form>
                                                 <!-- QUANTIDADE -->
-                                                <input type="text" class="form-control rounded-0 fs-5 p-0 border-2" id="quantity" value="<?= $item->quantidade ?>" disabled>
+                                                    <input type="text" class="form-control rounded-0 border-2 text-center p-0 quantity-width" value="<?= $item->quantidade ?>" disabled>
                                                 <!-- ADICIONAR NO CARRINHO -->
                                                 <form action="?a=add_to_cart" method="POST">
                                                     <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
                                                     <input type="hidden" name="item-id" value="<?= $item->item_id ?>">
                                                     <input type="hidden" name="item-price" value="<?= $item->item_preco ?>">
                                                     <input type="hidden" name="quantity" value="1">
-                                                    <button class="btn btn-outline-dark rounded-0 fs-5 p-0 border-2" id="increase">+</button>
+                                                    <button class="btn btn-outline-dark rounded-0 border-2 btn-sm">+</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -67,7 +72,7 @@
                                                 <input type="hidden" name="to-remove" value="<?= $item->quantidade ?>">
                                                 <input type="hidden" name="quantity" value="<?= $item->quantidade ?>">
                                                 <button type="submit" class="btn btn-link rounded-0 fs-5 p-0 border-2">
-                                                    <i class="text-dark fa-solid fa-x fa-lg"></i>
+                                                    <i class="text-dark fa-solid fa-x"></i>
                                                 </button>
                                             </form>
                                         </div>

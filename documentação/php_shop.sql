@@ -13,6 +13,20 @@ CREATE TABLE `cliente` (
   `deleted_at` datetime default null
 );
 
+CREATE TABLE `morada_faturacao` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `nome` varchar(50) not null,
+  `apelido` varchar(50) not null,
+  `morada` varchar(50) not null,
+  `cidade` varchar(50) not null,
+  `cod_postal` varchar(25) not null,
+  `telefone` varchar(50),
+  `nif` varchar(50) not null,
+  `cliente_id` int not null
+)
+
+ALTER TABLE `morada_faturacao` ADD FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`);
+
 CREATE TABLE `gestor` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `utilizador` varchar(100) not null,

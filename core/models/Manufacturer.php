@@ -37,17 +37,19 @@ class Manufacturer {
 
         $db = new Database();
 
-        $params = [
-            ":query" => '%' . $search_query . '%'
-        ];
+        foreach ($search_query as $query) {
+            $nome[] = 'produto.nome LIKE '. '\'%'. $query . '%\'';
+            $descricao[] = 'produto.descricao LIKE '. '\'%'. $query . '%\'';
+            $nome_fabricante[] = 'fabricante.nome LIKE '. '\'%'. $query . '%\'';
+        };
 
         $results = $db->select("    
             SELECT DISTINCT fabricante.id, fabricante.nome FROM fabricante
             INNER JOIN produto ON produto.fabricante_id = fabricante.id
-            WHERE produto.nome LIKE :query
-            OR produto.descricao LIKE :query
-            OR fabricante.nome LIKE :query
-        ", $params);
+            WHERE (". implode(' AND ', $nome) .")
+            OR (". implode(' AND ', $descricao) .")
+            OR (" . implode(' AND ', $nome_fabricante) . ");
+        ");
 
         if(sizeof($results)) {
             return $results;

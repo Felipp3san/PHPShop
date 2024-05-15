@@ -117,19 +117,21 @@ class Product {
 
         $filters = implode(" AND ", $filter_params);
 
-        $params = [
-            ":query" => '%' . $search_query . '%'
-        ];
+        foreach ($search_query as $query) {
+            $nome[] = 'produto.nome LIKE '. '\'%'. $query . '%\'';
+            $descricao[] = 'produto.descricao LIKE '. '\'%'. $query . '%\'';
+            $nome_fabricante[] = 'fabricante.nome LIKE '. '\'%'. $query . '%\'';
+        };
 
         $results = $db->select("
             SELECT produto.*, AVG(review.avaliacao) AS 'avaliacao_media', COUNT(review.id) AS 'total_avaliacoes' 
             FROM produto 
             LEFT JOIN review ON produto.id = review.produto_id 
             LEFT JOIN fabricante ON produto.fabricante_id = fabricante.id
-            WHERE (produto.nome LIKE :query OR produto.descricao LIKE :query OR fabricante.nome LIKE :query)
+            WHERE ((". implode(' AND ', $nome) .") OR (". implode(' AND ', $descricao) .") OR (". implode(' AND ', $nome_fabricante) ."))
             AND (" . $filters . ") 
             GROUP BY produto.id
-        ", $params);
+        ");
 
         if(sizeof($results) > 0) {
             return $results;
@@ -142,20 +144,28 @@ class Product {
     public function get_products_by_query($search_query) {
     
         $db = new Database();
-
-        $params = [
-            ':nome' => '%'.$search_query.'%'
-        ];
-
+        
+        foreach ($search_query as $query) {
+            $nome[] = 'produto.nome LIKE '. '\'%'. $query . '%\'';
+            $descricao[] = 'produto.descricao LIKE '. '\'%'. $query . '%\'';
+            $nome_fabricante[] = 'nome LIKE '. '\'%'. $query . '%\'';
+        };
+        
+        // $params = [
+        //     ':nome' => implode(' AND ', $nome),
+        //     ':descricao' => implode(' AND ', $descricao),
+        //     ':fabricante_nome' => implode(' AND ', $nome_fabricante),
+        // ];
+        
         $results = $db->select("
             SELECT produto.*, AVG(review.avaliacao) AS 'avaliacao_media', COUNT(review.id) AS 'total_avaliacoes' 
             FROM produto 
             LEFT JOIN review ON produto.id = review.produto_id 
-            WHERE nome LIKE :nome
-            OR descricao LIKE :nome
-            OR fabricante_id IN (SELECT id FROM fabricante WHERE nome LIKE :nome)
+            WHERE (". implode(' AND ', $nome) .")
+            OR (". implode(' AND ', $descricao) .")
+            OR (produto.fabricante_id IN (SELECT id FROM fabricante WHERE ". implode(' AND ', $nome_fabricante) ."))
             GROUP BY produto.id
-        ", $params);
+        ");
 
         if(sizeof($results) > 0) {
             return $results;

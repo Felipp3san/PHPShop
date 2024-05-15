@@ -93,7 +93,7 @@ use core\models\Cart;
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
-                                            <li><a class="dropdown-item" href="?a=conta">Minha conta</a></li>
+                                            <li><a class="dropdown-item" href="?a=account">Minha conta</a></li>
                                         <?php endif ?>
                                         <li><a class="dropdown-item" href="?a=logout">Logout</a></li>
                                     <?php else : ?>

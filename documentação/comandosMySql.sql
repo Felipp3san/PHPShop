@@ -75,3 +75,12 @@ quantidade
 categoria_id                                      
 ativo                                       
 adicionar ao carrinho
+
+
+            SELECT produto.*, AVG(review.avaliacao) AS 'avaliacao_media', COUNT(review.id) AS 'total_avaliacoes' 
+            FROM produto 
+            LEFT JOIN review ON produto.id = review.produto_id 
+            WHERE (produto.nome LIKE '%intel%' AND produto.nome LIKE '%i7%')
+            OR (produto.descricao LIKE '%intel%' AND produto.descricao LIKE '%i7%')
+            OR (produto.fabricante_id IN (SELECT id FROM fabricante WHERE nome LIKE '%intel%' AND nome LIKE '%i7%'))
+            GROUP BY produto.id

@@ -59,7 +59,7 @@ use core\models\Favorite;
                         <?php endif ?>
                     </div>
 
-                    <div class="row">
+                    <div class="row d-flex align-items-center">
                         <!-- FAVORITO -->
                         <div class="col">
                             <?php if (isset($_SESSION['customer_id'])) : ?>
@@ -101,15 +101,15 @@ use core\models\Favorite;
 
                         <!-- QUANTIDADE -->
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-5">
                                 <div class="d-flex h-100">
-                                    <button type="button" class="btn btn-outline-dark rounded-0 h-100 fs-3 p-0" id="decrease">-</button>
-                                    <input type="text" class="form-control rounded-0 h-100 fs-3 p-0" id="quantity" name="quantity" value="1">
-                                    <button type="button" class="btn btn-outline-dark rounded-0 h-100 fs-3 p-0" id="increase">+</button>
+                                    <button type="button" class="btn btn-outline-dark btn-sm rounded-0" id="decrease">-</button>
+                                    <input type="text" class="form-control rounded-0 h-100 fs-3 p-0 text-center" id="quantity" name="quantity" value="1">
+                                    <button type="button" class="btn btn-outline-dark btn-sm rounded-0" id="increase">+</button>
                                 </div>
                             </div>
-                            <div class="col-8">
-                                <button type="submit" class="btn btn-outline-success rounded-0 w-100 fs-4">Adicionar ao Carrinho</button>
+                            <div class="col-7 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-outline-success rounded-0">Adicionar ao Carrinho</button>
                             </div>
                         </div>
                     </form>
@@ -132,7 +132,7 @@ use core\models\Favorite;
                 <h2 class="mb-4">Avaliação</h2>
 
                 <!-- AVALIAÇÕES -->
-                <div class="col-2 rounded p-3 mb-2 border shadow-sm" style="background-color: rgb(242,242,242);">
+                <div class="col-3 rounded p-3 mb-2 border shadow-sm" style="background-color: rgb(242,242,242);">
                     <div class="p-3 rounded text-center border" style="background-color: rgb(255,255,255);">
 
                         <?php if (isset($data['reviews']['average_grade'])) : ?>
@@ -183,65 +183,67 @@ use core\models\Favorite;
                 <h2 class="mb-4">Produtos Relacionados</h2>
 
                 <div class="row">
-                    <?php if (!empty($data['related-products']['products'])) : ?>
+                    <?php if (!empty($related_products)) : ?>
                         <?php $limit = 0; ?>
-                        <?php foreach ($data['related-products']['products'] as $product) : ?>
-                            <div class="col-md-3 px-1">
-                                <div class="product-card shadow">
-                                    <!-- IMAGEM -->
-                                    <div class="product-image">
-                                        <a href="?a=details&product-id=<?= $product->id ?>">
-                                            <img src="assets/images/produtos/<?= substr($product->imagem, 0, strpos($product->imagem, "@")) ?>" class="img-fluid mb-3" alt="<? $product->nome ?>">
-                                        </a>
-                                    </div>
-                                    <!-- DESCRICAO -->
-                                    <div class="product-text">
-                                        <h6 class="product-name mb-3"><?= $product->nome ?></h5>
-                                            <p class="product-description fw-light"><?= $product->descricao_curta ?></p>
-                                            <!-- AVALIAÇÃO -->
-                                            <div class="product-reviews mb-2">
-                                                <?php if ($product->avaliacao_media != null) : ?>
-                                                    <?php for ($i = 0; $i < $product->avaliacao_media; $i++) : ?>
-                                                        <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                                    <?php endfor ?>
-                                                    <?php for ($i; $i < 5; $i++) : ?>
-                                                        <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
-                                                    <?php endfor ?>
-                                                    <span><?= '(' . $product->total_avaliacoes . ')' ?></span>
+                        <?php foreach ($related_products as $related_product) : ?>
+                            <?php if($related_product->id != $product->id) : ?>
+                                <div class="col-md-3 px-1">
+                                    <div class="product-card shadow">
+                                        <!-- IMAGEM -->
+                                        <div class="product-image">
+                                            <a href="?a=details&product-id=<?= $related_product->id ?>">
+                                                <img src="assets/images/produtos/<?= substr($related_product->imagem, 0, strpos($related_product->imagem, "@")) ?>" class="img-fluid mb-3" alt="<? $related_product->nome ?>">
+                                            </a>
+                                        </div>
+                                        <!-- DESCRICAO -->
+                                        <div class="product-text">
+                                            <h6 class="product-name mb-3"><?= $related_product->nome ?></h5>
+                                                <p class="product-description fw-light"><?= $related_product->descricao_curta ?></p>
+                                                <!-- AVALIAÇÃO -->
+                                                <div class="product-reviews mb-2">
+                                                    <?php if ($related_product->avaliacao_media != null) : ?>
+                                                        <?php for ($i = 0; $i < $related_product->avaliacao_media; $i++) : ?>
+                                                            <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                                        <?php endfor ?>
+                                                        <?php for ($i; $i < 5; $i++) : ?>
+                                                            <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                                                        <?php endfor ?>
+                                                        <span><?= '(' . $related_product->total_avaliacoes . ')' ?></span>
+                                                    <?php else : ?>
+                                                        <?php for ($i = 0; $i < 5; $i++) : ?>
+                                                            <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                                                        <?php endfor ?>
+                                                        <span>(0)</span>
+                                                    <?php endif ?>
+                                                </div>
+                                                <!-- DISPONILIBIDADE -->
+                                                <?php if ($related_product->quantidade > 10) : ?>
+                                                    <div class="text-success product-availability">
+                                                        <i class="fa-regular fa-circle-check"></i>
+                                                        <span>Disponível</span>
+                                                    </div>
+                                                <?php elseif ($related_product->quantidade <= 10 && $related_product->quantidade > 0) : ?>
+                                                    <div class="text-warning product-availability">
+                                                        <i class="fa-regular fa-circle-check"></i>
+                                                        <span>Poucas Unidades</span>
+                                                    </div>
                                                 <?php else : ?>
-                                                    <?php for ($i = 0; $i < 5; $i++) : ?>
-                                                        <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
-                                                    <?php endfor ?>
-                                                    <span>(0)</span>
+                                                    <div class="text-danger product-availability">
+                                                        <i class="fa-regular fa-circle-xmark"></i>
+                                                        <span>Indisponível</span>
+                                                    </div>
                                                 <?php endif ?>
-                                            </div>
-                                            <!-- DISPONILIBIDADE -->
-                                            <?php if ($product->quantidade > 10) : ?>
-                                                <div class="text-success product-availability">
-                                                    <i class="fa-regular fa-circle-check"></i>
-                                                    <span>Disponível</span>
+                                                <!-- PREÇO -->
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="product-price fs-4 fw-bold mb-0"><?= $related_product->preco ?> €</p>
                                                 </div>
-                                            <?php elseif ($product->quantidade <= 10 && $product->quantidade > 0) : ?>
-                                                <div class="text-warning product-availability">
-                                                    <i class="fa-regular fa-circle-check"></i>
-                                                    <span>Poucas Unidades</span>
-                                                </div>
-                                            <?php else : ?>
-                                                <div class="text-danger product-availability">
-                                                    <i class="fa-regular fa-circle-xmark"></i>
-                                                    <span>Indisponível</span>
-                                                </div>
-                                            <?php endif ?>
-                                            <!-- PREÇO -->
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <p class="product-price fs-4 fw-bold mb-0"><?= $product->preco ?> €</p>
-                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <?php $limit++; ?>
-                            <?php if ($limit == 4) : ?>
-                                <?php break; ?>
+                                <?php $limit++; ?>
+                                <?php if ($limit == 4) : ?>
+                                    <?php break; ?>
+                                <?php endif ?>
                             <?php endif ?>
                         <?php endforeach ?>
                     <?php endif ?>
