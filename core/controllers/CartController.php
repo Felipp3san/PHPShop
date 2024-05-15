@@ -6,6 +6,7 @@ use core\classes\Store;
 use core\models\Cart;
 
 class CartController {
+
     public function cart() {
         
         $cart = new Cart();
@@ -61,14 +62,15 @@ class CartController {
 
             $item_id = $_POST['item-id'];
             $quantity = $_POST['quantity'];
+            $to_remove = $_POST['to-remove'];
 
             if(Store::is_client_logged()) {
                 $customer_id = $_SESSION['customer_id'];
-                $results = $cart->remove_from_cart($item_id, $quantity, $customer_id);
+                $results = $cart->remove_from_cart($item_id, $quantity, $to_remove, $customer_id);
             }
             else {
                 $session_id = session_id();
-                $results = $cart->remove_from_cart($item_id, $quantity, null ,$session_id);
+                $results = $cart->remove_from_cart($item_id, $quantity, $to_remove, null ,$session_id);
             }
 
             if($results) {

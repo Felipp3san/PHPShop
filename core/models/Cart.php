@@ -20,7 +20,6 @@ class Cart {
 
             $params[':cliente_id'] = $customer_id;
 
-            
             // SE O ITEM JÁ EXISTE NO CARRINHO, APENAS MUDA A QUANTIDADE
             if($this->is_item_in_cart_customer_id($customer_id, $item_id)) {
                 
@@ -33,6 +32,7 @@ class Cart {
                 ", $params);
             }
             else {
+
                 $results = $db->insert("
                     INSERT INTO item_carrinho(item_id, quantidade, preco, cliente_id)
                     VALUES (:item_id, :quantidade, :preco, :cliente_id)
@@ -46,64 +46,79 @@ class Cart {
             // SE O ITEM JÁ EXISTE NO CARRINHO, APENAS MUDA A QUANTIDADE
             if($this->is_item_in_cart_session_id($session_id, $item_id)) {
 
+                unset($params[':preco']);
+
                 $results = $db->update("
                     UPDATE item_carrinho
                     SET quantidade = quantidade + :quantidade
                     WHERE session_id = :session_id AND item_id = :item_id
                 ", $params);
             } 
-            $results = $db->insert("
-                INSERT INTO item_carrinho(item_id, quantidade, preco, session_id)
-                VALUES (:item_id, :quantidade, :preco, :session_id)
-            ", $params);
-        }
+            else {
 
+                $results = $db->insert("
+                    INSERT INTO item_carrinho(item_id, quantidade, preco, session_id)
+                    VALUES (:item_id, :quantidade, :preco, :session_id)
+                ", $params);
+            }
+        }
 
         return $results;
     }
 
-    public function remove_from_cart($item_id, $quantity, $customer_id = null, $session_id = null) {
+    public function remove_from_cart($item_id, $quantity, $to_remove, $customer_id = null, $session_id = null) {
 
         $db = new Database();
 
         $params = [
             ':item_id' => $item_id,
+            ':quantidade' => $quantity,
+            ':remover' => $to_remove,
         ];
         
+        
         if(Store::is_client_logged()) {
-
+            
             $params[':cliente_id'] = $customer_id; 
-
+            
             // REMOVER SE A QUANTIDADE ESTIVER EM 1, ATUALIZAR SE FOR MAIS
-            if($quantity == 1) {
+            if($to_remove >= $quantity) {
+               
+                unset($params[':quantidade']);
+                unset($params[':remover']);
+
                 $results = $db->delete("
-                    DELETE FROM item_carrinho
-                    WHERE item_id = :item_id AND cliente_id = :cliente_id
+                DELETE FROM item_carrinho
+                WHERE item_id = :item_id AND cliente_id = :cliente_id
                 ", $params);
             }
             else {
                 $results = $db->update("
-                    UPDATE item_carrinho
-                    SET quantidade = quantidade - 1
-                    WHERE item_id = :item_id AND cliente_id = :cliente_id
+                UPDATE item_carrinho
+                SET quantidade = :quantidade - :remover
+                WHERE item_id = :item_id AND cliente_id = :cliente_id
                 ", $params);
             }
         }
         else {
-
+            
             $params[':session_id'] = $session_id;
-
+            
             // REMOVER SE A QUANTIDADE ESTIVER EM 1, ATUALIZAR SE FOR MAIS
-            if($quantity == 1) {
+            if($to_remove >= $quantity) {
+               
+                unset($params[':quantidade']);
+                unset($params[':remover']);
+                
                 $results = $db->delete("
-                    DELETE FROM item_carrinho
-                    WHERE item_id = :item_id AND session_id = :session_id
+                DELETE FROM item_carrinho
+                WHERE item_id = :item_id AND session_id = :session_id
                 ", $params);
             }
             else {
                 $results = $db->update("
                     UPDATE item_carrinho
-                    SET quantidade = quantidade - 1
+                    SET quantidade = :quantidade - :remover
                     WHERE item_id = :item_id AND session_id = :session_id
                 ", $params);
             }
@@ -143,9 +158,9 @@ class Cart {
         ];
 
         $results = $db->select("
-            SELECT * FROM item_carrinho 
-            INNER JOIN produto ON produto.id = item_carrinho.item_id 
-            WHERE item_carrinho.session_id = :session_id
+            SELECT i.item_id, i.quantidade, i.preco, p.imagem, p.nome, p.descricao_curta FROM item_carrinho as I
+            INNER JOIN produto as P ON p.id = i.item_id 
+            WHERE i.session_id = :session_id
         ", $params);
 
         if(sizeof($results) > 0) {

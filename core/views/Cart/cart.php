@@ -11,10 +11,11 @@
                         <?php if (isset($data['cart_items']) && $data['cart_items'] != false) : ?>
                             <li class="list-group-item">
                                 <div class="row text-center">
-                                    <div class="col-6"><span>Produto</span></div>
+                                    <div class="col-5"><span>Produto</span></div>
                                     <div class="col-2"><span>Preço</span></div>
                                     <div class="col-2"><span>Quantidade</span></div>
                                     <div class="col-2"><span>Preço Final</span></div>
+                                    <div class="col-1"><span>Remover</span></div>
                                 </div>
                             </li>
                             <?php foreach ($data['cart_items'] as $item) : ?>
@@ -26,7 +27,7 @@
                                                 <img src="assets/images/produtos/<?= substr($item->imagem, 0, strpos($item->imagem, "@")) ?>" class="img-thumbnail border-0" width="150" height="150" alt="<? $product->nome ?>">
                                             </a>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <!-- TITULO -->
                                             <span class="fw-semibold"><?= $item->nome ?></span>
                                         </div>
@@ -38,6 +39,7 @@
                                                 <!-- REMOVER DO CARRINHO -->
                                                 <form action="?a=remove_from_cart" method="POST">
                                                     <input type="hidden" name="item-id" value="<?= $item->item_id ?>">
+                                                    <input type="hidden" name="to-remove" value="1">
                                                     <input type="hidden" name="quantity" value="<?= $item->quantidade ?>">
                                                     <button class="btn btn-outline-dark rounded-0 fs-5 p-0 border-2" id="decrease">-</button>
                                                 </form>
@@ -56,6 +58,18 @@
                                         <div class="col-2 d-grid justify-content-center">
                                             <!-- PRECO TOTAL -->
                                             <span class="lead fw-medium fs-4 d-flex justify-content-center"><?= number_format($item->preco * $item->quantidade, 2) ?> €</span>
+                                        </div>
+                                        <div class="col-1 d-grid justify-content-center">
+                                            <form action="?a=remove_from_cart" method="POST">
+                                                <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
+                                                <input type="hidden" name="item-id" value="<?= $item->item_id ?>">
+                                                <input type="hidden" name="item-price" value="<?= $item->item_preco ?>">
+                                                <input type="hidden" name="to-remove" value="<?= $item->quantidade ?>">
+                                                <input type="hidden" name="quantity" value="<?= $item->quantidade ?>">
+                                                <button type="submit" class="btn btn-link rounded-0 fs-5 p-0 border-2">
+                                                    <i class="text-dark fa-solid fa-x fa-lg"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                         <!-- SOMAR TOTAL DOS PRODUTOS -->
                                         <?php $total = (!isset($total)) ? $item->preco * $item->quantidade : $total + $item->preco * $item->quantidade ?>
