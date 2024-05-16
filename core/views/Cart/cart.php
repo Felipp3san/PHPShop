@@ -43,6 +43,7 @@
                                             <div class="d-flex justify-content-center">
                                                 <!-- REMOVER 1 DO CARRINHO -->
                                                 <form action="?a=remove_from_cart" method="POST">
+                                                    <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
                                                     <input type="hidden" name="item-id" value="<?= $item->item_id ?>">
                                                     <input type="hidden" name="to-remove" value="1">
                                                     <input type="hidden" name="quantity" value="<?= $item->quantidade ?>">

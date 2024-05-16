@@ -55,15 +55,16 @@ class CartController {
     }
 
     public function remove_from_cart(){
-
         if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+
+            // URL atual para redirecionamento
+            $actual_url = substr($_POST['actual-url'], 4);
 
             $cart = new Cart();
 
             $item_id = $_POST['item-id'];
             $quantity = $_POST['quantity'];
             $to_remove = $_POST['to-remove'];
-            $actual_url = $_POST['actual-url'];
 
             if(Store::is_client_logged()) {
                 $customer_id = $_SESSION['customer_id'];

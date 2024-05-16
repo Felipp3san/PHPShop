@@ -137,6 +137,11 @@ use core\models\User;
           </div>
         </div>
       </div>
+      <div class="product-card shadow p-3">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Forma de pagamento</h5>
+        </div>
+      </div>
     </div>
     <!-- DETALHES DO CARRINHO  -->
     <div class="col-md-4">
@@ -183,7 +188,30 @@ use core\models\User;
           </ul>
         </div>
       </div>
-      <button class="btn btn-primary w-100 rounded-0">Finalizar Pedido</button>
+      <div class="product-card shadow p-3">
+                <div class="card-body">
+                    <!-- Resumo do carrinho -->
+                    <h5 class="card-title mb-3">Resumo do Pedido</h5>
+                    <ul class="list-group rounded-0">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Subtotal
+                            <span><?php echo number_format($total = (!isset($total)) ? 0 : $total, 2) ?> €</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Frete
+                            <span>Grátis</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>Total</strong>
+                            <strong><?php echo number_format($total = (!isset($total)) ? 0 : $total, 2) ?> €</strong>
+                        </li>
+                    </ul>
+                    <!-- Botões de ação -->
+                    <div class="d-grid mt-3">
+                        <a type="button" class="btn btn-primary btn-block rounded-0" href="?a=preview_order">Finalizar Compra</a>
+                    </div>
+                </div>
+            </div>
     </div>
   </div>
 </div>
