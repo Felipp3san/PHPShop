@@ -196,45 +196,4 @@ class Customer {
             return false;
         }
     } 
-
-    public function get_account_data($customer_id) {
-        $db = new Database();
-
-        $params = [
-            ':cliente_id' => $customer_id 
-        ];
-
-        $results = $db->select("
-            SELECT * FROM cliente
-            WHERE id = :cliente_id        
-        ", $params);
-
-        if(sizeof($results) > 0) {
-            return $results[0];
-        }
-        else {
-            return false;
-        }
-    }
-
-    public function get_addresses($customer_id) {
-
-        $db = new Database();
-
-        $params = [
-            ':cliente_id' => $customer_id 
-        ];
-
-        $results = $db->select("
-            SELECT * FROM morada_faturacao 
-            WHERE cliente_id = :cliente_id        
-        ", $params);
-
-        if(sizeof($results) > 0) {
-            return $results;
-        }
-        else {
-            return false;
-        }
-    }
 }

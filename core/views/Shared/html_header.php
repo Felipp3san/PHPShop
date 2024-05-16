@@ -98,7 +98,6 @@ use core\models\Cart;
                                         <li><a class="dropdown-item" href="?a=logout">Logout</a></li>
                                     <?php else : ?>
                                         <li><a class="dropdown-item" href="?a=login">Login</a></li>
-                                        <li><a class="dropdown-item" href="?a=register">Criar conta</a></li>
                                     <?php endif ?>
                                 </ul>
                             </div>

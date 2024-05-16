@@ -107,11 +107,11 @@ class Database
 
             if(!empty($params)) {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute($params);
+                $success = $execute->execute($params);
             }
             else {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute();
+                $success = $execute->execute();
             }
         } catch (PDOException $e) {
            return false; 
@@ -119,7 +119,7 @@ class Database
             $this->close_connection();
         }
 
-        return true;
+        return $success;
     }
 
     public function delete($sql, $params = null) {
@@ -136,11 +136,11 @@ class Database
 
             if(!empty($params)) {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute($params);
+                $success = $execute->execute($params);
             }
             else {
                 $execute = $this->connection->prepare($sql);
-                $execute->execute();
+                $success = $execute->execute();
             }
         } catch (PDOException $e) {
             return false; 
@@ -148,7 +148,7 @@ class Database
             $this->close_connection();
         }
 
-        return true;
+        return $success;
     }
 
     // GENERICO

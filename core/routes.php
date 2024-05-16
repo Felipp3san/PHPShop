@@ -15,6 +15,8 @@ $routes = [
     // User
     'account' => 'UserController@account',
     'add_address' => 'UserController@add_address',
+    'remove_address' => 'UserController@remove_address',
+    'define_default_address' => 'UserController@define_default_address',
     
     // Main
     'index' => 'MainController@index',

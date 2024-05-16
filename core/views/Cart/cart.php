@@ -41,22 +41,22 @@
                                         </div>
                                         <div class="col-2">
                                             <div class="d-flex justify-content-center">
-                                                <!-- REMOVER DO CARRINHO -->
+                                                <!-- REMOVER 1 DO CARRINHO -->
                                                 <form action="?a=remove_from_cart" method="POST">
                                                     <input type="hidden" name="item-id" value="<?= $item->item_id ?>">
                                                     <input type="hidden" name="to-remove" value="1">
                                                     <input type="hidden" name="quantity" value="<?= $item->quantidade ?>">
-                                                    <button class="btn btn-outline-dark btn-sm rounded-0 border-2">-</button>
+                                                    <button class="btn btn-outline-secondary btn-sm rounded-0 border-2">-</button>
                                                 </form>
                                                 <!-- QUANTIDADE -->
                                                     <input type="text" class="form-control rounded-0 border-2 text-center p-0 quantity-width" value="<?= $item->quantidade ?>" disabled>
-                                                <!-- ADICIONAR NO CARRINHO -->
+                                                <!-- ADICIONAR 1 NO CARRINHO -->
                                                 <form action="?a=add_to_cart" method="POST">
                                                     <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
                                                     <input type="hidden" name="item-id" value="<?= $item->item_id ?>">
                                                     <input type="hidden" name="item-price" value="<?= $item->item_preco ?>">
                                                     <input type="hidden" name="quantity" value="1">
-                                                    <button class="btn btn-outline-dark rounded-0 border-2 btn-sm">+</button>
+                                                    <button class="btn btn-outline-secondary rounded-0 border-2 btn-sm">+</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -64,6 +64,7 @@
                                             <!-- PRECO TOTAL -->
                                             <span class="lead fw-medium fs-4 d-flex justify-content-center"><?= number_format($item->preco * $item->quantidade, 2) ?> €</span>
                                         </div>
+                                        <!-- REMOVER PRODUTO DO CARRINHO -->
                                         <div class="col-1 d-grid justify-content-center">
                                             <form action="?a=remove_from_cart" method="POST">
                                                 <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
@@ -72,7 +73,7 @@
                                                 <input type="hidden" name="to-remove" value="<?= $item->quantidade ?>">
                                                 <input type="hidden" name="quantity" value="<?= $item->quantidade ?>">
                                                 <button type="submit" class="btn btn-link rounded-0 fs-5 p-0 border-2">
-                                                    <i class="text-dark fa-solid fa-x"></i>
+                                                    <i class="text-secondary fa-solid fa-x"></i>
                                                 </button>
                                             </form>
                                         </div>

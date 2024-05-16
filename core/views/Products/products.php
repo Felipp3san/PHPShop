@@ -11,59 +11,63 @@ use core\models\Favorite;
             <div class="product-card shadow p-2">
                 <h5>Filtros</h5>
                 <!-- FILTRAGEM POR QUERY -->
-                    <?php if(isset($_GET['a']) && $_GET['a'] == 'search_products'): ?> 
-                        <form id="filters-query" action="?a=search_products">
-                            <input type="hidden" name="a" value="search_products">
-                            <input type="hidden" name="query" value="<?= $search_query ?>">
-                            <!-- STOCK -->
-                            <p class="m-0 fw-semibold">Stock</p>
-                            <hr class="mx-0 my-1">
-                            <div>
-                                <input class="form-check-input rounded-0" type="checkbox" id="in-stock" name="in-stock" onclick="submitFormQuery()" <?php if (isset($_GET['in-stock'])) echo 'checked'; ?>>
-                                <label class="form-check-label" for="in-stock">Disponível</label>
-                            </div>
-                            <div>
-                                <input class="form-check-input rounded-0" type="checkbox" id="no-stock" name="no-stock" onclick="submitFormQuery()" <?php if (isset($_GET['no-stock'])) echo 'checked'; ?>>
-                                <label class="form-check-label" for="no-stock">Indisponível</label>
-                            </div>
-                            <!-- FABRICANTES  -->
-                            <p class="m-0 mt-3 fw-semibold">Fabricante</p>
-                            <hr class="mx-0 my-1">
+                <?php if (isset($_GET['a']) && $_GET['a'] == 'search_products') : ?>
+                    <form id="filters-query" action="?a=search_products">
+                        <input type="hidden" name="a" value="search_products">
+                        <input type="hidden" name="query" value="<?= $search_query ?>">
+                        <!-- STOCK -->
+                        <p class="m-0 fw-semibold">Stock</p>
+                        <hr class="mx-0 my-1">
+                        <div>
+                            <input class="form-check-input rounded-0" type="checkbox" id="in-stock" name="in-stock" onclick="submitFormQuery()" <?php if (isset($_GET['in-stock'])) echo 'checked'; ?>>
+                            <label class="form-check-label" for="in-stock">Disponível</label>
+                        </div>
+                        <div>
+                            <input class="form-check-input rounded-0" type="checkbox" id="no-stock" name="no-stock" onclick="submitFormQuery()" <?php if (isset($_GET['no-stock'])) echo 'checked'; ?>>
+                            <label class="form-check-label" for="no-stock">Indisponível</label>
+                        </div>
+                        <!-- FABRICANTES  -->
+                        <p class="m-0 mt-3 fw-semibold">Fabricante</p>
+                        <hr class="mx-0 my-1">
+                        <?php if (isset($filter_manufacturers) && !empty($filter_manufacturers)) : ?>
                             <?php foreach ($filter_manufacturers as $manufacturer) : ?>
                                 <div>
                                     <input class="form-check-input rounded-0" type="checkbox" name="manufacturer[]" value=<?= $manufacturer->id ?> onclick="submitFormQuery()" <?php if (isset($_GET['manufacturer']) && in_array($manufacturer->id, $_GET['manufacturer'])) echo 'checked'; ?>>
                                     <label class="form-check-label" for=""><?= $manufacturer->nome ?></label>
                                 </div>
                             <?php endforeach ?>
-                        </form>
+                        <?php endif ?>
+                    </form>
                     <!-- FILTRAGEM POR CATEGORIA -->
-                    <?php else: ?>
-                        <form id="filters" action="?a=products&category-name=<?= $category_name ?>&id=<?= $category_id ?>">
-                            <input type="hidden" name="a" value="products">
-                            <input type="hidden" name="category-name" value="<?= $category_name ?>">
-                            <input type="hidden" name="id" value="<?= $category_id ?>">
-                            <!-- STOCK -->
-                            <p class="m-0 fw-semibold">Stock</p>
-                            <hr class="mx-0 my-1">
-                            <div>
-                                <input class="form-check-input rounded-0" type="checkbox" id="in-stock" name="in-stock" onclick="submitForm()" <?php if (isset($_GET['in-stock'])) echo 'checked'; ?>>
-                                <label class="form-check-label" for="in-stock">Disponível</label>
-                            </div>
-                            <div>
-                                <input class="form-check-input rounded-0" type="checkbox" id="no-stock" name="no-stock" onclick="submitForm()" <?php if (isset($_GET['no-stock'])) echo 'checked'; ?>>
-                                <label class="form-check-label" for="no-stock">Indisponível</label>
-                            </div>
-                            <!-- FABRICANTES  -->
-                            <p class="m-0 mt-3 fw-semibold">Fabricante</p>
-                            <hr class="mx-0 my-1">
+                <?php else : ?>
+                    <form id="filters" action="?a=products&category-name=<?= $category_name ?>&id=<?= $category_id ?>">
+                        <input type="hidden" name="a" value="products">
+                        <input type="hidden" name="category-name" value="<?= $category_name ?>">
+                        <input type="hidden" name="id" value="<?= $category_id ?>">
+                        <!-- STOCK -->
+                        <p class="m-0 fw-semibold">Stock</p>
+                        <hr class="mx-0 my-1">
+                        <div>
+                            <input class="form-check-input rounded-0" type="checkbox" id="in-stock" name="in-stock" onclick="submitForm()" <?php if (isset($_GET['in-stock'])) echo 'checked'; ?>>
+                            <label class="form-check-label" for="in-stock">Disponível</label>
+                        </div>
+                        <div>
+                            <input class="form-check-input rounded-0" type="checkbox" id="no-stock" name="no-stock" onclick="submitForm()" <?php if (isset($_GET['no-stock'])) echo 'checked'; ?>>
+                            <label class="form-check-label" for="no-stock">Indisponível</label>
+                        </div>
+                        <!-- FABRICANTES  -->
+                        <p class="m-0 mt-3 fw-semibold">Fabricante</p>
+                        <hr class="mx-0 my-1">
+                        <?php if (isset($filter_manufacturers) && !empty($filter_manufacturers)) : ?>
                             <?php foreach ($filter_manufacturers as $manufacturer) : ?>
                                 <div>
                                     <input class="form-check-input rounded-0" type="checkbox" name="manufacturer[]" value=<?= $manufacturer->id ?> onclick="submitForm()" <?php if (isset($_GET['manufacturer']) && in_array($manufacturer->id, $_GET['manufacturer'])) echo 'checked'; ?>>
                                     <label class="form-check-label" for=""><?= $manufacturer->nome ?></label>
                                 </div>
                             <?php endforeach ?>
-                        </form>
-                    <?php endif ?>
+                        <?php endif ?>
+                    </form>
+                <?php endif ?>
             </div>
         </div>
         <div class="col-9">
