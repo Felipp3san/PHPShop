@@ -156,7 +156,7 @@ INSERT INTO estado_pagamento (estado, descrição) VALUES ('Cancelado', 'Pagamen
 INSERT INTO estado_pagamento (estado, descrição) VALUES ('Reembolsado', 'Pagamento reembolsado ao cliente.');
 
 CREATE TABLE `item_pedido` (
-  `num_pedido` int PRIMARY KEY,
+  `num_pedido` varchar(255),
   `item_id` int not null,
   `quantidade` int not null,
   `preco` decimal(6,2) not null
@@ -186,7 +186,7 @@ INSERT INTO review (cliente_id, produto_id, avaliacao, texto)
 VALUES (4, 4, 3, 'Boa placa-mãe, mas poderia ter mais recursos de conectividade.');
 
 CREATE TABLE `item_historico_pedido` (
-  `num_pedido` int not null,
+  `num_pedido` varchar(255) not null,
   `cliente_id` int not null
 );
 
@@ -220,7 +220,7 @@ ALTER TABLE `review` ADD FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id`);
 
 ALTER TABLE `item_historico_pedido` ADD FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`);
 
-ALTER TABLE `pedido` ADD FOREIGN KEY (`num_pedido`) REFERENCES `item_historico_pedido` (`num_pedido`);
+ALTER TABLE `item_historico_pedido` ADD FOREIGN KEY (`num_pedido`) REFERENCES `pedido` (`num_pedido`);
 
 ALTER TABLE `pedido` ADD FOREIGN KEY (`metodo_pagamento_id`) REFERENCES `metodo_pagamento` (`id`);
 

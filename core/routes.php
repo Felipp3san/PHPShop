@@ -28,6 +28,7 @@ $routes = [
 
     // Order
     'preview_order' => 'OrderController@preview_order',
+    'checkout' => 'OrderController@checkout',
 
     // Authentication
     'login' => 'AuthenticationController@login',

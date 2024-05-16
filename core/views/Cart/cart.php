@@ -112,7 +112,6 @@
                     <!-- Botões de ação -->
                     <div class="d-grid mt-3">
                         <a type="button" class="btn btn-primary btn-block rounded-0" href="?a=preview_order">Finalizar Compra</a>
-                        <a type="button" class="btn btn-success btn-block mt-2 rounded-0" href="?a=index">Continuar Comprando</a>
                     </div>
                 </div>
             </div>
