@@ -98,13 +98,15 @@ class UserController {
         }
 
         $actual_url = substr($_POST['actual-url'], 4);
+        $customer_id = $_SESSION['customer_id'];
+
         $user = new User();
 
         // POST('/?a=login/')
         if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
             $address_id = $_POST['address-id'];
 
-            $results = $user->remove_address($address_id);
+            $results = $user->remove_address($customer_id, $address_id);
             
             if($results) {
                 $_SESSION['success-title'] = "Remoção de morada";

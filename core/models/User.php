@@ -86,7 +86,7 @@ class User {
         return $results;
     }
 
-    public function remove_address($address_id) {
+    public function remove_address($customer_id, $address_id) {
         $db = new Database();
 
         $params = [
@@ -97,6 +97,24 @@ class User {
             DELETE FROM morada_faturacao
             WHERE id = :morada_id
         ", $params);
+
+        // Ao remover, define a morada mais antiga como padrão, se ainda existir alguma.
+        if(self::address_quantity($customer_id) > 0){
+
+            $params[':cliente_id'] = $customer_id;
+            unset($params[':morada_id']);
+
+            // Procure a morada com o menor id e atualiza o ativo para true.
+            $update_result = $db->update("
+                UPDATE morada_faturacao
+                SET ativo = 1 
+                WHERE id = (
+                    SELECT id FROM (
+                        SELECT MIN(id) as id FROM morada_faturacao WHERE cliente_id = :cliente_id
+                    ) as temp 
+                ) 
+            ",$params); 
+        }
 
         return $results;
     }

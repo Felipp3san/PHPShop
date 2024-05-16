@@ -140,6 +140,34 @@ use core\models\User;
       <div class="product-card shadow p-3">
         <div class="card-body">
           <h5 class="card-title mb-3">Forma de pagamento</h5>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <img src="assets/images/pagamentos/paypal.png" alt="PayPal" style="max-width: 200px;">
+                </div>
+                <div class="col">
+                  <p>PayPal</p>
+                  <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
+                  <label class="btn btn-outline-primary rounded-0" for="option1">Pagar com PayPal</label>
+                  <!-- <a href="#" class="btn btn-primary rounded-0">Pagar com PayPal</a> -->
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <img src="assets/images/pagamentos/mbway.png" alt="Transferência Bancária" style="max-width: 200px;">
+                </div>
+                <div class="col">
+                  <p>Transferência Bancária</p>
+                  <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
+                  <label class="btn btn-outline-primary rounded-0" for="option2">Pagar por Transferência</label>
+                  <!-- <a href="#" class="btn btn-primary rounded-0">Pagar por Transferência</a> -->
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

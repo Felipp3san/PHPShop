@@ -29,10 +29,6 @@ body {
     background-color: rgb(255,255,255);
 }
 
-.badge {
-    background-color: orange;
-}
-
 .search-bar {
     display: flex;
     align-items: center;
