@@ -43,14 +43,14 @@ class UserController {
         if (!Store::is_client_logged()) {
             return Store::redirect();
         }
-
+        
         $user = new User();
         $customer_id = $_SESSION['customer_id'];
-
+        
         // POST('/?a=login/')
         if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
-
             
+            $actual_url = $_POST['actual-url'];
             $nome = trim($_POST['nome']);
             $apelido = trim($_POST['apelido']);
             $morada = trim($_POST['morada']);
@@ -65,26 +65,30 @@ class UserController {
             else {
                 $results = $user->add_address($customer_id, $nome, $apelido, $morada, $cidade, $cod_postal, $nif);
             }
-
+            
             if($results) {
                 $_SESSION['success-title'] = "Morada adicionada";
                 $_SESSION['success'] = "Morada adicionada com sucesso!";
             }
             else {
             }
-
-            return Store::redirect('account');
+            
+            return Store::redirect($actual_url);
         }
+
+        $actual_url = $_GET['actual-url'];
 
         // GET
         if (!User::address_limit_reached($customer_id)) {
-            return Store::layout('user/add_address');
+            $data['actual_url'] = $actual_url;
+            return Store::layout('user/add_address', $data);
         }
         else {
             $_SESSION['error-title'] = "Limite de moradas atingido";
             $_SESSION['error'] = "Você já possui 3 moradas.";
-            return Store::redirect('account');
+            return Store::redirect($actual_url);
         }
+        
     }
 
     public function remove_address(){
@@ -93,6 +97,7 @@ class UserController {
             return Store::redirect();
         }
 
+        $actual_url = substr($_POST['actual-url'], 4);
         $user = new User();
 
         // POST('/?a=login/')
@@ -112,7 +117,7 @@ class UserController {
             }
         }
         
-        return Store::redirect('account');
+        return Store::redirect($actual_url);
     }
 
     public function define_default_address() {

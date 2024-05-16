@@ -103,13 +103,13 @@ use core\models\Favorite;
                         <div class="row">
                             <div class="col-5">
                                 <div class="d-flex h-100">
-                                    <button type="button" class="btn btn-outline-dark btn-sm rounded-0" id="decrease">-</button>
-                                    <input type="text" class="form-control rounded-0 h-100 fs-3 p-0 text-center" id="quantity" name="quantity" value="1">
-                                    <button type="button" class="btn btn-outline-dark btn-sm rounded-0" id="increase">+</button>
+                                    <button type="button" class="btn btn-outline-dark btn-md rounded-0" id="decrease" <?php if($product->quantidade <= 0) echo "disabled" ?>>-</button>
+                                    <input type="text" class="border-dark form-control rounded-0 h-100 fs-3 p-0 text-center" id="quantity" name="quantity" value="1" <?php if($product->quantidade <= 0) echo "disabled" ?>>
+                                    <button type="button" class="btn btn-outline-dark btn-md rounded-0 border-left-0" id="increase" <?php if($product->quantidade <= 0) echo "disabled" ?>>+</button>
                                 </div>
                             </div>
                             <div class="col-7 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-outline-success rounded-0">Adicionar ao Carrinho</button>
+                                <button type="submit" class="btn btn-outline-<?php if($product->quantidade > 0) echo "success" ; else echo "secondary"; ?> rounded-0" <?php if($product->quantidade <= 0) echo "disabled" ?>>Adicionar ao Carrinho</button>
                             </div>
                         </div>
                     </form>

@@ -49,8 +49,9 @@
                 </div>
 
                 <div class="d-flex gap-2 justify-content-center">
+                    <input type="hidden" name="actual-url" value="<?= $actual_url ?>">
                     <button type="submit" class="btn btn-primary btn-lg rounded-0">Adicionar</button>
-                    <a class="btn btn-secondary rounded-0 btn-lg px-5" href="?a=account">Retornar</a>
+                    <a class="btn btn-secondary rounded-0 btn-lg px-5" href="?a=<?=$actual_url?>">Retornar</a>
                 </div>
             </div>
         </form>

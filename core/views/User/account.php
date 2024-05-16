@@ -28,7 +28,7 @@ use core\models\User;
                     <input type="text" class="form-control rounded-0" value="<?= ucfirst($account_data->nome_completo) ?>" readonly>
                 </div>
                 <div class="col-sm-1">
-                    <button class="btn btn-outline-primary rounded-0">Editar</button>
+                    <button class="btn btn-outline-success rounded-0">Editar</button>
                 </div>
             </div>
             <div class="form-group row">
@@ -37,7 +37,7 @@ use core\models\User;
                     <input type="email" class="form-control rounded-0" value="<?= $account_data->email ?>" readonly>
                 </div>
                 <div class="col-sm-1">
-                    <button class="btn btn-outline-primary rounded-0">Editar</button>
+                    <button class="btn btn-outline-success rounded-0">Editar</button>
                 </div>
             </div>
             <div class="form-group row">
@@ -46,7 +46,7 @@ use core\models\User;
                     <input type="password" class="form-control rounded-0" value="**********" readonly>
                 </div>
                 <div class="col-sm-1">
-                    <button class="btn btn-outline-primary rounded-0">Editar</button>
+                    <button class="btn btn-outline-success rounded-0">Editar</button>
                 </div>
             </div>
         </div>
@@ -144,17 +144,26 @@ use core\models\User;
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div class="d-flex justify-content-center gap-2 my-3">
-                                            <form action="?a=remove_address" method="post">
-                                                <input type="hidden" name="address-id" value="<?= $address->id ?>">
-                                                <button class="btn btn-outline-danger rounded-0">Eliminar</button>
-                                            </form>
+                                        <div class="d-flex justify-content-between gap-2 my-3 px-3">
+                                            <div>
                                             <?php if ($address->ativo != 1) : ?>
-                                                <form action="?a=define_default_address" method="post">
+                                                    <form action="?a=define_default_address" method="post">
+                                                        <input type="hidden" name="address-id" value="<?= $address->id ?>">
+                                                        <button class="btn btn-outline-secondary rounded-0">Definir padrão</button>
+                                                    </form>
+                                                    <?php endif ?>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <form action="?a=edit_address" method="post">
                                                     <input type="hidden" name="address-id" value="<?= $address->id ?>">
-                                                    <button class="btn btn-outline-primary rounded-0">Definir padrão</button>
+                                                    <button class="btn btn-outline-success rounded-0">Editar</button>
                                                 </form>
-                                            <?php endif ?>
+                                                <form action="?a=remove_address" method="post">
+                                                    <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
+                                                    <input type="hidden" name="address-id" value="<?= $address->id ?>">
+                                                    <button class="btn btn-outline-danger rounded-0">Eliminar</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +177,7 @@ use core\models\User;
 
     <div class="row">
         <div class="col-3">
-            <a class="btn btn-outline-dark rounded-0" href="?a=add_address"><i class="fa-solid fa-address-book fa-xl py-3"></i><span class="mx-2">Adicionar nova morada</span></a>
+            <a class="btn btn-transparent rounded-0" href="?a=add_address&actual-url=<?= substr(htmlspecialchars($_SERVER['REQUEST_URI']), 4)?>"><i class="fa-solid fa-address-book fa-xl py-3"></i><span class="mx-2">Adicionar nova morada</span></a>
         </div>
     </div>
 

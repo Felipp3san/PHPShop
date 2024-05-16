@@ -26,6 +26,9 @@ $routes = [
     'add_to_cart' => 'CartController@add_to_cart',
     'remove_from_cart' => 'CartController@remove_from_cart',
 
+    // Order
+    'preview_order' => 'OrderController@preview_order',
+
     // Authentication
     'login' => 'AuthenticationController@login',
     'logout' => 'AuthenticationController@logout',

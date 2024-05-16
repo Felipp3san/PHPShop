@@ -63,6 +63,7 @@ class CartController {
             $item_id = $_POST['item-id'];
             $quantity = $_POST['quantity'];
             $to_remove = $_POST['to-remove'];
+            $actual_url = $_POST['actual-url'];
 
             if(Store::is_client_logged()) {
                 $customer_id = $_SESSION['customer_id'];
@@ -74,15 +75,15 @@ class CartController {
             }
 
             if($results) {
-                $_SESSION['success-title'] = "Carrinho";
+                $_SESSION['success-title'] = "Remover item do carrinho";
                 $_SESSION['success'] = "Item removido do carrinho!";
             }
             else {
-                $_SESSION['error-title'] = "Carrinho";
+                $_SESSION['error-title'] = "Remover item do carrinho";
                 $_SESSION['error'] = "Erro, tente novamente.";
             }
 
-            return Store::redirect('cart');
+            return Store::redirect($actual_url);
         }
     }
 }
