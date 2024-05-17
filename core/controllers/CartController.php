@@ -4,6 +4,7 @@ namespace core\controllers;
 
 use core\classes\Store;
 use core\models\Cart;
+use core\models\Product;
 
 class CartController {
 
@@ -31,6 +32,24 @@ class CartController {
             $quantity = $_POST['quantity'];
             
             $cart = new Cart();
+            $product = new Product();
+
+            // Verifica se o item possui a quantidade inserida no carrinho
+            if(isset($_POST['selected-quantity'])) {
+                // Carrinho
+                $results = $product->verify_item_quantity($item_id, $_POST['selected-quantity'] + $quantity);
+            }
+            else {
+                // Detalhes
+                $results = $product->verify_item_quantity($item_id, $quantity);
+            }
+
+            if(!$results) {
+                $_SESSION['error-title'] = "Adicionar ao carrinho";
+                $_SESSION['error'] = "O item não possui em estoque a quantidade selecionada."; 
+                return Store::redirect($actual_url);
+            }
+            //============================================================
 
             if(Store::is_client_logged()) {
                 $customer_id = $_SESSION['customer_id'];
@@ -42,11 +61,11 @@ class CartController {
             }
 
             if($results) {
-                $_SESSION['success-title'] = "Carrinho";
+                $_SESSION['success-title'] = "Adicionar ao carrinho";
                 $_SESSION['success'] = "Item adicionado ao carrinho!";
             }
             else {
-                $_SESSION['error-title'] = "Carrinho";
+                $_SESSION['error-title'] = "Adicionar ao carrinho";
                 $_SESSION['error'] = "Erro, tente novamente.";
             }
 

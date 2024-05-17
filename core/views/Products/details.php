@@ -103,6 +103,7 @@ use core\models\Favorite;
                         <div class="row">
                             <div class="col-5">
                                 <div class="d-flex h-100">
+                                    <input type="hidden" id="max-quantity" value="<?= $product->quantidade?>">
                                     <button type="button" class="btn btn-outline-dark btn-md rounded-0" id="decrease" <?php if($product->quantidade <= 0) echo "disabled" ?>>-</button>
                                     <input type="text" class="border-dark form-control rounded-0 h-100 fs-3 p-0 text-center" id="quantity" name="quantity" value="1" <?php if($product->quantidade <= 0) echo "disabled" ?>>
                                     <button type="button" class="btn btn-outline-dark btn-md rounded-0 border-left-0" id="increase" <?php if($product->quantidade <= 0) echo "disabled" ?>>+</button>
@@ -258,7 +259,10 @@ use core\models\Favorite;
     $(document).ready(function() {
         $('#increase').click(function() {
             var value = parseInt($('#quantity').val());
-            $('#quantity').val(value + 1);
+            var maxQuantity = parseInt($('#max-quantity').val());
+                if(value < maxQuantity) {
+                    $('#quantity').val(value + 1);
+            }
         });
 
         $('#decrease').click(function() {

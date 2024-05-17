@@ -136,5 +136,4 @@ class ProductController {
     
         return $filter_params;
     }
-
 }

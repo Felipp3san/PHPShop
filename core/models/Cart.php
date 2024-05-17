@@ -127,6 +127,21 @@ class Cart {
         return $results;
     }
 
+    public function clear_cart($customer_id) {
+        $db = new Database();
+
+        $params = [
+            ':cliente_id' => $customer_id,
+        ];
+        
+        $results = $db->delete("
+        DELETE FROM item_carrinho
+        WHERE cliente_id = :cliente_id
+        ", $params);
+
+        return $results;
+    }
+
     public function get_cart_items_by_customer_id($customer_id) {
 
         $db = new Database(); 

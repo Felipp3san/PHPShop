@@ -5,6 +5,7 @@ namespace core\controllers;
 use core\classes\Store;
 use core\models\Cart;
 use core\models\Order;
+use core\models\Product;
 use core\models\User;
 
 class OrderController {
@@ -51,6 +52,8 @@ class OrderController {
                 return Store::redirect('preview_order');
             }
 
+            $cliente_id = $_SESSION['customer_id'];
+
             // Adicionar todos os produtos e informações em um só array 
             $ids = $_POST['cart-items-ids'];
             $quantities = $_POST['cart-items-quantities'];
@@ -66,15 +69,27 @@ class OrderController {
             // =================
 
             $params = [
-                'customer_id' => $_SESSION['customer_id'],
+                'customer_id' => $cliente_id,
                 'payment' => $_POST['payment'],
                 'address' => $_POST['address'],
                 'products' => $products,
             ];
             
             $order = new Order();
+            $cart = new Cart();
+            $product = new Product();
 
-            $order->create_order($params);
+            $results = $order->create_order($params);
+
+            // Criação do pedido bem sucedida
+            if($results) {
+
+                // Limpar carrinho
+                $cart->clear_cart($cliente_id);
+
+                // Modificar quantidade dos itens
+                $product->update_items_quantities($products);
+            }
         }
     }
 }

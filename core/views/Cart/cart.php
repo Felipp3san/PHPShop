@@ -49,10 +49,11 @@
                                                     <input type="hidden" name="quantity" value="<?= $item->quantidade ?>">
                                                     <button class="btn btn-outline-secondary btn-sm rounded-0 border-2">-</button>
                                                 </form>
-                                                <!-- QUANTIDADE -->
-                                                    <input type="text" class="form-control rounded-0 border-2 text-center p-0 quantity-width" value="<?= $item->quantidade ?>" disabled>
+                                                <input type="text" class="form-control rounded-0 border-2 text-center p-0 quantity-width" value="<?= $item->quantidade ?>" disabled>
                                                 <!-- ADICIONAR 1 NO CARRINHO -->
                                                 <form action="?a=add_to_cart" method="POST">
+                                                    <!-- QUANTIDADE -->
+                                                    <input type="hidden" name="selected-quantity" class="form-control rounded-0 border-2 text-center p-0 quantity-width" value="<?= $item->quantidade ?>">
                                                     <input type="hidden" name="actual-url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
                                                     <input type="hidden" name="item-id" value="<?= $item->item_id ?>">
                                                     <input type="hidden" name="item-price" value="<?= $item->item_preco ?>">
