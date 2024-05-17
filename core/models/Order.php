@@ -38,17 +38,69 @@ class Order {
                     ':product_price' => $product['price'],
                 ];
 
-                $results = $db->insert("
+                $db->insert("
                     INSERT INTO item_pedido(num_pedido, item_id, quantidade, preco)
                     VALUES (:order_number, :product_id, :product_quantity, :product_price);
                 ", $item_params);
             }
 
-            return $results;
+            return $order_number;
         } 
+        else {
+            return false;
+        }
 
         // Remover quantidades dos items da base de dados
         // Limpar carrinho
+    }
+
+    public function get_order($order_number) {
+        $db = new Database();
+
+        $params = [
+            ':num_pedido' => $order_number,
+        ];
+       
+        // Buscar pedido
+        $results = $db->select("
+            SELECT 
+                pedido.num_pedido AS num_pedido, 
+                pedido.data_pedido AS data_pedido, 
+                cliente.nome_completo AS nome_cliente,
+                estado_pagamento.estado AS estado_pagamento,
+                estado_entrega.estado AS estado_entrega
+            FROM pedido
+            INNER JOIN cliente ON pedido.cliente_id = cliente.id
+            INNER JOIN estado_pagamento ON pedido.estado_pagamento_id = estado_pagamento.id
+            INNER JOIN estado_entrega ON pedido.estado_entrega_id = estado_entrega.id
+            WHERE pedido.num_pedido = :num_pedido
+        ", $params);
+        
+        if(sizeof($results) > 0){
+
+            $data = [
+                'order' => $results,
+            ];
+
+            // Buscar items do pedido        
+            $products = $db->select("
+                SELECT 
+                    produto.id AS id, 
+                    produto.nome AS nome_produto,
+                    produto.imagem AS imagem_produto, 
+                    item_pedido.quantidade AS quantidade,
+                    item_pedido.preco AS preco
+                FROM item_pedido
+                INNER JOIN produto ON produto.id = item_pedido.item_id
+                WHERE item_pedido.num_pedido = :num_pedido
+            ", $params);
+
+            $data['products'] = $products;
+
+            return $data;
+        } else {
+            return false;
+        }
     }
 
     // Função para gerar um número de pedido único

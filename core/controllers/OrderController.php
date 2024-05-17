@@ -31,7 +31,6 @@ class OrderController {
         return Store::layout('Order/preview_order', $data);
     }
 
-
     public function checkout() {
         // Se utilizador não estiver logado ao tentar finalizar compra, é redirecionado para login
         if(!Store::is_client_logged()) {
@@ -79,17 +78,26 @@ class OrderController {
             $cart = new Cart();
             $product = new Product();
 
-            $results = $order->create_order($params);
+            $order_number = $order->create_order($params);
 
             // Criação do pedido bem sucedida
-            if($results) {
+            if($order_number) {
 
                 // Limpar carrinho
                 $cart->clear_cart($cliente_id);
 
                 // Modificar quantidade dos itens
                 $product->update_items_quantities($products);
+
+                return Store::layout('Order/order', $order->get_order($order_number));
             }
         }
+    }
+
+    public function order() {
+
+        $order = new Order();
+
+        return Store::layout('Order/order', $order->get_order(317159374288639));
     }
 }

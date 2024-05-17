@@ -27,6 +27,7 @@ $routes = [
     'remove_from_cart' => 'CartController@remove_from_cart',
 
     // Order
+    'order' => 'OrderController@order',
     'preview_order' => 'OrderController@preview_order',
     'checkout' => 'OrderController@checkout',
 
