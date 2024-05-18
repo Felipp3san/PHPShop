@@ -150,7 +150,7 @@ use core\models\User;
 							<input type="radio" name="payment" id="paypal" value="4" hidden>
 							<div class="card-body">
 								<div class="row align-items-center">
-									<div class="col-3">
+									<div class="col-4">
 										<img src="assets/images/pagamentos/paypal.png" alt="PayPal" style="max-width: 200px;">
 									</div>
 									<div class="col">
@@ -163,7 +163,7 @@ use core\models\User;
 							<input type="radio" name="payment" id="transfer" value="3" hidden>
 							<div class="card-body">
 								<div class="row align-items-center">
-									<div class="col-3">
+									<div class="col-4">
 										<img src="assets/images/pagamentos/mbway.png" alt="Transferência Bancária" style="max-width: 200px;">
 									</div>
 									<div class="col">

@@ -3,6 +3,7 @@
         max-width: 50px;
     }
 </style>
+
 <div class="container-fluid">
     <h2 class="mt-4 mb-4">Seu Carrinho</h2>
     <div class="row">

@@ -84,3 +84,8 @@ adicionar ao carrinho
             OR (produto.descricao LIKE '%intel%' AND produto.descricao LIKE '%i7%')
             OR (produto.fabricante_id IN (SELECT id FROM fabricante WHERE nome LIKE '%intel%' AND nome LIKE '%i7%'))
             GROUP BY produto.id
+
+
+SELECT * FROM pedido
+INNER JOIN item_pedido ON pedido.num_pedido = item_pedido.num_pedido
+WHERE pedido.num_pedido = 317159456234529;

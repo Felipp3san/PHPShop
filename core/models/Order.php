@@ -66,6 +66,9 @@ class Order {
             SELECT 
                 pedido.num_pedido AS num_pedido, 
                 pedido.data_pedido AS data_pedido, 
+                pedido.estado_entrega_id AS estado_entrega_id, 
+                pedido.morada_entrega_id AS morada_entrega_id, 
+                pedido.cod_rastreamento AS cod_rastreamento, 
                 cliente.nome_completo AS nome_cliente,
                 estado_pagamento.estado AS estado_pagamento,
                 estado_entrega.estado AS estado_entrega
@@ -79,7 +82,7 @@ class Order {
         if(sizeof($results) > 0){
 
             $data = [
-                'order' => $results,
+                'details' => $results[0],
             ];
 
             // Buscar items do pedido        
@@ -99,6 +102,83 @@ class Order {
 
             return $data;
         } else {
+            return false;
+        }
+    }
+
+    public function get_orders_by_customer_id($customer_id) {
+        $db = new Database();
+
+        $params = [
+            ':cliente_id' => $customer_id,
+        ];
+       
+        // Buscar pedido
+        $orders = $db->select("
+            SELECT 
+                pedido.num_pedido AS num_pedido, 
+                pedido.data_pedido AS data_pedido, 
+                cliente.nome_completo AS nome_cliente,
+                estado_pagamento.estado AS estado_pagamento,
+                estado_entrega.estado AS estado_entrega
+            FROM pedido
+            INNER JOIN cliente ON pedido.cliente_id = cliente.id
+            INNER JOIN estado_pagamento ON pedido.estado_pagamento_id = estado_pagamento.id
+            INNER JOIN estado_entrega ON pedido.estado_entrega_id = estado_entrega.id
+            WHERE pedido.cliente_id = :cliente_id
+        ", $params);
+        
+        if(sizeof($orders) > 0){
+
+            foreach($orders as $order) {
+
+                $params = [
+                    ':num_pedido' => $order->num_pedido
+                ];
+
+                $products = $db->select("
+                    SELECT 
+                        produto.id AS id, 
+                        produto.nome AS nome_produto,
+                        produto.imagem AS imagem_produto, 
+                        produto.preco AS preco, 
+                        item_pedido.quantidade AS quantidade,
+                        item_pedido.preco AS preco_total,
+                        item_pedido.num_pedido AS num_pedido
+                    FROM item_pedido
+                    INNER JOIN produto ON produto.id = item_pedido.item_id
+                    WHERE item_pedido.num_pedido = :num_pedido
+                ", $params);
+
+                $order->products = $products; 
+            }
+
+            // echo '<pre>';
+            // die(print_r($orders));
+
+            return $orders;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_order_address($address_id) {
+
+        $db = new Database();
+
+        $params = [
+            ':id' => $address_id
+        ];
+
+        $results = $db->select("
+            SELECT * FROM morada_faturacao 
+            WHERE id = :id        
+        ", $params);
+
+        if(sizeof($results) > 0) {
+            return $results[0];
+        }
+        else {
             return false;
         }
     }

@@ -89,15 +89,47 @@ class OrderController {
                 // Modificar quantidade dos itens
                 $product->update_items_quantities($products);
 
-                return Store::layout('Order/order', $order->get_order($order_number));
+                return Store::layout('Order/order_details', $order->get_order($order_number));
             }
         }
     }
 
-    public function order() {
+    public function order_details() {
+
+        if(!Store::is_client_logged()) {
+            return Store::redirect();
+        };
 
         $order = new Order();
 
-        return Store::layout('Order/order', $order->get_order(317159374288639));
+        if(isset($_GET['order_number'])) {
+            $order_number = $_GET['order_number'];
+            $results = $order->get_order($order_number);
+            $order_address = $order->get_order_address($results['details']->morada_entrega_id);
+        }
+
+
+        $data = [
+            'order' => $results,
+            'order_address' => $order_address
+        ];
+
+        return Store::layout('Order/order_details', $data);
+    }
+
+    public function order_list() {
+
+        if(!Store::is_client_logged()) {
+            return Store::redirect();
+        };
+
+        $order = new Order();
+        $customer_id = $_SESSION['customer_id'];
+
+        $data = [
+            'orders' => $order->get_orders_by_customer_id($customer_id)
+        ];
+        
+        return Store::layout('Order/order_list', $data);
     }
 }

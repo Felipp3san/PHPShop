@@ -78,7 +78,7 @@ use core\models\Favorite;
                             <div class="product-card shadow">
                                 <!-- IMAGEM -->
                                 <div class="product-image">
-                                    <a href="?a=details&product-id=<?= $product->id ?>">
+                                    <a class="btn btn-transparent border-0 p-0" href="?a=details&product-id=<?= $product->id ?>">
                                         <img src="assets/images/produtos/<?= substr($product->imagem, 0, strpos($product->imagem, "@")) ?>" class="img-fluid mb-3" alt="<? $product->nome ?>">
                                     </a>
                                 </div>
