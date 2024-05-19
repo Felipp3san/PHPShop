@@ -21,6 +21,12 @@ use core\models\User;
 		font-size: 0.875rem;
 		/* tamanho de fonte menor, ajuste conforme necessário */
 	}
+
+	.disabled-overlay {
+		pointer-events: none; /* Desativa a interatividade */
+		opacity: 0.5; /* Ajusta a opacidade para esmaecer */
+		background-color: rgba(255, 255, 255, 0.5); /* Ajuste a cor de fundo se necessário */
+	}
 </style>
 
 <div class="container-fluid">
@@ -126,20 +132,21 @@ use core\models\User;
 				<div class="product-card shadow p-3">
 					<div class="card-body">
 						<h5 class="card-title mb-3">Forma de pagamento</h5>
-						<div class="product-card p-3 payment-card shadow-sm border">
-							<input type="radio" name="payment" id="paypal" value="4" hidden>
+						<div class="product-card p-3 payment-card shadow-sm border disabled-overlay" id="paypal-card">
+							<input type="radio" name="payment" id="paypal" value="4" hidden disabled>
 							<div class="card-body">
 								<div class="row align-items-center">
 									<div class="col-4">
 										<img src="assets/images/pagamentos/paypal.png" alt="PayPal" style="max-width: 200px;">
 									</div>
-									<div class="col">
+									<div class="col d-flex justify-content-between align-items-center">
 										<strong class="fs-5">PayPal</strong>
+										<span class="text-muted"> Em desenvolvimento...</span>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="product-card p-3 payment-card shadow-sm border">
+						<div class="product-card p-3 payment-card shadow-sm border" id="transfer-card">
 							<input type="radio" name="payment" id="transfer" value="3" hidden>
 							<div class="card-body">
 								<div class="row align-items-center">
@@ -289,24 +296,35 @@ use core\models\User;
 
 	});
 
-	Array.from(paymentCard).forEach((card) => {
+	const paypalRadio = document.getElementById("paypal");
+	const paypalCard = document.getElementById("paypal-card");
+	const transferRadio = document.getElementById("transfer");
+	const transferCard = document.getElementById("transfer-card");
+	
+	paypalCard.addEventListener("click", (e) => {
+		if(paypalRadio.disabled != true){
+			transferCard.classList.remove("shadow");
+			transferCard.style.transform = "scale(0.9)";
+			transferCard.classList.add("shadow-sm");	
+	
+			e.currentTarget.classList.remove("shadow-sm");
+			e.currentTarget.classList.add("shadow");
+			e.currentTarget.style.transform = "scale(0.975)";
+			paypalRadio.checked = true;
+		}
+	});
 
-		card.addEventListener("click", (e) => {
-
-			Array.from(paymentCard).forEach((card) => {
-				card.classList.remove("shadow");
-				card.style.transform = "scale(0.9)";
-				card.classList.add("shadow-sm");
-			});
-
-			card.classList.remove("shadow-sm");
-			card.classList.add("shadow");
-			card.style.transform = "scale(0.975)";
-
-			let input = card.querySelector("input");
-			input.checked = true;
-		})
-
+	transferCard.addEventListener("click", (e) => {
+		if(transferRadio.disabled != true) {
+			paypalCard.classList.remove("shadow");
+			paypalCard.style.transform = "scale(0.9)";
+			paypalCard.classList.add("shadow-sm");
+	
+			e.currentTarget.classList.remove("shadow-sm");
+			e.currentTarget.classList.add("shadow");
+			e.currentTarget.style.transform = "scale(0.975)";
+			transferRadio.checked = true;
+		}
 	});
 
 	const myModal = document.getElementById('paymentModal')
