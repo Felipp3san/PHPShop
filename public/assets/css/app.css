@@ -17,16 +17,16 @@ body {
     background-color: rgb(246,246,246);
 }
 
-.container-width {
-    width: 85%;
-}
-
 .min-height {
     min-height: calc(100vh - 101px - 56px);
 }
 
 .container-background {
     background-color: rgb(255,255,255);
+}
+
+.container-width {
+    width: 85%;
 }
 
 .search-bar {
@@ -142,10 +142,6 @@ body {
     padding: 20px;
 }
 
-.container-width {
-    width: 85%;
-}
-
 /* LOGIN/REGISTER */
 
 #login {
@@ -209,4 +205,11 @@ body {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     /* Number of lines before the ellipsis */
+}
+
+@media screen and (max-width:1500px)
+{
+    .container-width{
+        width: 100%;
+    }    
 }

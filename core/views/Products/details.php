@@ -3,9 +3,7 @@
 use core\models\Favorite;
 ?>
 
-<div class="container-fluid">
-
-    <div class="col-10 mx-auto">
+<div class="container">
         <div class="row gap-3">
 
             <div class="col-7 product-card shadow">
@@ -252,7 +250,6 @@ use core\models\Favorite;
             </div>
         </div>
     </div>
-</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>

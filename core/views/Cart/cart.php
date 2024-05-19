@@ -5,7 +5,7 @@
 </style>
 
 <div class="container-fluid">
-    <h2 class="mt-4 mb-4">Seu Carrinho</h2>
+    <h2 class="mb-4">Seu Carrinho</h2>
     <div class="row">
         <div class="col-md-8">
             <div class="product-card shadow p-3">

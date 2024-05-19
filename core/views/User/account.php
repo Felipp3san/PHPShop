@@ -152,7 +152,9 @@ use core\models\User;
                                                     <button class="btn btn-outline-secondary rounded-0">Definir padrão</button>
                                                 </form>
                                             <?php else: ?>
-                                                <span class="badge text-bg-transparent border border-secondary text-secondary rounded-0 h-100 fs-6 fw-normal d-flex gap-2 align-items-center"><i class="fa-solid fa-circle-check"></i>Padrão</span>
+                                                <span class="badge text-bg-transparent border border-primary text-primary rounded-0 h-100 fs-6 fw-normal d-flex gap-2 align-items-center">
+                                                    <i class="fa-solid fa-circle-check"></i>Padrão
+                                                </span>
                                             <?php endif ?>
                                             </div>
                                             <div class="d-flex gap-2">

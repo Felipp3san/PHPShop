@@ -14,11 +14,16 @@ use core\models\User;
 	.payment-card:hover {
 		cursor: pointer;
 	}
+
+	.label-discreto {
+    font-weight: normal; /* ou um valor como 300 */
+    font-size: 0.875rem; /* tamanho de fonte menor, ajuste conforme necessário */
+}
 </style>
 
 <div class="container-fluid">
 	<form action="?a=checkout" method="post">
-		<h2 class="mt-4 mb-4">Finalizar pedido</h2>
+		<h2 class="mb-4">Finalizar pedido</h2>
 
 		<div class="row">
 			<div class="col-md-8">
@@ -37,84 +42,56 @@ use core\models\User;
 
 						<?php else : ?>
 
-							<div class="row">
+							<div class="row px-2">
 								<?php if (isset($addresses) && !empty($addresses)) : ?>
 									<?php foreach ($addresses as $address) : ?>
-										<div class="col-4">
+										<div class="col-4 p-0">
 											<div class="product-card address-card border <?php if ($address->ativo == 1) echo "shadow";
 																							else echo "shadow-sm"; ?>" <?php if ($address->ativo == 1) echo "style='transform: scale(0.975);'"; ?>>
 												
 												<input type="radio" name="address" value="<?= $address->id ?>" hidden <?php if ($address->ativo == 1) echo "checked";?>>
 												<div class="card-body">
 													<ul class="list-group rounded-0">
-														<li class="list-group-item border-0 border-bottom">
+														<li class="list-group-item border-0 pb-1 border-bottom">
 															<div class="row">
-																<div class="col-5">
-																	<strong>Nome:</strong>
-																</div>
-																<div class="col">
-																	<span class="text-muted"><?= ucfirst($address->nome) ?></span>
-																</div>
+																<label class="label-discreto fw-semibold" for="nome">Nome</label>
+																<span class="text-muted" id="nome"><?= ucwords($address->nome) ?></span>
 															</div>
 														</li>
-														<li class="list-group-item border-0 border-bottom">
+														<li class="list-group-item border-0 pt-0 pb-1 border-bottom">
 															<div class="row">
-																<div class="col-5">
-																	<strong>Apelido:</strong>
-																</div>
-																<div class="col">
-																	<span class="text-muted"><?= ucfirst($address->apelido) ?></span>
-																</div>
+																<label class="label-discreto fw-semibold" for="apelido">Apelido</label>
+																<span class="text-muted" id="apelido"><?= ucwords($address->apelido) ?></span>
 															</div>
 														</li>
-														<li class="list-group-item border-0 border-bottom">
+														<li class="list-group-item border-0 pt-0 pb-1 border-bottom">
 															<div class="row">
-																<div class="col-5">
-																	<strong>Morada:</strong>
-																</div>
-																<div class="col">
-																	<span class="text-muted address"><?= ucfirst($address->morada) ?></span>
-																</div>
+																<label class="label-discreto fw-semibold" for="morada">Morada</label>
+																<span class="text-muted text-truncate" id="morada"><?= ucwords($address->morada) ?></span>
 															</div>
 														</li>
-														<li class="list-group-item border-0 border-bottom">
+														<li class="list-group-item border-0 pt-0 pb-1 border-bottom">
 															<div class="row">
-																<div class="col-5">
-																	<strong>Cidade:</strong>
-																</div>
-																<div class="col">
-																	<span class="text-muted"><?= ucfirst($address->cidade) ?></span>
-																</div>
+																<label class="label-discreto fw-semibold" for="cidade">Cidade</label>
+																<span class="text-muted" id="cidade"><?= ucwords($address->cidade) ?></span>
 															</div>
 														</li>
-														<li class="list-group-item border-0 border-bottom">
+														<li class="list-group-item border-0 pt-0 pb-1 border-bottom">
 															<div class="row">
-																<div class="col-5">
-																	<strong>Código Postal:</strong>
-																</div>
-																<div class="col">
-																	<span class="text-muted"><?= $address->cod_postal ?></span>
-																</div>
+																<label class="label-discreto fw-semibold" for="cod-postal">Código Postal</label>
+																<span class="text-muted" id="cod-postal"><?= substr($address->cod_postal, 0, 4) . '-' . substr($address->cod_postal, 4) ?></span>
 															</div>
 														</li>
-														<li class="list-group-item border-0 border-bottom">
+														<li class="list-group-item border-0 pt-0 pb-1 border-bottom">
 															<div class="row">
-																<div class="col-5">
-																	<strong>Telefone:</strong>
-																</div>
-																<div class="col">
-																	<span class="text-muted"><?= $address->telefone ?></span>
-																</div>
+																<label class="label-discreto fw-semibold" for="telefone">Telefone</label>
+																<span class="text-muted" id="telefone"><?= $address->telefone ?></span>
 															</div>
 														</li>
-														<li class="list-group-item border-0 border-bottom">
+														<li class="list-group-item border-0 pt-0">
 															<div class="row">
-																<div class="col-5">
-																	<strong>NIF:</strong>
-																</div>
-																<div class="col">
-																	<span class="text-muted"><?= $address->nif ?></span>
-																</div>
+																<label class="label-discreto fw-semibold" for="nif">NIF</label>
+																<span class="text-muted" id="nif"><?= $address->nif ?></span>
 															</div>
 														</li>
 													</ul>

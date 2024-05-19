@@ -71,11 +71,13 @@ class Order {
                 pedido.cod_rastreamento AS cod_rastreamento, 
                 cliente.nome_completo AS nome_cliente,
                 estado_pagamento.estado AS estado_pagamento,
-                estado_entrega.estado AS estado_entrega
+                estado_entrega.estado AS estado_entrega,
+                metodo_pagamento.tipo AS tipo_pagamento
             FROM pedido
             INNER JOIN cliente ON pedido.cliente_id = cliente.id
             INNER JOIN estado_pagamento ON pedido.estado_pagamento_id = estado_pagamento.id
             INNER JOIN estado_entrega ON pedido.estado_entrega_id = estado_entrega.id
+            INNER JOIN metodo_pagamento ON pedido.metodo_pagamento_id = metodo_pagamento.id
             WHERE pedido.num_pedido = :num_pedido
         ", $params);
         

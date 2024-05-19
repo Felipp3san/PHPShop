@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
     <h3 class="mb-4">Favoritos</h3>
     <div class="row">
         <?php foreach ($favorites as $favorite) : ?>

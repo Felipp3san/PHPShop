@@ -22,6 +22,10 @@ class OrderController {
 
         $data['cart_items'] = $cart->get_cart_items_by_customer_id($customer_id);
 
+        if(empty($data['cart_items'])) {
+            return Store::redirect('cart');
+        }
+
         $addresses = $user->get_addresses($customer_id);
            
         if($addresses) {
@@ -89,12 +93,14 @@ class OrderController {
                 // Modificar quantidade dos itens
                 $product->update_items_quantities($products);
 
-                return Store::layout('Order/order_details', $order->get_order($order_number));
+                $_SESSION['order_placed'] = true;
+
+                return $this->order_details($order_number);
             }
         }
     }
 
-    public function order_details() {
+    public function order_details($order_number = null) {
 
         if(!Store::is_client_logged()) {
             return Store::redirect();
@@ -107,7 +113,10 @@ class OrderController {
             $results = $order->get_order($order_number);
             $order_address = $order->get_order_address($results['details']->morada_entrega_id);
         }
-
+        else {
+            $results = $order->get_order($order_number);
+            $order_address = $order->get_order_address($results['details']->morada_entrega_id);
+        }
 
         $data = [
             'order' => $results,

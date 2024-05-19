@@ -1,10 +1,11 @@
 <div class="container">
 
     <div class="row">
-        <?php if (false) : ?>
-            <h2 class="mt-4 mb-4">pedido criado!</h2>
+        <?php if (isset($_SESSION['order_placed'])) : ?>
+            <h2 class="mb-4">Pedido criado!</h2>
+            <?php unset($_SESSION['order_placed']) ?>
         <?php else : ?>
-            <h2 class="mt-4 mb-4">Detalhes do pedido</h2>
+            <h2 class="mb-4">Detalhes do pedido</h2>
         <?php endif ?>
     </div>
 
@@ -20,7 +21,7 @@
             <div class="card-body">
                 <?php if ($order['details']->estado_entrega_id == 1) : ?>
                     <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 25%"></div>
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width: 25%"></div>
                     </div>
                     <p class="fw-semibold" style="width: 25%; text-align:right;"><?= $order['details']->estado_entrega ?></p>
                 <?php elseif ($order['details']->estado_entrega_id == 2) : ?>
@@ -54,7 +55,7 @@
                 <p class="m-1"><strong>Apelido:</strong> <span><?= ucwords($order_address->apelido, " ") ?></span></p>
                 <p class="m-1"><strong>Morada:</strong> <span><?= ucwords($order_address->morada, " ") ?></span></p>
                 <p class="m-1"><strong>Cidade:</strong> <span><?= ucwords($order_address->cidade, " ") ?></span></p>
-                <p class="m-1"><strong>Código Postal:</strong> <span><?= $order_address->cod_postal ?></span></p>
+                <p class="m-1"><strong>Código Postal:</strong> <span><?= substr($order_address->cod_postal, 0, 4) . '-' . substr($order_address->cod_postal, 4) ?></span></p>
                 <p class="m-1"><strong>Telefone: </strong> <span><?= $order_address->telefone ?></span></p>
                 <p class="m-1"><strong>NIF:</strong> <span><?= $order_address->nif ?></span></p>
             </div>
@@ -68,6 +69,7 @@
                 <p class="m-1"><strong>Data do Pedido:</strong> <span><?= $order['details']->data_pedido ?></span></p>
                 <p class="m-1"><strong>Cliente:</strong> <span><?= ucwords($order['details']->nome_cliente, " ") ?></span></p>
                 <p class="m-1"><strong>Observações:</strong> <span></span></p>
+                <p class="m-1"><strong>Tipo Pagamento:</strong> <span><?= $order['details']->tipo_pagamento ?></span></p>
                 <p class="m-1"><strong>Estado Pagamento:</strong> <span><?= $order['details']->estado_pagamento ?></span></p>
                 <p class="m-1"><strong>Código de Rastreamento:</strong> <span><?= $order['details']->cod_rastreamento ?></span></p>
             </div>
@@ -82,6 +84,7 @@
             </div>
             <div class="card-body">
                 <ul id="itens_pedido" class="list-group rounded-0">
+                    <?php $total = 0 ?>
                     <?php foreach ($order['products'] as $product) : ?>
                         <li class="list-group-item">
                             <div class="row d-flex justify-content-between align-items-center">
@@ -107,13 +110,22 @@
                                 </div>
                             </div>
                         </li>
+                        <?php $total += $product->preco * $product->quantidade ?>
                     <?php endforeach ?>
                 </ul>
             </div>
-            <div class="card-footer mt-4 text-end">
-                <p>Subtotal: </p>
-                <p>Frete: </p>
-                <p>Total:  </p>
+            <div class="card-footer mt-4 d-flex justify-content-end">
+                <ul class="col-3 list-group rounded-0 text-end">
+                    <li class="list-group-item">
+                        <span>Subtotal:</span> <strong><?= $total ?> €</strong>
+                    </li>
+                    <li class="list-group-item">
+                        <span>Frete:</span> <strong>Grátis</strong>
+                    </li>
+                    <li class="list-group-item">
+                        <span>Total:</span> <strong><?= $total ?> €</strong>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
