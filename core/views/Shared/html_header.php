@@ -80,7 +80,7 @@ use core\models\Cart;
                                 <button class="btn btn-link p-0 text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; background: none;">
                                     <i class="fa-solid fa-user fa-lg"></i>
                                 </button>
-                                <ul class="dropdown-menu rounded-0">
+                                <ul class="dropdown-menu dropdown-menu-end rounded-0">
                                     <?php if (Store::is_client_logged()) : ?>
                                         <?php if (isset($_SESSION['admin_id'])) : ?>
                                             <li><a class="dropdown-item disabled text-dark">Olá, <?= $_SESSION['admin_username'] ?>!</a></li>

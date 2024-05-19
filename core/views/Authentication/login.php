@@ -40,7 +40,7 @@
                     <div class="d-flex flex-column gap-3">
                         <div class="form-floating">
                             <input type="text" class="form-control rounded-0" id="full-name" name="full-name" placeholder="" required />
-                            <label for="email">Nome</label>
+                            <label for="email">Nome Completo</label>
                         </div>
                         <div class="form-floating">
                             <input type="email" class="form-control rounded-0" id="email" name="email" placeholder="" required />

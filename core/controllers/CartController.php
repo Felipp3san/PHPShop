@@ -27,6 +27,7 @@ class CartController {
             // URL atual para redirecionamento
             $actual_url = substr($_POST['actual-url'], 4);
 
+            $customer_id = $_SESSION['customer_id'];
             $item_id = $_POST['item-id'];
             $item_price = $_POST['item-price'];
             $quantity = $_POST['quantity'];
@@ -37,11 +38,11 @@ class CartController {
             // Verifica se o item possui a quantidade inserida no carrinho
             if(isset($_POST['selected-quantity'])) {
                 // Carrinho
-                $results = $product->verify_item_quantity($item_id, $_POST['selected-quantity'] + $quantity);
+                $results = $product->verify_item_quantity($customer_id, $item_id, $_POST['selected-quantity'] + $quantity);
             }
             else {
                 // Detalhes
-                $results = $product->verify_item_quantity($item_id, $quantity);
+                $results = $product->verify_item_quantity($customer_id, $item_id, $quantity);
             }
 
             if(!$results) {

@@ -105,12 +105,12 @@
                                     </div>
                                     <!-- PRECO TOTAL -->
                                     <div class="row">
-                                        <span class="lead fw-medium fs-4"><?= number_format($product->preco * $product->quantidade, 2) ?> €</span>
+                                        <span class="lead fw-medium fs-4"><?= number_format($product->preco, 2) ?> €</span>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                        <?php $total += $product->preco * $product->quantidade ?>
+                        <?php $total += $product->preco?>
                     <?php endforeach ?>
                 </ul>
             </div>

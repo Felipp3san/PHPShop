@@ -92,6 +92,13 @@ class AuthenticationController {
                 return Store::redirect('login');
             }
 
+            // Verificar se a password tem pelo menos 8 caracteres.
+            if(strlen($_POST['password']) < 8 && strlen($_POST['password'] > 20)) {
+                $_SESSION['error-title'] = "Registo inválido";
+                $_SESSION['error'] = "A senha deve possuir no mínimo 8 caracteres.";
+                return Store::redirect('login');
+            }
+
             $customer_email = strtolower(trim($_POST['email']));
 
             // Verificar se email é válido.

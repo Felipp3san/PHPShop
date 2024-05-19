@@ -101,6 +101,39 @@ class AdminController {
         }
     }
 
+    public function products() {
+        if(!Store::is_admin_logged()) { 
+            return Store::layout('Admin/access_denied');
+        }
+
+        $product = new Product();
+
+        $data = [
+            'products' => $product->get_products()
+        ];
+
+        return Store::layout('Admin/products', $data);
+    }
+
+    public function edit_product() {
+
+        if(!Store::is_admin_logged()) { 
+            return Store::layout('Admin/access_denied');
+        }
+
+        $product = new Product();
+        $category = new Category();
+        $manufacturer = new Manufacturer();
+
+        $data = [
+            'product' => $product->get_product_by_id($_GET['id']),
+            'categories' => $category->get_categories(),
+            'manufacturers' => $manufacturer->get_manufacturers(),
+        ];
+
+        return Store::layout('Admin/edit_product', $data);
+    }
+
     public function add_products() {
         if(!Store::is_admin_logged()) { 
             return Store::layout('Admin/access_denied');

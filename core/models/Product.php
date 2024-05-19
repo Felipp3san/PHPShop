@@ -191,27 +191,45 @@ class Product {
         }
         
         return $results; 
-    }
 
+    }
     // Verifica se o produto possui no minimo a quantidade adicionada ao carrinho.
-    public function verify_item_quantity($item_id, $quantity) {
+    public function verify_item_quantity($cliente_id, $item_id, $quantity) {
         $db = new Database();
 
         $params = [
+            ':cliente_id' => $cliente_id,
             ':item_id' => $item_id,
         ];
 
-        $results = $db->select("
-            SELECT * FROM produto
-            WHERE id = :item_id
+        $item_cart = $db->select("
+            SELECT quantidade 
+            FROM item_carrinho 
+            WHERE item_id = :item_id AND cliente_id = :cliente_id
         ", $params);
 
-        if($results[0]->quantidade >= $quantity) {
-           return true; 
-        } 
-        else {
-            return false;
+        unset($params[':cliente_id']);
+        
+        $product = $db->select("
+            SELECT id, quantidade  
+            FROM produto
+            WHERE id = :item_id 
+        ", $params);
+
+        if(!$item_cart) {
+
+            if($product[0]->quantidade >= $quantity) {
+                return true;
+            }
         }
+        else {
+            
+            if($product[0]->quantidade >= ($item_cart[0]->quantidade + $quantity)) {
+                return true; 
+            } 
+        }
+
+        return false;
     }
     
     // Atualiza a quantidade dos items ao criar pedido

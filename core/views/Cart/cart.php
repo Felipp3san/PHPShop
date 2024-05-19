@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="col-2 d-grid justify-content-center">
                                             <!-- PRECO TOTAL -->
-                                            <span class="lead fw-medium fs-4 d-flex justify-content-center"><?= number_format($item->preco * $item->quantidade, 2) ?> €</span>
+                                            <span class="lead fw-medium fs-4 d-flex justify-content-center text-truncate"><?= number_format($item->preco * $item->quantidade, 2) ?> €</span>
                                         </div>
                                         <!-- REMOVER PRODUTO DO CARRINHO -->
                                         <div class="col-1 d-grid justify-content-center">
