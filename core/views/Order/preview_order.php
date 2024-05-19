@@ -16,13 +16,16 @@ use core\models\User;
 	}
 
 	.label-discreto {
-    font-weight: normal; /* ou um valor como 300 */
-    font-size: 0.875rem; /* tamanho de fonte menor, ajuste conforme necessário */
-}
+		font-weight: normal;
+		/* ou um valor como 300 */
+		font-size: 0.875rem;
+		/* tamanho de fonte menor, ajuste conforme necessário */
+	}
 </style>
 
 <div class="container-fluid">
-	<form action="?a=checkout" method="post">
+
+	<form id="checkout-form" action="?a=checkout" method="post">
 		<h2 class="mb-4">Finalizar pedido</h2>
 
 		<div class="row">
@@ -48,8 +51,8 @@ use core\models\User;
 										<div class="col-4 p-0">
 											<div class="product-card address-card border <?php if ($address->ativo == 1) echo "shadow";
 																							else echo "shadow-sm"; ?>" <?php if ($address->ativo == 1) echo "style='transform: scale(0.975);'"; ?>>
-												
-												<input type="radio" name="address" value="<?= $address->id ?>" hidden <?php if ($address->ativo == 1) echo "checked";?>>
+
+												<input type="radio" name="address" value="<?= $address->id ?>" hidden <?php if ($address->ativo == 1) echo "checked"; ?>>
 												<div class="card-body">
 													<ul class="list-group rounded-0">
 														<li class="list-group-item border-0 pb-1 border-bottom">
@@ -220,7 +223,40 @@ use core\models\User;
 						</ul>
 						<!-- Botões de ação -->
 						<div class="d-grid mt-3">
-							<button type="submit" class="btn btn-primary btn-block rounded-0">Finalizar Compra</button>
+							<!-- Modal -->
+							<button type="button" class="btn btn-primary btn-block rounded-0" onclick="proceedToPayment()">
+								Finalizar compra
+							</button>
+
+							<div class="modal modal-bg" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h1 class="modal-title fs-5" id="exampleModalLabel">Finalizar Compra</h1>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<p>Por favor, faça a transferência bancária para a conta abaixo:</p>
+											<ul>
+												<li><strong>Nome do Beneficiário: </strong>Felippe Santana</li>
+												<li><strong>IBAN:</strong> PT50 1234 1234 1234 1234 12</li>
+												<li><strong>BIC/SWIFT:</strong> BBPIPTPL</li>
+												<li><strong>Valor Total: </strong><?php echo number_format($total = (!isset($total)) ? 0 : $total, 2) ?> €</li>
+											</ul>
+											<p>Instruções:</p>
+											<ol>
+												<li>Efetue a transferência utilizando os dados fornecidos acima.</li>
+												<li>Envie o comprovante de pagamento para o e-mail <strong>felippe.phpshop@gmail.com</strong>.</li>
+												<li>O seu pedido será processado assim que recebermos a confirmação da transferência.</li>
+											</ol>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cancelar</button>
+											<button type="submit" class="btn btn-primary rounded-0">Já fiz o pagamento</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -272,4 +308,16 @@ use core\models\User;
 		})
 
 	});
+
+	const myModal = document.getElementById('paymentModal')
+
+	function proceedToPayment() {
+		let transfer = document.getElementById('transfer');
+
+		if (transfer.checked) {
+			$('#paymentModal').modal('show');
+		} else {
+			document.getElementById("checkout-form").submit();
+		}
+	}
 </script>

@@ -117,13 +117,13 @@
             <div class="card-footer mt-4 d-flex justify-content-end">
                 <ul class="col-3 list-group rounded-0 text-end">
                     <li class="list-group-item">
-                        <span>Subtotal:</span> <strong><?= $total ?> €</strong>
+                        <span>Subtotal:</span> <strong><?= number_format($total, 2) ?> €</strong>
                     </li>
                     <li class="list-group-item">
                         <span>Frete:</span> <strong>Grátis</strong>
                     </li>
                     <li class="list-group-item">
-                        <span>Total:</span> <strong><?= $total ?> €</strong>
+                        <span>Total:</span> <strong><?= number_format($total, 2) ?> €</strong>
                     </li>
                 </ul>
             </div>
